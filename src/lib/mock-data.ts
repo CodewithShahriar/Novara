@@ -232,6 +232,39 @@ export const INITIAL_BUSES: BusDetails[] = [
       noiseCancellingCabin: true,
       fastChargePorts: true,
     }
+  },
+  {
+    id: 'bus-5',
+    name: 'DawnRunner Executive Shuttle',
+    operator: 'Novara Premier AeroLine',
+    model: 'NC-7500 AeroGlide',
+    type: 'Early Bird Express',
+    totalSeats: 36,
+    availableSeats: 32,
+    basePrice: 70,
+    rating: 4.88,
+    reviewsCount: 185,
+    departureTime: '05:30 AM',
+    arrivalTime: '10:45 AM',
+    duration: '5h 15m',
+    fromCity: 'San Francisco',
+    toCity: 'Los Angeles',
+    date: '2026-11-25',
+    amenities: [
+      'Wi-Fi 7 Starlink',
+      'Artisan Morning Coffee Bar',
+      'Quiet Cabin Zone',
+      'Fast USB-C 100W PD',
+    ],
+    imageUrl: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=1200&q=80',
+    seats: generateSeatsForBus('bus-5', 70),
+    features: {
+      electricAutonomous: true,
+      panoramicRoof: false,
+      hepaFilterAir: true,
+      noiseCancellingCabin: true,
+      fastChargePorts: true,
+    }
   }
 ];
 

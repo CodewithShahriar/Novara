@@ -22,8 +22,34 @@ import {
   SlidersHorizontal,
   Bus,
   Eye,
+  Sunrise,
+  Sun,
+  Sunset,
+  Moon,
 } from 'lucide-react';
 import { INITIAL_BUSES, CITIES } from '@/lib/mock-data';
+
+const TIME_SLOTS = [
+  { id: '00-06', range: '00-06', label: 'Early Morning (00:00 - 06:00)', icon: Sunrise },
+  { id: '06-12', range: '06-12', label: 'Morning (06:00 - 12:00)', icon: Sun },
+  { id: '12-18', range: '12-18', label: 'Afternoon (12:00 - 18:00)', icon: Sunset },
+  { id: '18-00', range: '18-00', label: 'Night (18:00 - 24:00)', icon: Moon },
+];
+
+function getSlotForTime(timeStr: string): string {
+  const match = timeStr.match(/(\d+):(\d+)\s*(AM|PM)?/i);
+  if (!match) return '06-12';
+  let hour = parseInt(match[1], 10);
+  const isPM = match[3]?.toUpperCase() === 'PM';
+  const isAM = match[3]?.toUpperCase() === 'AM';
+  if (isPM && hour < 12) hour += 12;
+  if (isAM && hour === 12) hour = 0;
+
+  if (hour >= 0 && hour < 6) return '00-06';
+  if (hour >= 6 && hour < 12) return '06-12';
+  if (hour >= 12 && hour < 18) return '12-18';
+  return '18-00';
+}
 
 function RoutesContent() {
   const searchParams = useSearchParams();
@@ -40,7 +66,7 @@ function RoutesContent() {
 
   const [selectedOperator, setSelectedOperator] = useState<string>('all');
   const [maxPrice, setMaxPrice] = useState<number>(150);
-  const [selectedAmenity, setSelectedAmenity] = useState<string>('all');
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>('all');
   const [sortOption, setSortOption] = useState<'price-asc' | 'price-desc' | 'duration' | 'rating'>('price-asc');
 
   const filteredBuses = useMemo(() => {
@@ -52,10 +78,8 @@ function RoutesContent() {
 
     list = list.filter((b) => b.basePrice <= maxPrice);
 
-    if (selectedAmenity !== 'all') {
-      list = list.filter((b) =>
-        b.amenities.some((a) => a.toLowerCase().includes(selectedAmenity.toLowerCase()))
-      );
+    if (selectedTimeSlot !== 'all') {
+      list = list.filter((b) => getSlotForTime(b.departureTime) === selectedTimeSlot);
     }
 
     if (sortOption === 'price-asc') {
@@ -67,7 +91,7 @@ function RoutesContent() {
     }
 
     return list;
-  }, [selectedOperator, maxPrice, selectedAmenity, sortOption]);
+  }, [selectedOperator, maxPrice, selectedTimeSlot, sortOption]);
 
   const operators = Array.from(new Set(INITIAL_BUSES.map((b) => b.operator)));
 
@@ -160,9 +184,9 @@ function RoutesContent() {
                   onClick={() => {
                     setSelectedOperator('all');
                     setMaxPrice(150);
-                    setSelectedAmenity('all');
+                    setSelectedTimeSlot('all');
                   }}
-                  className="text-xs text-[#D8B788] font-semibold hover:underline"
+                  className="text-xs text-[#D8B788] font-semibold hover:underline cursor-pointer"
                 >
                   Reset
                 </button>
@@ -204,27 +228,44 @@ function RoutesContent() {
                 />
               </div>
 
-              {/* Amenities */}
+              {/* Departure Time Slots Filter (Matches Reference UI) */}
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-slate-400 tracking-wider">
-                  Onboard Amenity
-                </label>
-                <div className="space-y-1.5 text-xs text-slate-300">
-                  {['all', 'Wi-Fi 7', 'Reclining', 'OLED', 'HEPA'].map((amenity) => (
-                    <label
-                      key={amenity}
-                      className="flex items-center gap-2 cursor-pointer hover:text-white"
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold uppercase text-slate-400 tracking-wider">
+                    Departure Time
+                  </label>
+                  {selectedTimeSlot !== 'all' && (
+                    <button
+                      type="button"
+                      onClick={() => setSelectedTimeSlot('all')}
+                      className="text-[10px] text-[#D8B788] hover:underline cursor-pointer lowercase"
                     >
-                      <input
-                        type="radio"
-                        name="amenity"
-                        checked={selectedAmenity === amenity}
-                        onChange={() => setSelectedAmenity(amenity)}
-                        className="accent-[#B48C56]"
-                      />
-                      <span>{amenity === 'all' ? 'All Amenities' : amenity}</span>
-                    </label>
-                  ))}
+                      clear
+                    </button>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-4 gap-1.5 p-1 rounded-2xl bg-[#071526]/80 border border-white/10">
+                  {TIME_SLOTS.map((slot) => {
+                    const isSelected = selectedTimeSlot === slot.id;
+                    const Icon = slot.icon;
+                    return (
+                      <button
+                        key={slot.id}
+                        type="button"
+                        onClick={() => setSelectedTimeSlot(isSelected ? 'all' : slot.id)}
+                        className={`flex flex-col items-center justify-center py-2.5 px-1 rounded-xl transition-all cursor-pointer ${
+                          isSelected
+                            ? 'bg-gradient-to-b from-[#A67C41]/35 to-[#694416]/50 border border-[#E0BE86]/50 text-[#FDEBD0] shadow-[0_4px_12px_rgba(166,124,65,0.25)]'
+                            : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
+                        }`}
+                        title={slot.label}
+                      >
+                        <Icon className={`w-4 h-4 mb-1.5 ${isSelected ? 'text-[#E5C287]' : 'text-slate-400'}`} />
+                        <span className="text-[11px] font-bold tracking-tight">{slot.range}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
