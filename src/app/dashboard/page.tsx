@@ -446,56 +446,42 @@ export default function UserDashboardPage() {
           </div>
         </div>
 
-        {/* Demo Ticket Banner when NOT verified yet */}
-        {!isVerified && (
-          <div className="flex items-center justify-between gap-3 p-4 rounded-2xl bg-gradient-to-r from-[#0B1E34] to-[#071526] border border-[#38BDF8]/25 mb-6 text-xs text-slate-300 shadow-lg">
-            <div className="flex items-center gap-2.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shrink-0" />
-              <span>
-                <strong className="text-white">Demo Pass Preview:</strong> Pre-loaded ticket <span className="font-mono font-bold text-[#38BDF8]">#NOV-849201</span> is displayed below. Click <strong>View Pass</strong> to inspect the digital boarding pass, or complete OTP verification to manage bookings.
-              </span>
-            </div>
-            <span className="hidden sm:inline-block text-[10px] uppercase font-mono tracking-wider px-2.5 py-1 rounded-md bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/20 font-bold shrink-0">
-              Live Demo Mode
-            </span>
-          </div>
-        )}
-
-        {/* Display Bookings List & Tabs (Always available in demo or verified mode) */}
-        <>
-          {/* Success Alert */}
-          {isCancelSuccess && (
-            <div className="mb-6 p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs flex items-center justify-between animate-in fade-in">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Booking successfully cancelled. Full refund has been initiated to your original payment method.</span>
+        {/* Bookings List & Tabs (Hidden when OTP card is active; visible on initial demo view and once verified) */}
+        {(!otpSent || isVerified) && (
+          <>
+            {/* Success Alert */}
+            {isCancelSuccess && (
+              <div className="mb-6 p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs flex items-center justify-between animate-in fade-in">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <span>Booking successfully cancelled. Full refund has been initiated to your original payment method.</span>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Tab Controls */}
-          <div className="flex items-center gap-2 mb-6 border-b border-white/10 pb-3">
-            <button
-              onClick={() => setActiveTab('upcoming')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
-                activeTab === 'upcoming'
-                  ? 'bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] text-white shadow-md border border-[#E0BE86]/35'
-                  : 'text-slate-400 hover:text-white bg-[#0B192C] border border-white/5'
-              }`}
-            >
-              Active Passes ({upcomingBookings.length})
-            </button>
-            <button
-              onClick={() => setActiveTab('past')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
-                activeTab === 'past'
-                  ? 'bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] text-white shadow-md border border-[#E0BE86]/35'
-                  : 'text-slate-400 hover:text-white bg-[#0B192C] border border-white/5'
-              }`}
-            >
-              Past & Cancelled ({pastBookings.length})
-            </button>
-          </div>
+            {/* Tab Controls */}
+            <div className="flex items-center gap-2 mb-6 border-b border-white/10 pb-3">
+              <button
+                onClick={() => setActiveTab('upcoming')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  activeTab === 'upcoming'
+                    ? 'bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] text-white shadow-md border border-[#E0BE86]/35'
+                    : 'text-slate-400 hover:text-white bg-[#0B192C] border border-white/5'
+                }`}
+              >
+                Active Passes ({upcomingBookings.length})
+              </button>
+              <button
+                onClick={() => setActiveTab('past')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  activeTab === 'past'
+                    ? 'bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] text-white shadow-md border border-[#E0BE86]/35'
+                    : 'text-slate-400 hover:text-white bg-[#0B192C] border border-white/5'
+                }`}
+              >
+                Past & Cancelled ({pastBookings.length})
+              </button>
+            </div>
 
           {/* Content Tabs */}
           {activeTab === 'upcoming' && (
@@ -631,7 +617,8 @@ export default function UserDashboardPage() {
               )}
             </div>
           )}
-        </>
+          </>
+        )}
 
         {/* Cancellation Confirmation Modal */}
         {cancellingRef && (
