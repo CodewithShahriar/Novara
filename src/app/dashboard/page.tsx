@@ -14,15 +14,18 @@ import {
   ExternalLink,
   CheckCircle2,
   Bus,
+  X,
 } from 'lucide-react';
 import { BookingRecord } from '@/lib/types';
 import { INITIAL_BOOKINGS } from '@/lib/mock-data';
+import DigitalTicketCard from '@/components/tickets/DigitalTicketCard';
 
 export default function UserDashboardPage() {
   const [bookings, setBookings] = useState<BookingRecord[]>([]);
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past' | 'profile'>('upcoming');
   const [cancellingRef, setCancellingRef] = useState<string | null>(null);
   const [isCancelSuccess, setIsCancelSuccess] = useState(false);
+  const [selectedTicketForModal, setSelectedTicketForModal] = useState<BookingRecord | null>(null);
 
   useEffect(() => {
     async function fetchBookings() {
@@ -212,13 +215,13 @@ export default function UserDashboardPage() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <Link
-                        href={`/ticket/${b.bookingRef}`}
-                        className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#071526] hover:bg-[#B48C56] hover:text-slate-950 text-white border border-white/10 font-bold text-xs uppercase tracking-wider transition"
+                      <button
+                        onClick={() => setSelectedTicketForModal(b)}
+                        className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#071526] hover:bg-[#B48C56] hover:text-slate-950 text-white border border-white/10 font-bold text-xs uppercase tracking-wider transition cursor-pointer"
                       >
                         <ExternalLink className="w-3.5 h-3.5 text-[#D8B788]" />
                         <span>View Pass</span>
-                      </Link>
+                      </button>
 
                       <button
                         onClick={() => setCancellingRef(b.bookingRef)}
@@ -314,6 +317,24 @@ export default function UserDashboardPage() {
                   Confirm Cancellation
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Real Boarding Pass Popup Modal */}
+        {selectedTicketForModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in overflow-y-auto">
+            <div className="relative w-full max-w-2xl my-auto">
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedTicketForModal(null)}
+                className="absolute -top-3 -right-3 z-20 w-9 h-9 rounded-full bg-[#071526] border border-white/20 text-white flex items-center justify-center hover:bg-[#B48C56] hover:text-slate-950 transition cursor-pointer shadow-2xl"
+                title="Close Boarding Pass"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <DigitalTicketCard booking={selectedTicketForModal} />
             </div>
           </div>
         )}
