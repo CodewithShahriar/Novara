@@ -1,23 +1,24 @@
 'use client';
 
 import React from 'react';
-import { SeatData } from '@/lib/types';
+import { SeatData, BusDetails } from '@/lib/types';
 import {
   X,
   Check,
-  ShieldCheck,
-  Sparkles,
   User,
   Phone,
   ArrowLeft,
   Armchair,
   Bus,
+  MapPin,
+  Calendar,
+  Clock,
   QrCode,
-  Lock,
 } from 'lucide-react';
 
 interface SeatDetailsPanelProps {
   seat: SeatData | null;
+  bus?: BusDetails | null;
   isSelected: boolean;
   onConfirmSeat: (seat: SeatData) => void;
   onDeselectSeat: (seat: SeatData) => void;
@@ -28,6 +29,7 @@ interface SeatDetailsPanelProps {
 
 export default function SeatDetailsPanel({
   seat,
+  bus,
   isSelected,
   onConfirmSeat,
   onDeselectSeat,
@@ -41,16 +43,27 @@ export default function SeatDetailsPanel({
   const isWindow = seat.isWindow;
   const ticketRef = `NOV-849201-${seat.seatNumber}`;
 
+  // Authentic bus journey itinerary defaults
+  const fromCity = bus?.fromCity || 'San Francisco';
+  const toCity = bus?.toCity || 'Los Angeles';
+  const departureTime = bus?.departureTime || '08:30 AM';
+  const arrivalTime = bus?.arrivalTime || '01:45 PM';
+  const duration = bus?.duration || '5h 15m Express';
+  const date = bus?.date || '2026-11-25';
+  const coachName = bus?.name || 'Apex Skyliner BioDrive';
+
   return (
-    <div className="fixed top-16 md:top-20 right-3 sm:right-6 md:right-8 z-40 w-[94vw] max-w-md animate-in slide-in-from-right duration-300">
+    <div className="fixed bottom-3 sm:bottom-auto sm:top-20 left-2 right-2 sm:left-auto sm:right-6 md:right-8 z-40 w-auto sm:w-[94vw] max-w-md max-h-[86vh] sm:max-h-[88vh] overflow-y-auto overscroll-contain animate-in slide-in-from-right duration-300">
       
       {/* 
         ========================================================================
         AUTHENTIC LUXURY EXECUTIVE BOARDING PASS / TICKET VOUCHER
         Features:
+        - Mobile-responsive layout fitting all screens with fluid scroll
         - Scalloped ticket tear notches on left & right borders
-        - Perforated dotted tear line separating pass header from boarding stub
-        - Realistic linear barcode, security hologram tag, and gold foil accents
+        - Perforated dotted tear line
+        - Concise bus journey itinerary (from/to, departure/arrival times, date)
+        - Stark Black & White Scanner QR Code matching real boarding pass
         ========================================================================
       */}
       <div className="relative bg-[#071322]/98 backdrop-blur-2xl rounded-3xl border border-[#C5A880]/35 text-white shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85),0_0_25px_rgba(197,168,128,0.12)] overflow-hidden">
@@ -59,10 +72,10 @@ export default function SeatDetailsPanel({
         <div className="h-1.5 w-full bg-gradient-to-r from-[#D8B788] via-[#B48C56] to-[#8C6B3D]" />
 
         {/* 1. TICKET HEADER & CONTROLS */}
-        <div className="p-5 pb-4 border-b border-white/10 bg-gradient-to-b from-white/5 to-transparent">
+        <div className="p-4 sm:p-5 pb-3 sm:pb-4 border-b border-white/10 bg-gradient-to-b from-white/5 to-transparent">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#0B1E34] to-[#071526] border border-[#C5A880]/40 flex items-center justify-center p-1 shadow-inner">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#0B1E34] to-[#071526] border border-[#C5A880]/40 flex items-center justify-center p-1 shadow-inner shrink-0">
                 <img 
                   src="/images/novara-logo.png" 
                   alt="Novara" 
@@ -89,7 +102,7 @@ export default function SeatDetailsPanel({
                 title="Return to full bus overview"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Cabin Overview</span>
+                <span className="hidden xs:inline">Cabin Overview</span>
               </button>
 
               <button
@@ -102,23 +115,23 @@ export default function SeatDetailsPanel({
           </div>
         </div>
 
-        {/* 2. TICKET BODY: SEAT IDENTIFIER & FARE */}
-        <div className="p-5 space-y-4">
+        {/* 2. TICKET BODY: SEAT IDENTIFIER, BUS JOURNEY ITINERARY & PASSENGER INPUT */}
+        <div className="p-4 sm:p-5 space-y-3.5">
           
           {/* Main Seat Voucher Block */}
-          <div className="bg-gradient-to-br from-[#0B1E34]/90 to-[#071526]/90 rounded-2xl p-4 border border-[#C5A880]/20 shadow-inner flex items-center justify-between">
-            <div className="flex items-center gap-3.5">
-              <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-[#C5A880]/20 via-[#B48C56]/10 to-transparent border border-[#C5A880]/40 flex flex-col items-center justify-center text-[#E5C287] shadow-md">
+          <div className="bg-gradient-to-br from-[#0B1E34]/90 to-[#071526]/90 rounded-2xl p-3.5 sm:p-4 border border-[#C5A880]/20 shadow-inner flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C5A880]/20 via-[#B48C56]/10 to-transparent border border-[#C5A880]/40 flex flex-col items-center justify-center text-[#E5C287] shadow-md shrink-0">
                 <Armchair className="w-5 h-5 text-[#E5C287] stroke-[2.2]" />
                 <span className="text-[8px] font-black uppercase tracking-wider text-slate-300">SUITE</span>
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-3xl font-black text-white tracking-tight">
+                  <span className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                     {seat.seatNumber}
                   </span>
                   <span
-                    className={`text-[10px] px-2 py-0.5 rounded-md font-extrabold uppercase tracking-wider ${
+                    className={`text-[9px] sm:text-[10px] px-2 py-0.5 rounded-md font-extrabold uppercase tracking-wider ${
                       isVip
                         ? 'bg-[#B48C56]/30 text-[#E5C287] border border-[#B48C56]/60 shadow-[0_0_10px_rgba(180,140,86,0.3)]'
                         : isWindow
@@ -135,37 +148,71 @@ export default function SeatDetailsPanel({
               </div>
             </div>
 
-            <div className="text-right pl-3 border-l border-white/10">
+            <div className="text-right pl-3 border-l border-white/10 shrink-0">
               <span className="text-[9px] text-[#D8B788] uppercase font-bold tracking-widest block">FARE</span>
-              <div className="text-2xl font-black text-[#E5C287] leading-none mt-0.5">${seat.price}</div>
+              <div className="text-xl sm:text-2xl font-black text-[#E5C287] leading-none mt-0.5">${seat.price}</div>
               <span className="text-[9px] text-slate-400 font-medium">All Taxes Incl.</span>
             </div>
           </div>
 
-          {/* Suite Amenities & Specs */}
-          <div className="bg-[#0B1E34]/50 rounded-xl p-3.5 border border-white/5 space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-black text-[#D8B788] uppercase tracking-widest flex items-center gap-1.5">
-                <Sparkles className="w-3 h-3 text-[#D8B788]" />
-                <span>Suite Amenities & Specifications</span>
-              </span>
-              <span className="text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3" />
-                Guaranteed 3D Seat
-              </span>
-            </div>
-            <div className="grid grid-cols-1 gap-1.5 text-[11px] text-slate-300">
-              {seat.features.map((feature, idx) => (
-                <div key={idx} className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#C5A880] shadow-[0_0_6px_rgba(197,168,128,0.8)]" />
-                  <span>{feature}</span>
+          {/* 
+            ====================================================================
+            BUS JOURNEY ITINERARY DETAILS (Replaces Suite Amenities per user request!)
+            Displays where the bus goes, departure/arrival times, date & platform
+            ====================================================================
+          */}
+          <div className="bg-[#0B1E34]/80 rounded-2xl p-3.5 sm:p-4 border border-[#C5A880]/20 shadow-inner space-y-3">
+            
+            {/* Direct City Route Header */}
+            <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-lg bg-[#C5A880]/20 flex items-center justify-center shrink-0">
+                  <MapPin className="w-3.5 h-3.5 text-[#C5A880]" />
                 </div>
-              ))}
+                <div>
+                  <div className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Intercity Corridor</div>
+                  <div className="text-xs sm:text-sm font-black text-white uppercase tracking-tight">
+                    {fromCity} <span className="text-[#C5A880] mx-1">➔</span> {toCity}
+                  </div>
+                </div>
+              </div>
+              <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 uppercase tracking-wider">
+                Direct
+              </span>
             </div>
+
+            {/* Departure, Arrival & Duration Cards */}
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div className="bg-[#071322]/85 rounded-xl p-2 border border-white/5">
+                <span className="block text-[8px] uppercase tracking-wider text-slate-400 font-bold">Departs</span>
+                <span className="text-xs sm:text-sm font-black text-[#E5C287]">{departureTime}</span>
+              </div>
+              <div className="bg-[#071322]/85 rounded-xl p-2 border border-white/5">
+                <span className="block text-[8px] uppercase tracking-wider text-slate-400 font-bold">Arrives</span>
+                <span className="text-xs sm:text-sm font-black text-white">{arrivalTime}</span>
+              </div>
+              <div className="bg-[#071322]/85 rounded-xl p-2 border border-white/5">
+                <span className="block text-[8px] uppercase tracking-wider text-slate-400 font-bold">Duration</span>
+                <span className="text-xs sm:text-sm font-black text-slate-300">{duration}</span>
+              </div>
+            </div>
+
+            {/* Travel Date & Coach Platform */}
+            <div className="flex flex-wrap items-center justify-between gap-2 text-[10px] sm:text-[11px] text-slate-300 pt-1 px-0.5">
+              <div className="flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+                <span className="font-semibold">{date}</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Bus className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+                <span className="font-semibold text-slate-300">Bay 02 • {coachName}</span>
+              </div>
+            </div>
+
           </div>
 
           {/* Passenger Details Form */}
-          <div className="space-y-2 pt-1">
+          <div className="space-y-1.5 pt-0.5">
             <label className="text-[10px] font-bold text-slate-300 uppercase tracking-widest block flex items-center justify-between">
               <span>Passenger Details (Optional)</span>
               <span className="text-[9px] text-slate-500 font-normal">Can be edited at checkout</span>
@@ -205,7 +252,7 @@ export default function SeatDetailsPanel({
           PERFORATED TICKET TEAR NOTCH & DIVIDER LINE
           ========================================================================
         */}
-        <div className="relative py-2 flex items-center justify-center">
+        <div className="relative py-1 flex items-center justify-center">
           {/* Left Scalloped Semi-Circle Cutout */}
           <div className="absolute -left-3 w-6 h-6 rounded-full bg-[#071322] border-r border-[#C5A880]/35 shadow-inner" />
           {/* Perforated Dotted Tear Line */}
@@ -214,24 +261,83 @@ export default function SeatDetailsPanel({
           <div className="absolute -right-3 w-6 h-6 rounded-full bg-[#071322] border-l border-[#C5A880]/35 shadow-inner" />
         </div>
 
-        {/* 3. TICKET BOTTOM STUB: BARCODE & CONFIRM CTA */}
-        <div className="p-5 pt-3 bg-gradient-to-b from-transparent to-[#040C16]/90 space-y-4">
+        {/* 
+          ========================================================================
+          3. TICKET BOTTOM STUB: HIGH-CONTRAST BLACK & WHITE SCANNER QR CODE
+          ========================================================================
+        */}
+        <div className="p-4 sm:p-5 pt-2 sm:pt-3 bg-gradient-to-b from-transparent to-[#040C16]/95 space-y-3.5">
           
-          {/* Realistic Barcode Ribbon */}
-          <div className="flex items-center justify-between px-2">
-            <div className="flex gap-0.5 h-6 items-end">
-              {[2, 1, 3, 1, 2, 4, 1, 2, 3, 1, 2, 1, 3, 2, 1, 4, 2, 1, 3, 2, 1, 2, 4, 1, 3].map((w, i) => (
-                <div key={i} className="bg-[#D8B788]/80" style={{ width: `${w * 1.2}px`, height: '100%' }} />
-              ))}
+          {/* Authentic Black & White Scanner QR Code + Verification Label */}
+          <div className="flex items-center justify-between bg-[#0B1E34]/60 rounded-2xl p-2.5 sm:p-3 border border-white/10">
+            
+            {/* Crisp Stark Black & White QR Code with ISO Finder Patterns */}
+            <div className="bg-white rounded-xl p-1.5 shadow-md flex items-center justify-center shrink-0 border border-slate-200">
+              <svg width="48" height="48" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Top-Left Finder */}
+                <rect x="1" y="1" width="7" height="7" fill="#000000" />
+                <rect x="2" y="2" width="5" height="5" fill="#FFFFFF" />
+                <rect x="3" y="3" width="3" height="3" fill="#000000" />
+
+                {/* Top-Right Finder */}
+                <rect x="17" y="1" width="7" height="7" fill="#000000" />
+                <rect x="18" y="2" width="5" height="5" fill="#FFFFFF" />
+                <rect x="19" y="3" width="3" height="3" fill="#000000" />
+
+                {/* Bottom-Left Finder */}
+                <rect x="1" y="17" width="7" height="7" fill="#000000" />
+                <rect x="2" y="18" width="5" height="5" fill="#FFFFFF" />
+                <rect x="3" y="19" width="3" height="3" fill="#000000" />
+
+                {/* Timing Tracks & High-Density Code Modules */}
+                <rect x="9" y="3" width="1" height="1" fill="#000000" />
+                <rect x="11" y="3" width="1" height="1" fill="#000000" />
+                <rect x="13" y="3" width="1" height="1" fill="#000000" />
+                <rect x="15" y="3" width="1" height="1" fill="#000000" />
+
+                <rect x="3" y="9" width="1" height="1" fill="#000000" />
+                <rect x="3" y="11" width="1" height="1" fill="#000000" />
+                <rect x="3" y="13" width="1" height="1" fill="#000000" />
+                <rect x="3" y="15" width="1" height="1" fill="#000000" />
+
+                <rect x="9" y="9" width="2" height="2" fill="#000000" />
+                <rect x="12" y="9" width="1" height="2" fill="#000000" />
+                <rect x="14" y="9" width="2" height="1" fill="#000000" />
+                <rect x="10" y="12" width="2" height="1" fill="#000000" />
+                <rect x="13" y="12" width="2" height="2" fill="#000000" />
+                <rect x="10" y="14" width="1" height="2" fill="#000000" />
+                <rect x="12" y="15" width="2" height="1" fill="#000000" />
+                <rect x="15" y="14" width="1" height="2" fill="#000000" />
+
+                <rect x="9" y="17" width="2" height="1" fill="#000000" />
+                <rect x="12" y="18" width="1" height="2" fill="#000000" />
+                <rect x="14" y="17" width="2" height="2" fill="#000000" />
+                <rect x="17" y="17" width="2" height="1" fill="#000000" />
+                <rect x="20" y="17" width="1" height="2" fill="#000000" />
+                <rect x="22" y="18" width="2" height="1" fill="#000000" />
+
+                <rect x="9" y="20" width="1" height="2" fill="#000000" />
+                <rect x="11" y="21" width="2" height="1" fill="#000000" />
+                <rect x="14" y="20" width="1" height="3" fill="#000000" />
+                <rect x="17" y="20" width="2" height="2" fill="#000000" />
+                <rect x="20" y="21" width="3" height="2" fill="#000000" />
+              </svg>
             </div>
-            <div className="text-right">
-              <span className="text-[9px] font-mono text-slate-400 block tracking-widest">
-                VERIFIED TICKET STUB
-              </span>
-              <span className="text-[10px] font-black text-emerald-400 tracking-wider">
+
+            {/* QR Label & Status */}
+            <div className="text-right pl-3">
+              <div className="text-[10px] font-black text-white tracking-wider flex items-center justify-end gap-1.5">
+                <QrCode className="w-3.5 h-3.5 text-[#C5A880]" />
+                <span>DIGITAL BOARDING PASS</span>
+              </div>
+              <div className="text-[9px] font-mono text-slate-400 tracking-widest mt-0.5">
+                SCAN AT COACH DOOR
+              </div>
+              <div className="text-[10px] font-black text-emerald-400 tracking-wider mt-0.5">
                 CONFIRMATION READY
-              </span>
+              </div>
             </div>
+
           </div>
 
           {/* Action CTA Buttons */}

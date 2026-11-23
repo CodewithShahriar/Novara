@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { RoundedBox } from '@react-three/drei';
 import { SeatData, SeatStatus } from '@/lib/types';
-import { getLeatherTexture, getSeatBadgeTexture } from './textures';
+import { getSeatBadgeTexture } from './textures';
 
 interface SeatMeshProps {
   seat: SeatData;
@@ -22,65 +22,68 @@ export default function SeatMesh({ seat, status, onClick, onHover }: SeatMeshPro
   const isBooked = status === 'BOOKED';
   const isSelected = status === 'SELECTED';
 
-  const upholsteryTexture = useMemo(() => {
-    return getLeatherTexture(isVip);
-  }, [isVip]);
-
-  // Luxury coach materials matching Reference Pictures 3 & 4
+  // Authentic European touring coach seat materials matching reference photo:
+  // - Center insert: Elegant Forest Teal / Sage Green (or Cognac for VIP)
+  // - Bolsters & Headrest: Dark Anthracite / Charcoal Leather
+  // - Outer Shell & Pedestal: Matte Slate Grey composite & Die-cast alloy
   const materials = useMemo(() => {
-    let mainColor = '#1E3A5F'; // Deep luxury touring navy
-    let bolsterColor = '#152A45'; // Contoured bolster navy
-    let shellColor = '#2B3545'; // Dark molded ergonomic shell
+    let centerColor = '#2F6758'; // Reference photo signature Forest Teal
+    let bolsterColor = '#1F2429'; // Reference photo deep Charcoal Anthracite
+    let shellColor = '#3D444E'; // Modern matte grey molded shell
+    let legColor = '#4B535E'; // Die-cast alloy leg
+    let armrestAccent = '#2F6758';
 
     if (isVip) {
-      mainColor = '#8D5231'; // Italian saddle cognac
-      bolsterColor = '#6E3C1E';
-      shellColor = '#261C16';
+      centerColor = '#8D5231'; // Italian saddle cognac leather
+      bolsterColor = '#1F2429';
+      armrestAccent = '#8D5231';
+      shellColor = '#322822';
     }
 
     if (isBooked) {
-      mainColor = '#334155'; // Muted dark slate
-      bolsterColor = '#1E293B';
-      shellColor = '#18202F';
+      centerColor = '#3A424B'; // Muted dark slate
+      bolsterColor = '#22272E';
+      armrestAccent = '#3A424B';
+      shellColor = '#2A3038';
     } else if (isSelected) {
-      mainColor = isVip ? '#D97706' : '#2563EB'; // Vibrant glowing selection
-      bolsterColor = isVip ? '#B45309' : '#1D4ED8';
-      shellColor = '#0F172A';
+      centerColor = isVip ? '#D97706' : '#2563EB'; // Vibrant glowing selection
+      bolsterColor = isVip ? '#78350F' : '#1E3A8A';
+      armrestAccent = '#F59E0B';
     }
 
-    // Patterned Coach Seat Upholstery (Picture 3 & 4)
-    const upholsteryMat = new THREE.MeshStandardMaterial({
-      color: mainColor,
-      map: upholsteryTexture,
+    // Plush central leather/fabric cushion
+    const centerMat = new THREE.MeshStandardMaterial({
+      color: centerColor,
+      roughness: 0.38,
+      metalness: 0.06,
+    });
+
+    // Dark charcoal side bolsters & headrest frame
+    const bolsterMat = new THREE.MeshStandardMaterial({
+      color: bolsterColor,
       roughness: 0.42,
       metalness: 0.08,
     });
 
-    const bolsterMat = new THREE.MeshStandardMaterial({
-      color: bolsterColor,
-      roughness: 0.45,
-      metalness: 0.05,
-    });
-
-    // Crisp White Leather Headrest Antimacassar / Pillow (Hallmark of Luxury Coach in Picture 3 & 4)
-    const whiteHeadrestMat = new THREE.MeshStandardMaterial({
-      color: isSelected ? '#FEF08A' : isBooked ? '#94A3B8' : '#F8FAFC',
-      roughness: 0.28,
-      metalness: 0.08,
-    });
-
-    // Dark molded protective shell
+    // Matte composite outer shell (back & under-carriage)
     const shellMat = new THREE.MeshStandardMaterial({
       color: shellColor,
-      roughness: 0.5,
-      metalness: 0.2,
+      roughness: 0.48,
+      metalness: 0.15,
     });
 
-    // Polished satin metal trim & brackets
-    const metalMat = new THREE.MeshStandardMaterial({
-      color: '#CBD5E1',
-      roughness: 0.22,
-      metalness: 0.85,
+    // Cast alloy pedestal leg & armrest frame
+    const alloyMat = new THREE.MeshStandardMaterial({
+      color: legColor,
+      roughness: 0.35,
+      metalness: 0.45,
+    });
+
+    // Armrest top accent pad
+    const armAccentMat = new THREE.MeshStandardMaterial({
+      color: armrestAccent,
+      roughness: 0.40,
+      metalness: 0.05,
     });
 
     // Seat number badge accent
@@ -93,14 +96,14 @@ export default function SeatMesh({ seat, status, onClick, onHover }: SeatMeshPro
       : '#0284C7';
 
     return {
-      upholsteryMat,
+      centerMat,
       bolsterMat,
-      whiteHeadrestMat,
       shellMat,
-      metalMat,
+      alloyMat,
+      armAccentMat,
       badgeColor,
     };
-  }, [isVip, isBooked, isSelected, upholsteryTexture]);
+  }, [isVip, isBooked, isSelected]);
 
   const badgeTexture = useMemo(() => {
     return getSeatBadgeTexture(seat.seatNumber, materials.badgeColor);
@@ -158,34 +161,52 @@ export default function SeatMesh({ seat, status, onClick, onHover }: SeatMeshPro
         ========================================================================
       */}
       <group rotation={[0, Math.PI, 0]}>
-        {/* 1. SEAT PEDESTAL BASE & FLOOR MOUNTING STANCHION (Picture 3) */}
-        <group position={[0, -0.18, 0]}>
+        
+        {/* 
+          ======================================================================
+          1. DIE-CAST ARCHED PEDESTAL LEG WITH SIGNATURE OBLONG CUTOUT (Picture)
+          ======================================================================
+        */}
+        <group position={[seat.col % 2 === 0 ? -0.10 : 0.10, -0.18, 0]}>
+          {/* Base Floor Mounting Bracket */}
           <mesh position={[0, -0.165, 0]} receiveShadow>
-            <boxGeometry args={[0.26, 0.03, 0.36]} />
-            <primitive object={materials.shellMat} attach="material" />
+            <boxGeometry args={[0.18, 0.02, 0.28]} />
+            <primitive object={materials.alloyMat} attach="material" />
           </mesh>
 
-          {/* Sturdy Steel Pedestal Leg (Molded U-bracket like Picture 3) */}
-          <group position={[0, -0.05, 0]}>
-            <mesh castShadow>
-              <boxGeometry args={[0.06, 0.22, 0.22]} />
-              <primitive object={materials.shellMat} attach="material" />
+          {/* Arched Upright Leg with Signature Oval/Pill Cutout Hole */}
+          <group position={[0, -0.06, 0]}>
+            {/* Front Leg Strut */}
+            <mesh position={[0, 0, 0.08]} castShadow>
+              <boxGeometry args={[0.04, 0.19, 0.05]} />
+              <primitive object={materials.alloyMat} attach="material" />
             </mesh>
-            <mesh position={[0, 0, 0]}>
-              <boxGeometry args={[0.04, 0.14, 0.12]} />
-              <meshBasicMaterial color="#0F172A" />
+            {/* Rear Leg Strut */}
+            <mesh position={[0, 0, -0.08]} castShadow>
+              <boxGeometry args={[0.04, 0.19, 0.05]} />
+              <primitive object={materials.alloyMat} attach="material" />
+            </mesh>
+            {/* Top Connecting Arch */}
+            <mesh position={[0, 0.08, 0]} castShadow>
+              <boxGeometry args={[0.04, 0.04, 0.21]} />
+              <primitive object={materials.alloyMat} attach="material" />
+            </mesh>
+            {/* Bottom Foot Bridge */}
+            <mesh position={[0, -0.08, 0]}>
+              <boxGeometry args={[0.04, 0.03, 0.21]} />
+              <primitive object={materials.alloyMat} attach="material" />
             </mesh>
           </group>
 
-          {/* Seat Cantilever Carriage Plate */}
-          <RoundedBox args={[0.32, 0.04, 0.32]} radius={0.012} smoothness={3} position={[0, 0.07, 0]} castShadow>
-            <primitive object={materials.shellMat} attach="material" />
+          {/* Seat Cantilever Carriage Subframe */}
+          <RoundedBox args={[0.34, 0.03, 0.32]} radius={0.01} smoothness={3} position={[0, 0.06, 0]} castShadow>
+            <primitive object={materials.alloyMat} attach="material" />
           </RoundedBox>
 
-          {/* Selected Highlight Accent Ring */}
+          {/* Selected Highlight Accent Ring on Floor */}
           {isSelected && (
             <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.16, 0]}>
-              <ringGeometry args={[0.24, 0.32, 32]} />
+              <ringGeometry args={[0.22, 0.30, 32]} />
               <meshStandardMaterial
                 color="#F59E0B"
                 emissive="#F59E0B"
@@ -197,213 +218,265 @@ export default function SeatMesh({ seat, status, onClick, onHover }: SeatMeshPro
           )}
         </group>
 
-        {/* 2. PLUSH LUXURY PATTERNED SEAT CUSHION (Picture 3 & 4) */}
+        {/* 
+          ======================================================================
+          2. ERGONOMIC BUCKET SEAT CUSHION (Two-Tone Teal Center + Charcoal Lip)
+          ======================================================================
+        */}
         <group position={[0, 0.05, 0.02]}>
-          {/* Main Contoured Navy Upholstery Cushion */}
+          {/* Main Central Forest Teal Cushion Insert */}
           <RoundedBox
-            args={[0.44, 0.12, 0.46]}
-            radius={0.03}
+            args={[0.28, 0.10, 0.44]}
+            radius={0.025}
             smoothness={4}
+            position={[0, 0, -0.02]}
             castShadow
             receiveShadow
           >
-            <primitive object={materials.upholsteryMat} attach="material" />
+            <primitive object={materials.centerMat} attach="material" />
           </RoundedBox>
 
-          {/* Left Contoured Thigh Bolster */}
-          <group position={[-0.20, 0.035, 0]}>
-            <RoundedBox args={[0.07, 0.07, 0.45]} radius={0.02} smoothness={3} castShadow>
+          {/* Left Contoured Charcoal Thigh Bolster */}
+          <group position={[-0.17, 0.015, -0.02]}>
+            <RoundedBox args={[0.08, 0.085, 0.44]} radius={0.02} smoothness={3} castShadow>
               <primitive object={materials.bolsterMat} attach="material" />
             </RoundedBox>
           </group>
 
-          {/* Right Contoured Thigh Bolster */}
-          <group position={[0.20, 0.035, 0]}>
-            <RoundedBox args={[0.07, 0.07, 0.45]} radius={0.02} smoothness={3} castShadow>
+          {/* Right Contoured Charcoal Thigh Bolster */}
+          <group position={[0.17, 0.015, -0.02]}>
+            <RoundedBox args={[0.08, 0.085, 0.44]} radius={0.02} smoothness={3} castShadow>
               <primitive object={materials.bolsterMat} attach="material" />
             </RoundedBox>
           </group>
 
-          {/* Lower Seat Perimeter Molded Shell (Picture 3) */}
-          <mesh position={[0, -0.05, 0]}>
-            <boxGeometry args={[0.45, 0.04, 0.47]} />
+          {/* Front Waterfall Contoured Lip (Charcoal band across front like photo) */}
+          <group position={[0, -0.005, 0.185]}>
+            <RoundedBox args={[0.42, 0.085, 0.07]} radius={0.02} smoothness={3} castShadow>
+              <primitive object={materials.bolsterMat} attach="material" />
+            </RoundedBox>
+          </group>
+
+          {/* Molded Protective Under-Pan (Matte grey composite) */}
+          <mesh position={[0, -0.045, 0]}>
+            <boxGeometry args={[0.43, 0.03, 0.45]} />
             <primitive object={materials.shellMat} attach="material" />
           </mesh>
         </group>
 
-        {/* 3. PROPER ERGONOMIC CURVED BACKREST */}
-        <group position={[0, 0.4, -0.18]} rotation={[-0.12, 0, 0]}>
-          {/* Molded Composite Protective Back Shell (Picture 3 & 4) */}
+        {/* 
+          ======================================================================
+          3. TALL SCULPTED BACKREST WITH WINGED HEADREST (Exact Photo Match!)
+          ======================================================================
+        */}
+        <group position={[0, 0.44, -0.18]} rotation={[-0.10, 0, 0]}>
+          
+          {/* Smooth Ergonomic Composite Rear Protective Shell */}
           <RoundedBox
-            args={[0.46, 0.62, 0.07]}
-            radius={0.025}
+            args={[0.44, 0.72, 0.06]}
+            radius={0.03}
             smoothness={3}
-            position={[0, 0, -0.04]}
+            position={[0, 0.02, -0.035]}
             castShadow
             receiveShadow
           >
             <primitive object={materials.shellMat} attach="material" />
           </RoundedBox>
 
-          {/* Personal Entertainment 4K Screen on Seat Back (Facing passenger behind) */}
-          <mesh position={[0, 0.10, -0.078]} rotation={[0, Math.PI, 0]}>
-            <planeGeometry args={[0.28, 0.16]} />
-            <meshStandardMaterial color="#0B132B" emissive="#0284C7" emissiveIntensity={0.25} roughness={0.1} />
-          </mesh>
+          {/* Foldable Compact Tray Table on Seat Back (Facing passenger behind) */}
+          <group position={[0, -0.12, -0.07]}>
+            <mesh>
+              <boxGeometry args={[0.30, 0.015, 0.02]} />
+              <primitive object={materials.alloyMat} attach="material" />
+            </mesh>
+            <mesh position={[0, -0.08, 0]}>
+              <planeGeometry args={[0.28, 0.14]} />
+              <meshStandardMaterial color="#2B313A" roughness={0.6} />
+            </mesh>
+          </group>
 
-          {/* Foldable Tray Table on Back Shell */}
-          <mesh position={[0, -0.15, -0.078]}>
-            <boxGeometry args={[0.32, 0.015, 0.02]} />
-            <primitive object={materials.metalMat} attach="material" />
-          </mesh>
-
-          {/* Main Backrest Navy Patterned Cushion */}
+          {/* Center Vertical Forest Teal Backrest Cushion */}
           <RoundedBox
-            args={[0.42, 0.44, 0.09]}
+            args={[0.26, 0.48, 0.08]}
             radius={0.025}
             smoothness={4}
-            position={[0, -0.06, 0.025]}
+            position={[0, -0.08, 0.02]}
             castShadow
             receiveShadow
           >
-            <primitive object={materials.upholsteryMat} attach="material" />
+            <primitive object={materials.centerMat} attach="material" />
           </RoundedBox>
 
-          {/* Lower Lumbar Ergonomic Pillow with Horizontal Contours (Image 4) */}
-          <RoundedBox
-            args={[0.34, 0.16, 0.05]}
-            radius={0.02}
-            smoothness={3}
-            position={[0, -0.18, 0.07]}
-            castShadow
-          >
-            <primitive object={materials.upholsteryMat} attach="material" />
-          </RoundedBox>
-
-          {/* Horizontal Lumbar Cushion Segment Contours (Image 4 Wireframe) */}
-          {[-0.14, -0.06, 0.02].map((hy, hi) => (
-            <mesh key={hi} position={[0, hy, 0.072]}>
-              <boxGeometry args={[0.30, 0.012, 0.005]} />
-              <primitive object={materials.bolsterMat} attach="material" />
-            </mesh>
-          ))}
-
-          {/* Left Torso Support Bolster */}
-          <group position={[-0.19, -0.04, 0.045]}>
-            <RoundedBox args={[0.075, 0.42, 0.065]} radius={0.02} smoothness={3} castShadow>
+          {/* Left Torso Charcoal Bolster Wing */}
+          <group position={[-0.165, -0.08, 0.035]}>
+            <RoundedBox args={[0.075, 0.48, 0.065]} radius={0.02} smoothness={3} castShadow>
               <primitive object={materials.bolsterMat} attach="material" />
             </RoundedBox>
           </group>
 
-          {/* Right Torso Support Bolster */}
-          <group position={[0.19, -0.04, 0.045]}>
-            <RoundedBox args={[0.075, 0.42, 0.065]} radius={0.02} smoothness={3} castShadow>
+          {/* Right Torso Charcoal Bolster Wing */}
+          <group position={[0.165, -0.08, 0.035]}>
+            <RoundedBox args={[0.075, 0.48, 0.065]} radius={0.02} smoothness={3} castShadow>
               <primitive object={materials.bolsterMat} attach="material" />
             </RoundedBox>
           </group>
-
-          {/* Top Shoulder Aisle Grab Handle (Image 4 Wireframe) */}
-          {(seat.col === 1 || seat.col === 2) && (
-            <group position={[seat.col === 1 ? -0.22 : 0.22, 0.32, -0.02]} rotation={[0, 0, seat.col === 1 ? -0.2 : 0.2]}>
-              <mesh castShadow>
-                <torusGeometry args={[0.042, 0.008, 12, 24, Math.PI * 1.1]} />
-                <primitive object={materials.metalMat} attach="material" />
-              </mesh>
-            </group>
-          )}
 
           {/* 
-            4. CRISP WHITE LEATHER HEADREST PILLOW / ANTIMACASSAR COVER
-            (Exact match to Reference Pictures 3 & 4!)
+            ====================================================================
+            4. INTEGRATED CONCAVED HEADREST WITH FLARING PRIVACY WINGS (Photo)
+            ====================================================================
           */}
-          <group position={[0, 0.28, 0.02]}>
-            {/* White Antimacassar Headrest Slip (Spans top of seat) */}
+          <group position={[0, 0.26, 0.03]}>
+            
+            {/* Top Crown & Outer Headrest Frame (Charcoal) */}
             <RoundedBox
-              args={[0.44, 0.20, 0.095]}
+              args={[0.38, 0.22, 0.085]}
               radius={0.03}
               smoothness={4}
               position={[0, 0, 0]}
               castShadow
             >
-              <primitive object={materials.whiteHeadrestMat} attach="material" />
+              <primitive object={materials.bolsterMat} attach="material" />
             </RoundedBox>
 
-            {/* Front Headrest Badge with Seat Number (Instant 2D Texture) */}
-            <mesh position={[0, -0.01, 0.052]}>
-              <planeGeometry args={[0.16, 0.056]} />
+            {/* Left Cupped Privacy Wing (Angles forward to cradle head) */}
+            <group position={[-0.17, 0, 0.025]} rotation={[0, -0.22, 0]}>
+              <RoundedBox args={[0.06, 0.20, 0.07]} radius={0.02} smoothness={3} castShadow>
+                <primitive object={materials.bolsterMat} attach="material" />
+              </RoundedBox>
+            </group>
+
+            {/* Right Cupped Privacy Wing (Angles forward to cradle head) */}
+            <group position={[0.17, 0, 0.025]} rotation={[0, 0.22, 0]}>
+              <RoundedBox args={[0.06, 0.20, 0.07]} radius={0.02} smoothness={3} castShadow>
+                <primitive object={materials.bolsterMat} attach="material" />
+              </RoundedBox>
+            </group>
+
+            {/* Inset Center Headrest Cushion Pad (with debossed contour border) */}
+            <RoundedBox
+              args={[0.22, 0.16, 0.03]}
+              radius={0.02}
+              smoothness={3}
+              position={[0, -0.005, 0.035]}
+              castShadow
+            >
+              <meshStandardMaterial color="#1A1E22" roughness={0.35} metalness={0.08} />
+            </RoundedBox>
+
+            {/* Front Headrest Seat Number Badge */}
+            <mesh position={[0, -0.005, 0.052]}>
+              <planeGeometry args={[0.14, 0.05]} />
               <meshBasicMaterial map={badgeTexture} transparent />
             </mesh>
 
-            {/* Rear Headrest Badge (Visible from behind the seat!) */}
-            <mesh position={[0, -0.01, -0.063]} rotation={[0, Math.PI, 0]}>
-              <planeGeometry args={[0.16, 0.056]} />
+            {/* Rear Headrest Badge (Visible from behind) */}
+            <mesh position={[0, -0.005, -0.052]} rotation={[0, Math.PI, 0]}>
+              <planeGeometry args={[0.14, 0.05]} />
               <meshBasicMaterial map={badgeTexture} transparent />
             </mesh>
+
+          </group>
+
+          {/* Recline Mechanism Pivot Hinge Boss at base */}
+          <group position={[seat.col % 2 === 0 ? -0.22 : 0.22, -0.32, -0.01]} rotation={[0, 0, Math.PI / 2]}>
+            <cylinderGeometry args={[0.03, 0.03, 0.04, 16]} />
+            <primitive object={materials.alloyMat} attach="material" />
           </group>
         </group>
 
-        {/* 5. MODERN ERGONOMIC MOLDED ARMRESTS WITH CHROME HINGES (Picture 3 & 4) */}
-        {/* Left Armrest */}
-        <group position={[-0.25, 0.22, 0.02]}>
-          <RoundedBox
-            args={[0.052, 0.048, 0.32]}
-            radius={0.016}
-            smoothness={3}
-            position={[0, 0, 0]}
-            castShadow
-          >
-            <primitive object={materials.shellMat} attach="material" />
-          </RoundedBox>
-          <group position={[0, -0.09, -0.10]}>
-            <mesh castShadow>
-              <boxGeometry args={[0.025, 0.16, 0.04]} />
-              <primitive object={materials.metalMat} attach="material" />
+        {/* 
+          ======================================================================
+          5. MODERN L-SHAPED CURVED ARMREST WITH TEAL INLAY PAD (Picture Match!)
+          ======================================================================
+        */}
+        {/* Aisle-Side Armrest */}
+        {(seat.col === 1 || seat.col === 2) && (
+          <group position={[seat.col === 1 ? -0.24 : 0.24, 0.20, 0.02]}>
+            {/* Circular Hinge Pivot Joint */}
+            <mesh position={[0, -0.08, -0.12]} rotation={[0, 0, Math.PI / 2]}>
+              <cylinderGeometry args={[0.032, 0.032, 0.03, 16]} />
+              <primitive object={materials.alloyMat} attach="material" />
             </mesh>
-            <mesh position={[0, 0.06, 0]} rotation={[0, 0, Math.PI / 2]}>
-              <cylinderGeometry args={[0.018, 0.018, 0.035, 16]} />
-              <primitive object={materials.metalMat} attach="material" />
-            </mesh>
-          </group>
-        </group>
 
-        {/* Right Armrest */}
-        <group position={[0.25, 0.22, 0.02]}>
-          <RoundedBox
-            args={[0.052, 0.048, 0.32]}
-            radius={0.016}
-            smoothness={3}
-            position={[0, 0, 0]}
-            castShadow
-          >
-            <primitive object={materials.shellMat} attach="material" />
-          </RoundedBox>
-          <group position={[0, -0.09, -0.10]}>
-            <mesh castShadow>
-              <boxGeometry args={[0.025, 0.16, 0.04]} />
-              <primitive object={materials.metalMat} attach="material" />
+            {/* Vertical Arm Upright */}
+            <mesh position={[0, -0.01, -0.10]} rotation={[0.20, 0, 0]} castShadow>
+              <boxGeometry args={[0.03, 0.14, 0.04]} />
+              <primitive object={materials.alloyMat} attach="material" />
             </mesh>
-            <mesh position={[0, 0.06, 0]} rotation={[0, 0, Math.PI / 2]}>
-              <cylinderGeometry args={[0.018, 0.018, 0.035, 16]} />
-              <primitive object={materials.metalMat} attach="material" />
-            </mesh>
+
+            {/* Horizontal Forward Armrest Bar */}
+            <RoundedBox
+              args={[0.042, 0.035, 0.28]}
+              radius={0.012}
+              smoothness={3}
+              position={[0, 0.06, 0.02]}
+              castShadow
+            >
+              <primitive object={materials.alloyMat} attach="material" />
+            </RoundedBox>
+
+            {/* Signature Teal / Accent Soft Cushion Strip on Top */}
+            <RoundedBox
+              args={[0.032, 0.012, 0.24]}
+              radius={0.005}
+              smoothness={2}
+              position={[0, 0.082, 0.02]}
+              castShadow
+            >
+              <primitive object={materials.armAccentMat} attach="material" />
+            </RoundedBox>
           </group>
-        </group>
+        )}
+
+        {/* Window-Side Slim Armrest / Wall Rest */}
+        {(seat.col === 0 || seat.col === 3) && (
+          <group position={[seat.col === 0 ? 0.23 : -0.23, 0.20, 0.02]}>
+            <mesh position={[0, -0.08, -0.12]} rotation={[0, 0, Math.PI / 2]}>
+              <cylinderGeometry args={[0.028, 0.028, 0.025, 16]} />
+              <primitive object={materials.alloyMat} attach="material" />
+            </mesh>
+            <mesh position={[0, -0.01, -0.10]} rotation={[0.20, 0, 0]} castShadow>
+              <boxGeometry args={[0.025, 0.14, 0.035]} />
+              <primitive object={materials.alloyMat} attach="material" />
+            </mesh>
+            <RoundedBox
+              args={[0.036, 0.032, 0.26]}
+              radius={0.01}
+              smoothness={3}
+              position={[0, 0.06, 0.02]}
+              castShadow
+            >
+              <primitive object={materials.alloyMat} attach="material" />
+            </RoundedBox>
+            <RoundedBox
+              args={[0.026, 0.01, 0.22]}
+              radius={0.004}
+              smoothness={2}
+              position={[0, 0.08, 0.02]}
+              castShadow
+            >
+              <primitive object={materials.armAccentMat} attach="material" />
+            </RoundedBox>
+          </group>
+        )}
 
         {/* 6. Retractable Brushed Aluminum Footrest Bar */}
         <group position={[0, -0.05, -0.26]}>
           <mesh rotation={[0, 0, Math.PI / 2]}>
-            <cylinderGeometry args={[0.01, 0.01, 0.34, 12]} />
-            <primitive object={materials.metalMat} attach="material" />
+            <cylinderGeometry args={[0.01, 0.01, 0.32, 12]} />
+            <primitive object={materials.alloyMat} attach="material" />
           </mesh>
-          <mesh position={[-0.15, -0.04, 0]}>
+          <mesh position={[-0.14, -0.04, 0]}>
             <cylinderGeometry args={[0.006, 0.006, 0.08, 8]} />
-            <primitive object={materials.metalMat} attach="material" />
+            <primitive object={materials.alloyMat} attach="material" />
           </mesh>
-          <mesh position={[0.15, -0.04, 0]}>
+          <mesh position={[0.14, -0.04, 0]}>
             <cylinderGeometry args={[0.006, 0.006, 0.08, 8]} />
-            <primitive object={materials.metalMat} attach="material" />
+            <primitive object={materials.alloyMat} attach="material" />
           </mesh>
         </group>
+
       </group>
     </group>
   );

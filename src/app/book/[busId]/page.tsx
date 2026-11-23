@@ -207,6 +207,7 @@ export default function BookBusPage({
       {/* 5. SEAT DETAILS SLIDE-IN PANEL (When seat is zoomed in) */}
       <SeatDetailsPanel
         seat={activeFocusedSeat}
+        bus={bus}
         isSelected={
           activeFocusedSeat
             ? selectedSeatNumbers.includes(activeFocusedSeat.seatNumber)

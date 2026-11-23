@@ -42,28 +42,45 @@ function CameraController({
   activeFocusedSeat: SeatData | null;
   isZoomed: boolean;
 }) {
-  const { camera } = useThree();
+  const { camera, size } = useThree();
   const controlsRef = useRef<any>(null);
   const hasAnimatedIntro = useRef(false);
 
+  // Responsive mobile portrait viewport detection
+  const isMobilePortrait = size.width < 640 && size.width < size.height;
+
   useEffect(() => {
+    // Dynamically optimize FOV for mobile portrait screens so full coach length is visible
+    if ('fov' in camera) {
+      const targetFov = isMobilePortrait ? 46 : 38;
+      if ((camera as THREE.PerspectiveCamera).fov !== targetFov) {
+        (camera as THREE.PerspectiveCamera).fov = targetFov;
+        (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
+      }
+    }
+
     if (!controlsRef.current) return;
     const controls = controlsRef.current;
 
-    // First visit intro swoop: starts at Pic 1 (side angle) and smoothly rotates to Pic 2 (front-to-back overview)
+    // First visit intro swoop: starts at Pic 1 (side angle) and smoothly, majestically rotates to Pic 2
+    // Slower, graceful 3.8-second cinematic glide requested by user!
     if (!hasAnimatedIntro.current && !isZoomed) {
       hasAnimatedIntro.current = true;
       camera.position.set(INTRO_CAMERA_POS.x, INTRO_CAMERA_POS.y, INTRO_CAMERA_POS.z);
       controls.target.set(INTRO_TARGET.x, INTRO_TARGET.y, INTRO_TARGET.z);
       controls.enabled = false;
 
+      const targetPos = isMobilePortrait
+        ? { x: OVERVIEW_CAMERA_POS.x, y: OVERVIEW_CAMERA_POS.y + 2.0, z: OVERVIEW_CAMERA_POS.z - 1.2 }
+        : OVERVIEW_CAMERA_POS;
+
       gsap.to(camera.position, {
-        x: OVERVIEW_CAMERA_POS.x,
-        y: OVERVIEW_CAMERA_POS.y,
-        z: OVERVIEW_CAMERA_POS.z,
-        duration: 2.3,
+        x: targetPos.x,
+        y: targetPos.y,
+        z: targetPos.z,
+        duration: 3.8,
         ease: 'power2.inOut',
-        delay: 0.1,
+        delay: 0.15,
         onUpdate: () => {
           camera.lookAt(controls.target);
         },
@@ -78,9 +95,9 @@ function CameraController({
         x: OVERVIEW_TARGET.x,
         y: OVERVIEW_TARGET.y,
         z: OVERVIEW_TARGET.z,
-        duration: 2.3,
+        duration: 3.8,
         ease: 'power2.inOut',
-        delay: 0.1,
+        delay: 0.15,
       });
       return;
     }
@@ -106,7 +123,7 @@ function CameraController({
         x: targetCameraPos.x,
         y: targetCameraPos.y,
         z: targetCameraPos.z,
-        duration: 1.15,
+        duration: 1.25,
         ease: 'power3.inOut',
         onUpdate: () => {
           camera.lookAt(controls.target);
@@ -122,18 +139,22 @@ function CameraController({
         x: sx,
         y: sy + 0.35,
         z: sz,
-        duration: 1.15,
+        duration: 1.25,
         ease: 'power3.inOut',
       });
     } else {
       // Smoothly zoom back out to aligned cabin overview (Pic 2)
       controls.enabled = false;
 
+      const targetPos = isMobilePortrait
+        ? { x: OVERVIEW_CAMERA_POS.x, y: OVERVIEW_CAMERA_POS.y + 2.0, z: OVERVIEW_CAMERA_POS.z - 1.2 }
+        : OVERVIEW_CAMERA_POS;
+
       gsap.to(camera.position, {
-        x: OVERVIEW_CAMERA_POS.x,
-        y: OVERVIEW_CAMERA_POS.y,
-        z: OVERVIEW_CAMERA_POS.z,
-        duration: 1.1,
+        x: targetPos.x,
+        y: targetPos.y,
+        z: targetPos.z,
+        duration: 1.2,
         ease: 'power3.inOut',
         onUpdate: () => {
           camera.lookAt(controls.target);
@@ -149,11 +170,11 @@ function CameraController({
         x: OVERVIEW_TARGET.x,
         y: OVERVIEW_TARGET.y,
         z: OVERVIEW_TARGET.z,
-        duration: 1.1,
+        duration: 1.2,
         ease: 'power3.inOut',
       });
     }
-  }, [isZoomed, activeFocusedSeat, camera]);
+  }, [isZoomed, activeFocusedSeat, camera, size, isMobilePortrait]);
 
   return (
     <OrbitControls
