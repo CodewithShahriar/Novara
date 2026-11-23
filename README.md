@@ -91,11 +91,12 @@ Passengers can interactively rotate, zoom, and inspect individual seats, transit
 - **Aerodynamic Platinum Silver Exterior:** Sleek metallic finish with curved front bumper, triple LED projector headlights, daytime running lights, swept-back panoramic windshield, rear spoiler, and vertical LED taillights.
 
 ### 💳 Complete Booking Ecosystem
-- **Search & Discovery Engine:** Filter domestic intercity routes by origin, destination, journey date, and passengers.
+- **Search & Discovery Engine:** Filter domestic intercity routes by origin, destination, journey date, and passengers with real-time date and corridor synchronization.
+- **4-Slot Departure Time Filtering:** Segmented filters for Dawn (`00-06`), Morning (`06-12`), Afternoon (`12-18`), and Night (`18-00`) with visual solar/lunar indicators and pulsing loading feedback.
 - **Real-Time Price Aggregation:** Persistent floating summary bar dynamically calculates multi-seat totals and provides one-click checkout.
 - **Checkout & Passenger Manifest:** Secure booking confirmation with passenger contact input and instant payment confirmation.
-- **Digital Boarding Pass:** Generates a printable, scannable digital boarding pass complete with booking reference, seat assignment, high-density ISO QR code, barcode, gate, and baggage allowance.
-- **Passenger Dashboard:** History of upcoming and completed journeys.
+- **Digital Boarding Pass:** Generates a printable, scannable digital boarding pass complete with booking reference, seat assignment, high-density ISO QR code, barcode, gate, and baggage allowance with PDF export.
+- **Passenger Dashboard & 6-Digit OTP Hub:** Passwordless ticket retrieval powered by a custom segmented 6-digit OTP verification card with auto-focus advance, clipboard paste support, resend countdown, and instant cancellation/refund management.
 
 ---
 
@@ -248,11 +249,11 @@ novara/
 | Route | Description |
 | :--- | :--- |
 | `/` | **Landing Page:** Luxury hero, "Bus Travel With Easy" ticket section, popular destinations, day & night routes, schedule, and FAQ. |
-| `/routes` | **Schedules & Routes:** Filterable directory of intercity express lines, departure times, and fares. |
-| `/book/[busId]` | **3D Seat Selection:** Full-screen 3D cutaway coach, intro swoop, suite zoom inspection, 2D blueprint, and live summary tray. |
+| `/routes` | **Schedules & Routes:** Interactive corridor catalog with 4-slot departure time filtering (`00-06`, `06-12`, `12-18`, `18-00`), live date synchronization, and pulsing skeleton loader. |
+| `/book/[busId]` | **3D Seat Selection:** Full-screen 3D cutaway coach, 6.8s cinematic intro sweep, suite zoom inspection, 2D blueprint, and live summary tray. |
 | `/checkout` | **Checkout & Review:** Suite breakdown, passenger details, baggage add-ons, and payment confirmation. |
 | `/ticket/[bookingRef]` | **Digital Ticket:** Downloadable boarding pass with verified 29x29 ISO QR code, terminal, and gate details. |
-| `/dashboard` | **Passenger Hub:** Manage active and past bookings. |
+| `/dashboard` | **Passenger Hub:** Passwordless 6-digit segmented OTP verification, active and past boarding pass management, PDF downloads, and instant refund cancellations. |
 | `/about` | **About Novara:** Company vision, fleet engineering, safety records, and sustainability. |
 | `/contact` | **Contact & Support:** 24/7 passenger assistance, terminal locations, and feedback. |
 
