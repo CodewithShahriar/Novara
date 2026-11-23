@@ -244,7 +244,7 @@ export default function HomePage() {
 
           {/* Floating Horizontal Search Widget - Translucent Luxury Glassmorphism (Background Visible Through Glass) */}
           <div className="w-full max-w-6xl xl:max-w-7xl bg-[#061222]/40 backdrop-blur-xl rounded-3xl p-5 sm:p-6 lg:p-7 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.7),inset_0_1px_2px_rgba(255,255,255,0.22)] border border-white/20 text-white mt-8 sm:mt-12 lg:mt-14 ring-1 ring-white/10">
-            <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
+            <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
 
               {/* Departure City */}
               <div className="relative">
@@ -256,7 +256,7 @@ export default function HomePage() {
                   <select
                     value={fromCity}
                     onChange={(e) => setFromCity(e.target.value)}
-                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/45 hover:bg-[#0B1E34]/65 backdrop-blur-md border border-white/20 hover:border-[#B48C56]/70 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
+                    className="w-full h-[46px] pl-10 pr-3 py-3 bg-[#0B1E34]/45 hover:bg-[#0B1E34]/65 backdrop-blur-md border border-white/20 hover:border-[#B48C56]/70 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
                   >
                     {CITIES.map((city) => (
                       <option key={`from-${city}`} value={city} className="bg-[#0B1E34] text-white">
@@ -277,7 +277,7 @@ export default function HomePage() {
                   <select
                     value={toCity}
                     onChange={(e) => setToCity(e.target.value)}
-                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/45 hover:bg-[#0B1E34]/65 backdrop-blur-md border border-white/20 hover:border-[#B48C56]/70 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
+                    className="w-full h-[46px] pl-10 pr-3 py-3 bg-[#0B1E34]/45 hover:bg-[#0B1E34]/65 backdrop-blur-md border border-white/20 hover:border-[#B48C56]/70 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
                   >
                     {CITIES.map((city) => (
                       <option key={`to-${city}`} value={city} className="bg-[#0B1E34] text-white">
@@ -299,7 +299,7 @@ export default function HomePage() {
                     type="date"
                     value={journeyDate}
                     onChange={(e) => setJourneyDate(e.target.value)}
-                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/45 hover:bg-[#0B1E34]/65 backdrop-blur-md border border-white/20 hover:border-[#B48C56]/70 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner [color-scheme:dark]"
+                    className="w-full h-[46px] pl-10 pr-3 py-3 bg-[#0B1E34]/45 hover:bg-[#0B1E34]/65 backdrop-blur-md border border-white/20 hover:border-[#B48C56]/70 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner [color-scheme:dark]"
                   />
                 </div>
               </div>
@@ -314,7 +314,7 @@ export default function HomePage() {
                   <select
                     value={passengerCount}
                     onChange={(e) => setPassengerCount(Number(e.target.value))}
-                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/45 hover:bg-[#0B1E34]/65 backdrop-blur-md border border-white/20 hover:border-[#B48C56]/70 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
+                    className="w-full h-[46px] pl-10 pr-3 py-3 bg-[#0B1E34]/45 hover:bg-[#0B1E34]/65 backdrop-blur-md border border-white/20 hover:border-[#B48C56]/70 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
                   >
                     {[1, 2, 3, 4, 5, 6].map((num) => (
                       <option key={num} value={num} className="bg-[#0B1E34] text-white">
@@ -325,14 +325,17 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Find Tickets CTA Button */}
-              <div className="sm:col-span-2 lg:col-span-1 flex items-end">
+              {/* Find Tickets CTA Button - Aligned 100% Flush with Inputs */}
+              <div className="sm:col-span-2 lg:col-span-1 flex flex-col justify-end">
+                <label className="hidden lg:block text-[11px] font-bold text-transparent mb-1.5 select-none pointer-events-none">
+                  &nbsp;
+                </label>
                 <button
                   type="submit"
-                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#D8B788] via-[#B48C56] to-[#8C6B3D] hover:from-[#E2C799] hover:to-[#B48C56] text-slate-950 font-black text-xs uppercase tracking-wider shadow-[0_10px_25px_rgba(180,140,86,0.35)] hover:shadow-[0_14px_32px_rgba(180,140,86,0.5)] transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full h-[46px] px-6 rounded-2xl bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] hover:from-[#B5894B] hover:via-[#9A6F2E] hover:to-[#774E1B] text-white font-black text-xs uppercase tracking-widest shadow-[0_12px_28px_-6px_rgba(139,98,38,0.55),inset_0_1px_1px_rgba(255,255,255,0.32)] border border-[#E0BE86]/35 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer drop-shadow-sm"
                 >
-                  <Search className="w-4 h-4 text-slate-950 stroke-[2.5]" />
-                  <span>Find Tickets</span>
+                  <Search className="w-4 h-4 text-[#FDEBD0] stroke-[2.5]" />
+                  <span className="tracking-widest drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">Find Tickets</span>
                 </button>
               </div>
 
@@ -418,7 +421,7 @@ export default function HomePage() {
               <div className="pt-2">
                 <Link
                   href="/routes"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-[#C5A880] hover:bg-[#B48C56] text-white font-extrabold text-xs uppercase tracking-widest shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5"
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] hover:from-[#B5894B] hover:via-[#9A6F2E] hover:to-[#774E1B] text-white font-extrabold text-xs uppercase tracking-widest shadow-[0_10px_24px_-4px_rgba(139,98,38,0.5),inset_0_1px_1px_rgba(255,255,255,0.3)] border border-[#E0BE86]/35 transition-all transform hover:-translate-y-0.5 drop-shadow-sm cursor-pointer"
                 >
                   VIEW SCHEDULE
                 </Link>
@@ -564,7 +567,7 @@ export default function HomePage() {
               <div className="pt-4">
                 <Link
                   href="/routes"
-                  className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#B48C56] hover:bg-[#A37B47] text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg transition"
+                  className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] hover:from-[#B5894B] hover:via-[#9A6F2E] hover:to-[#774E1B] text-white font-bold text-xs uppercase tracking-wider shadow-[0_10px_24px_-4px_rgba(139,98,38,0.5),inset_0_1px_1px_rgba(255,255,255,0.3)] border border-[#E0BE86]/35 transition-all transform hover:-translate-y-0.5"
                 >
                   <span>Buy Ticket</span>
                   <ArrowRight className="w-4 h-4" />
@@ -640,9 +643,9 @@ export default function HomePage() {
                 </p>
                 <Link
                   href="/book/bus-1"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#B48C56] hover:bg-[#A37B47] text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg transition"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] hover:from-[#B5894B] hover:via-[#9A6F2E] hover:to-[#774E1B] text-white font-bold text-xs uppercase tracking-wider shadow-[0_10px_24px_-4px_rgba(139,98,38,0.5),inset_0_1px_1px_rgba(255,255,255,0.3)] border border-[#E0BE86]/35 transition-all transform hover:-translate-y-0.5"
                 >
-                  <Bus className="w-4 h-4" />
+                  <Bus className="w-4 h-4 text-[#FDEBD0]" />
                   <span>Launch 3D Cabin Tour</span>
                 </Link>
               </div>
@@ -786,10 +789,10 @@ export default function HomePage() {
           <div>
             <Link
               href="/routes"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#B48C56] hover:bg-[#A37B47] text-slate-950 font-bold text-xs uppercase tracking-wider shadow-2xl transition"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] hover:from-[#B5894B] hover:via-[#9A6F2E] hover:to-[#774E1B] text-white font-bold text-xs uppercase tracking-wider shadow-[0_12px_28px_-6px_rgba(139,98,38,0.6),inset_0_1px_1px_rgba(255,255,255,0.3)] border border-[#E0BE86]/35 transition-all transform hover:-translate-y-0.5"
             >
               <span>Book Your Journey Now</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 text-[#FDEBD0]" />
             </Link>
           </div>
         </div>

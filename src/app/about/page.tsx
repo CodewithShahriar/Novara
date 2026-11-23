@@ -197,9 +197,9 @@ export default function AboutPage() {
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/book/bus-1"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#D8B788] via-[#B48C56] to-[#8C6B3D] hover:from-[#E2C799] hover:to-[#B48C56] text-slate-950 font-black text-xs uppercase tracking-widest shadow-xl transition-all transform hover:scale-105 cursor-pointer"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] hover:from-[#B5894B] hover:via-[#9A6F2E] hover:to-[#774E1B] text-white font-black text-xs uppercase tracking-widest shadow-[0_12px_28px_-6px_rgba(139,98,38,0.5),inset_0_1px_1px_rgba(255,255,255,0.3)] border border-[#E0BE86]/35 transition-all transform hover:scale-105 cursor-pointer drop-shadow-sm"
           >
-            <Armchair className="w-4 h-4 stroke-[2.5]" />
+            <Armchair className="w-4 h-4 text-[#FDEBD0] stroke-[2.5]" />
             <span>Launch 3D Cabin Tour</span>
           </Link>
           <Link

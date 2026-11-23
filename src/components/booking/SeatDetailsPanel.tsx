@@ -317,10 +317,10 @@ export default function SeatDetailsPanel({
             ) : (
               <button
                 onClick={() => onConfirmSeat(seat)}
-                className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#D8B788] via-[#B48C56] to-[#8C6B3D] hover:from-[#E2C799] hover:to-[#B48C56] text-slate-950 font-black text-xs uppercase tracking-widest shadow-[0_12px_28px_rgba(180,140,86,0.4)] hover:shadow-[0_16px_36px_rgba(180,140,86,0.55)] transition-all transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] hover:from-[#B5894B] hover:via-[#9A6F2E] hover:to-[#774E1B] text-white font-black text-xs uppercase tracking-widest shadow-[0_12px_28px_-6px_rgba(139,98,38,0.6),inset_0_1px_1px_rgba(255,255,255,0.32)] border border-[#E0BE86]/35 transition-all transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer drop-shadow-sm"
               >
-                <Check className="w-4 h-4 stroke-[3]" />
-                <span>Confirm Suite {seat.seatNumber}</span>
+                <Check className="w-4 h-4 text-[#FDEBD0] stroke-[3]" />
+                <span className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">Confirm Suite {seat.seatNumber}</span>
               </button>
             )}
           </div>

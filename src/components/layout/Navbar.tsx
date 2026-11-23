@@ -75,10 +75,10 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-3">
           <Link
             href="/routes"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#B48C56] to-[#9E7947] hover:from-[#A8824E] hover:to-[#8F6C3C] text-white font-bold text-xs uppercase tracking-wider shadow-lg transition transform hover:-translate-y-0.5"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] hover:from-[#B5894B] hover:via-[#9A6F2E] hover:to-[#774E1B] text-white font-extrabold text-xs uppercase tracking-wider shadow-[0_8px_20px_-4px_rgba(139,98,38,0.5),inset_0_1px_1px_rgba(255,255,255,0.3)] border border-[#E0BE86]/35 transition transform hover:-translate-y-0.5"
           >
             <span>Book Seats</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5 text-[#FDEBD0]" />
           </Link>
         </div>
 
@@ -115,10 +115,10 @@ export default function Navbar() {
             <Link
               href="/routes"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg"
+              className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] hover:from-[#B5894B] hover:via-[#9A6F2E] hover:to-[#774E1B] text-white font-extrabold text-xs uppercase tracking-wider shadow-lg border border-[#E0BE86]/35"
             >
               <span>Book Seats</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 text-[#FDEBD0]" />
             </Link>
           </div>
         </div>
