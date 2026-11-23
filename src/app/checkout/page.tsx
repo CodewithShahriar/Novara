@@ -103,14 +103,14 @@ function CheckoutContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070A0F] py-8 sm:py-12 text-slate-100">
+    <div className="min-h-screen bg-[#071526] py-8 sm:py-12 text-slate-100">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Back Link */}
         <div className="mb-6">
           <Link
             href={`/book/${bus.id}`}
-            className="inline-flex items-center gap-2 text-xs font-semibold text-amber-400 hover:text-amber-300 transition"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-[#D8B788] hover:text-white transition"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Return to 3D Seat Selector</span>
@@ -121,9 +121,9 @@ function CheckoutContent() {
           
           {/* Passenger & Payment Information */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="clean-card rounded-3xl p-6 sm:p-8">
+            <div className="bg-[#0B192C]/90 border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl">
               <h2 className="text-xl sm:text-2xl font-black text-white mb-6 flex items-center gap-2.5">
-                <ShieldCheck className="w-6 h-6 text-amber-400" />
+                <ShieldCheck className="w-6 h-6 text-[#D8B788]" />
                 Passenger Details & Checkout
               </h2>
 
@@ -145,7 +145,7 @@ function CheckoutContent() {
                       value={passengerName}
                       onChange={(e) => setPassengerName(e.target.value)}
                       placeholder="e.g. Alex Mercer"
-                      className="w-full bg-slate-800/80 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition"
+                      className="w-full bg-[#071526] border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#B48C56] transition"
                     />
                   </div>
 
@@ -160,7 +160,7 @@ function CheckoutContent() {
                         value={passengerEmail}
                         onChange={(e) => setPassengerEmail(e.target.value)}
                         placeholder="alex@novaracoach.com"
-                        className="w-full bg-slate-800/80 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition"
+                        className="w-full bg-[#071526] border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#B48C56] transition"
                       />
                     </div>
 
@@ -174,7 +174,7 @@ function CheckoutContent() {
                         value={passengerPhone}
                         onChange={(e) => setPassengerPhone(e.target.value)}
                         placeholder="+1 (555) 000-0000"
-                        className="w-full bg-slate-800/80 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition"
+                        className="w-full bg-[#071526] border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#B48C56] transition"
                       />
                     </div>
                   </div>
@@ -196,13 +196,13 @@ function CheckoutContent() {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod('card')}
-                      className={`p-3.5 rounded-2xl border text-left flex flex-col justify-between transition ${
+                      className={`p-3.5 rounded-2xl border text-left flex flex-col justify-between transition cursor-pointer ${
                         paymentMethod === 'card'
-                          ? 'bg-amber-500/15 border-amber-500 text-white font-bold shadow-lg'
-                          : 'bg-slate-800/60 border-white/5 text-slate-400 hover:bg-slate-800'
+                          ? 'bg-[#B48C56]/20 border-[#B48C56] text-white font-bold shadow-lg'
+                          : 'bg-[#071526] border-white/5 text-slate-400 hover:bg-slate-800'
                       }`}
                     >
-                      <CreditCard className="w-5 h-5 text-amber-400 mb-2" />
+                      <CreditCard className="w-5 h-5 text-[#D8B788] mb-2" />
                       <div>
                         <div className="text-xs">Credit/Debit</div>
                         <div className="text-[10px] text-slate-400 font-normal">Visa / Master</div>
@@ -212,10 +212,10 @@ function CheckoutContent() {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod('applepay')}
-                      className={`p-3.5 rounded-2xl border text-left flex flex-col justify-between transition ${
+                      className={`p-3.5 rounded-2xl border text-left flex flex-col justify-between transition cursor-pointer ${
                         paymentMethod === 'applepay'
-                          ? 'bg-amber-500/15 border-amber-500 text-white font-bold shadow-lg'
-                          : 'bg-slate-800/60 border-white/5 text-slate-400 hover:bg-slate-800'
+                          ? 'bg-[#B48C56]/20 border-[#B48C56] text-white font-bold shadow-lg'
+                          : 'bg-[#071526] border-white/5 text-slate-400 hover:bg-slate-800'
                       }`}
                     >
                       <Zap className="w-5 h-5 text-slate-300 mb-2" />
@@ -228,10 +228,10 @@ function CheckoutContent() {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod('gpay')}
-                      className={`p-3.5 rounded-2xl border text-left flex flex-col justify-between transition ${
+                      className={`p-3.5 rounded-2xl border text-left flex flex-col justify-between transition cursor-pointer ${
                         paymentMethod === 'gpay'
-                          ? 'bg-amber-500/15 border-amber-500 text-white font-bold shadow-lg'
-                          : 'bg-slate-800/60 border-white/5 text-slate-400 hover:bg-slate-800'
+                          ? 'bg-[#B48C56]/20 border-[#B48C56] text-white font-bold shadow-lg'
+                          : 'bg-[#071526] border-white/5 text-slate-400 hover:bg-slate-800'
                       }`}
                     >
                       <CheckCircle2 className="w-5 h-5 text-emerald-400 mb-2" />
@@ -243,7 +243,7 @@ function CheckoutContent() {
                   </div>
 
                   {paymentMethod === 'card' && (
-                    <div className="p-4 rounded-2xl bg-slate-800/50 border border-white/5 space-y-3">
+                    <div className="p-4 rounded-2xl bg-[#071526] border border-white/5 space-y-3">
                       <div>
                         <label className="block text-[11px] text-slate-400 font-semibold mb-1">
                           Card Number
@@ -252,7 +252,7 @@ function CheckoutContent() {
                           type="text"
                           value={cardNumber}
                           onChange={(e) => setCardNumber(e.target.value)}
-                          className="w-full bg-slate-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400"
+                          className="w-full bg-[#0B192C] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#B48C56]"
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-3">
@@ -264,7 +264,7 @@ function CheckoutContent() {
                             type="text"
                             value={cardExpiry}
                             onChange={(e) => setCardExpiry(e.target.value)}
-                            className="w-full bg-slate-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400"
+                            className="w-full bg-[#0B192C] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#B48C56]"
                           />
                         </div>
                         <div>
@@ -275,7 +275,7 @@ function CheckoutContent() {
                             type="text"
                             value={cardCvc}
                             onChange={(e) => setCardCvc(e.target.value)}
-                            className="w-full bg-slate-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400"
+                            className="w-full bg-[#0B192C] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#B48C56]"
                           />
                         </div>
                       </div>
@@ -287,7 +287,7 @@ function CheckoutContent() {
                 <button
                   type="submit"
                   disabled={isProcessing}
-                  className="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-xl transition flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full py-4 rounded-xl bg-[#B48C56] hover:bg-[#A37B47] text-slate-950 font-bold text-xs uppercase tracking-wider shadow-xl transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
                 >
                   {isProcessing ? (
                     <div className="flex items-center gap-2">
@@ -307,20 +307,20 @@ function CheckoutContent() {
 
           {/* Booking Summary Sidebar */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="clean-card rounded-3xl p-6 sm:p-8">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400">
+            <div className="bg-[#0B192C]/90 border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#D8B788]">
                 Itinerary Overview
               </span>
               <h3 className="text-xl font-black text-white mt-1 mb-4">{bus.name}</h3>
 
               {/* Journey Route */}
-              <div className="bg-slate-800/60 rounded-2xl p-4 border border-white/5 space-y-3 mb-6">
+              <div className="bg-[#071526] rounded-2xl p-4 border border-white/5 space-y-3 mb-6">
                 <div className="flex items-center justify-between text-xs font-bold text-white">
                   <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-amber-400" />
+                    <MapPin className="w-4 h-4 text-[#B48C56]" />
                     <span>{bus.fromCity}</span>
                   </div>
-                  <span className="text-amber-400">{bus.departureTime}</span>
+                  <span className="text-[#D8B788]">{bus.departureTime}</span>
                 </div>
 
                 <div className="pl-6 border-l-2 border-dashed border-slate-700 py-1 text-[11px] text-slate-400 flex items-center justify-between">
@@ -348,11 +348,11 @@ function CheckoutContent() {
                     return (
                       <div
                         key={seatNum}
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs font-semibold text-white"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#B48C56]/15 border border-[#B48C56]/30 text-xs font-semibold text-white"
                       >
-                        <Armchair className="w-3.5 h-3.5 text-amber-400" />
+                        <Armchair className="w-3.5 h-3.5 text-[#D8B788]" />
                         <span>Suite {seatNum}</span>
-                        <span className="text-amber-400 font-bold">${s?.price || bus.basePrice}</span>
+                        <span className="text-[#D8B788] font-bold">${s?.price || bus.basePrice}</span>
                       </div>
                     );
                   })}
@@ -375,7 +375,7 @@ function CheckoutContent() {
                 </div>
                 <div className="border-t border-white/10 pt-3 flex justify-between items-baseline">
                   <span className="text-sm font-bold text-white">Total Charge</span>
-                  <span className="text-2xl font-black text-amber-400">${grandTotal}</span>
+                  <span className="text-2xl font-black text-[#D8B788]">${grandTotal}</span>
                 </div>
               </div>
             </div>

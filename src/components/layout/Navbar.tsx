@@ -30,7 +30,7 @@ export default function Navbar() {
                 NOVARA
               </span>
               <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#B48C56]/20 text-[#D8B788] border border-[#B48C56]/30 uppercase tracking-widest">
-                EUROPE
+                INTERCITY
               </span>
             </div>
             <p className="text-[10px] font-semibold tracking-widest text-slate-300 uppercase -mt-0.5">

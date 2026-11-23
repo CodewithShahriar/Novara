@@ -44,21 +44,21 @@ export default function TicketPage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#070A0F] flex flex-col items-center justify-center text-slate-400">
-        <div className="w-10 h-10 border-3 border-amber-400 border-t-transparent rounded-full animate-spin mb-4" />
-        <span className="text-xs font-semibold uppercase tracking-widest">Loading Boarding Pass...</span>
+      <div className="min-h-screen bg-[#071526] flex flex-col items-center justify-center text-slate-400">
+        <div className="w-10 h-10 border-3 border-[#B48C56] border-t-transparent rounded-full animate-spin mb-4" />
+        <span className="text-xs font-semibold uppercase tracking-widest text-[#D8B788]">Loading Boarding Pass...</span>
       </div>
     );
   }
 
   if (!booking) {
     return (
-      <div className="min-h-screen bg-[#070A0F] flex flex-col items-center justify-center text-white p-4">
+      <div className="min-h-screen bg-[#071526] flex flex-col items-center justify-center text-white p-4">
         <h2 className="text-xl font-bold mb-2">Ticket Not Found</h2>
         <p className="text-xs text-slate-500 mb-6 font-mono">Reference: {bookingRef}</p>
         <Link
           href="/dashboard"
-          className="px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs uppercase"
+          className="px-5 py-2.5 rounded-xl bg-[#B48C56] hover:bg-[#A37B47] text-slate-950 font-bold text-xs uppercase"
         >
           Go to Dashboard
         </Link>
@@ -67,14 +67,14 @@ export default function TicketPage({
   }
 
   return (
-    <div className="min-h-screen bg-[#070A0F] py-8 sm:py-12 text-slate-100">
+    <div className="min-h-screen bg-[#071526] py-8 sm:py-12 text-slate-100">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Navigation & Status Banner */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 no-print">
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-amber-400 hover:text-amber-300 transition"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-[#D8B788] hover:text-white transition"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Passenger Dashboard</span>
@@ -95,7 +95,7 @@ export default function TicketPage({
             href="/dashboard"
             className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition"
           >
-            <LayoutDashboard className="w-4 h-4 text-amber-400" />
+            <LayoutDashboard className="w-4 h-4 text-[#D8B788]" />
             <span>View All Trips in Passenger Dashboard</span>
           </Link>
         </div>

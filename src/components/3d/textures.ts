@@ -371,23 +371,23 @@ export function getTarmacTexture(): THREE.CanvasTexture {
   const ctx = canvas.getContext('2d');
 
   if (ctx) {
-    // High-grade asphalt transit pavement
-    ctx.fillStyle = '#262E3B';
+    // High-grade smooth European airport/terminal apron asphalt
+    ctx.fillStyle = '#2A3240';
     ctx.fillRect(0, 0, 1024, 1024);
 
-    // Fine mineral aggregate tarmac grain
+    // Fine aggregate pavement noise (soft & realistic)
     for (let x = 0; x < 1024; x += 8) {
       for (let y = 0; y < 1024; y += 8) {
-        const noise = (Math.random() - 0.5) * 18;
-        const gray = Math.min(255, Math.max(0, 42 + noise));
-        ctx.fillStyle = `rgb(${gray}, ${gray + 4}, ${gray + 8})`;
+        const noise = (Math.random() - 0.5) * 14;
+        const gray = Math.min(255, Math.max(0, 48 + noise));
+        ctx.fillStyle = `rgb(${gray}, ${gray + 3}, ${gray + 6})`;
         ctx.fillRect(x, y, 8, 8);
       }
     }
 
-    // Concrete expansion joint grid lines
-    ctx.strokeStyle = '#1E2430';
-    ctx.lineWidth = 3;
+    // Subtle concrete expansion joints
+    ctx.strokeStyle = '#1E2530';
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(0, 512);
     ctx.lineTo(1024, 512);
@@ -395,30 +395,18 @@ export function getTarmacTexture(): THREE.CanvasTexture {
     ctx.lineTo(512, 1024);
     ctx.stroke();
 
-    // Yellow safety bus bay demarcation line
-    ctx.strokeStyle = '#FACC15';
-    ctx.lineWidth = 14;
-    ctx.strokeRect(120, 80, 784, 864);
+    // Clean, crisp yellow coach bay perimeter lines (Single dedicated bay, no repetitive clutter)
+    ctx.strokeStyle = '#EAB308';
+    ctx.lineWidth = 10;
+    ctx.strokeRect(180, 60, 664, 904);
 
-    // Diagonal yellow transit hazard hatch stripes
-    ctx.strokeStyle = 'rgba(250, 204, 21, 0.65)';
-    ctx.lineWidth = 8;
+    // Clean white dashed center approach guideline
+    ctx.strokeStyle = 'rgba(248, 250, 252, 0.7)';
+    ctx.lineWidth = 5;
+    ctx.setLineDash([36, 28]);
     ctx.beginPath();
-    for (let i = 160; i < 900; i += 70) {
-      ctx.moveTo(i, 80);
-      ctx.lineTo(i + 50, 150);
-      ctx.moveTo(i, 874);
-      ctx.lineTo(i + 50, 944);
-    }
-    ctx.stroke();
-
-    // Clean white dashed guidance center line
-    ctx.strokeStyle = '#F8FAFC';
-    ctx.lineWidth = 6;
-    ctx.setLineDash([40, 30]);
-    ctx.beginPath();
-    ctx.moveTo(512, 160);
-    ctx.lineTo(512, 860);
+    ctx.moveTo(512, 100);
+    ctx.lineTo(512, 924);
     ctx.stroke();
     ctx.setLineDash([]);
   }
@@ -426,7 +414,7 @@ export function getTarmacTexture(): THREE.CanvasTexture {
   const texture = new THREE.CanvasTexture(canvas);
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat.set(2, 2);
+  texture.repeat.set(1, 1);
   cachedTarmac = texture;
   return texture;
 }

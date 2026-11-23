@@ -16,19 +16,17 @@ import {
   Coffee,
   CheckCircle2,
   Clock,
-  Sparkles,
   ChevronDown,
   ChevronUp,
-  FileText,
   Bus,
   ShieldCheck,
   Star,
   QrCode,
   Compass,
 } from 'lucide-react';
-import { CITIES, INITIAL_BUSES } from '@/lib/mock-data';
+import { CITIES } from '@/lib/mock-data';
 
-// Destinations data with flags & prices matching reference layout
+// Destinations data matching reference layout
 const POPULAR_DESTINATIONS = [
   {
     city: 'Budapest',
@@ -37,7 +35,7 @@ const POPULAR_DESTINATIONS = [
     trips: '8 Daily Trips',
     price: '€35',
     image: 'https://images.unsplash.com/photo-1549877452-9c387954fbc2?auto=format&fit=crop&w=800&q=80',
-    description: 'Breathtaking Parliament views along the scenic Danube river.',
+    description: 'Scenic Danube river vistas and majestic historic architecture.',
   },
   {
     city: 'Rome',
@@ -46,7 +44,7 @@ const POPULAR_DESTINATIONS = [
     trips: '12 Daily Trips',
     price: '€42',
     image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80',
-    description: 'Ancient monuments, historic piazzas, and world-class espresso.',
+    description: 'Historic piazzas, world-renowned cafes, and direct express hubs.',
   },
   {
     city: 'Prague',
@@ -55,7 +53,7 @@ const POPULAR_DESTINATIONS = [
     trips: '6 Daily Trips',
     price: '€29',
     image: 'https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=800&q=80',
-    description: 'Fairy-tale castles, Gothic bridges, and charming old town lanes.',
+    description: 'Fairy-tale castles, Gothic towers, and scenic riverside routes.',
   },
   {
     city: 'Paris',
@@ -64,7 +62,7 @@ const POPULAR_DESTINATIONS = [
     trips: '14 Daily Trips',
     price: '€49',
     image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80',
-    description: 'Iconic boulevards, romantic riverbanks, and timeless architecture.',
+    description: 'Iconic grand boulevards, romantic riverbanks, and art districts.',
   },
 ];
 
@@ -147,25 +145,25 @@ const FAQS = [
 
 const BLOG_POSTS = [
   {
-    title: 'Top 10 Scenic European Coach Routes to Experience This Season',
+    title: 'Top 10 Scenic Intercity Coach Routes to Experience This Season',
     date: 'Nov 18, 2026',
     category: 'Travel Guides',
     image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=700&q=80',
-    excerpt: 'From Alpine passes to Mediterranean coastlines, discover the most breathtaking panoramic highway journeys across Europe.',
+    excerpt: 'From Alpine highway passes to coastal panoramas, discover the most breathtaking long-distance touring routes.',
   },
   {
-    title: 'Night Travel Secrets: How to Sleep Comfortably on Intercity Coaches',
+    title: 'Night Travel Secrets: How to Sleep Comfortably on Intercity Buses',
     date: 'Nov 12, 2026',
     category: 'Travel Tips',
     image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=700&q=80',
     excerpt: 'Master the art of overnight sleeper travel with our guide to memory foam suites, sound pods, and circadian lighting.',
   },
   {
-    title: 'The Future of Touring: How Clean Autonomous Coaches Are Leading the Green Shift',
+    title: 'The Future of Touring: How Clean Autonomous Coaches Are Leading the Shift',
     date: 'Nov 05, 2026',
     category: 'Innovation',
     image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=700&q=80',
-    excerpt: 'Explore how aerodynamic engineering and electric powertrains are creating an ultra-quiet, zero-emission travel experience.',
+    excerpt: 'Explore how aerodynamic engineering and clean powertrains are creating an ultra-quiet, zero-emission travel experience.',
   },
 ];
 
@@ -205,54 +203,52 @@ export default function HomePage() {
     <div className="relative min-h-screen bg-[#F8FAFC] text-slate-800 font-sans selection:bg-[#B48C56] selection:text-white">
       
       {/* ============================================================== */}
-      {/* 1. HERO SECTION (Deep Navy & Gold - Matches Reference Image) */}
+      {/* 1. HERO SECTION (100% Faithful to Reference Image Layout)      */}
       {/* ============================================================== */}
-      <section className="relative bg-[#071526] text-white overflow-hidden pt-12 pb-24 md:pt-16 md:pb-32">
-        {/* Cinematic Backdrop Image with Dark Gradient Overlay */}
+      <section className="relative min-h-[580px] md:min-h-[660px] bg-[#071526] text-white flex flex-col justify-between pt-12 pb-16 md:pt-16 md:pb-20 overflow-hidden">
+        {/* Full-Bleed Cinematic Photography of Luxury Coach at Terminal (Matches Reference Image!) */}
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity scale-105 pointer-events-none transition-transform duration-1000"
+          className="absolute inset-0 bg-cover bg-center opacity-45 mix-blend-luminosity scale-100 pointer-events-none transition-transform duration-1000"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1920&q=80')`,
+            backgroundImage: `url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=2000&q=85')`,
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#071526]/80 via-[#071526]/95 to-[#071526] pointer-events-none" />
+        {/* Dark Vignette Overlay Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#071526] via-[#071526]/85 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#071526] via-transparent to-transparent pointer-events-none" />
 
-        {/* Ambient Warm Gold Glow */}
-        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-[#B48C56]/15 rounded-full blur-[140px] pointer-events-none" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-center">
           
-          {/* Hero Header */}
-          <div className="text-center max-w-3xl mx-auto mb-10 md:mb-14 space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-[#B48C56]/30 text-[#D8B788] text-xs font-semibold uppercase tracking-widest backdrop-blur-md">
-              <Sparkles className="w-3.5 h-3.5 text-[#B48C56]" />
-              <span>Novara Platinum Touring Express</span>
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
-              EUROPEAN <span className="text-[#C5A880]">INTERCITY</span> ROUTES
+          {/* Hero Left-Aligned Typography (Exact 1:1 Match to Reference Hero!) */}
+          <div className="text-left max-w-2xl mb-10 md:mb-14">
+            <h1 className="font-extrabold tracking-tight leading-none mb-4">
+              <span className="text-[#C5A880] text-3xl sm:text-5xl md:text-6xl font-serif italic block mb-1">
+                INTERCITY
+              </span>
+              <span className="text-white text-4xl sm:text-6xl md:text-7xl font-black block tracking-tight uppercase">
+                EXPRESS ROUTES
+              </span>
             </h1>
-
-            <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
-              Travel comfortably between Europe&apos;s leading capitals. Reserve panoramic window suites in our state-of-the-art touring coach network with guaranteed seat reservations.
+            <p className="text-xs sm:text-sm uppercase tracking-widest text-slate-300 font-medium">
+              PREMIUM CITY-TO-CITY TOURING COACH NETWORK • GUARANTEED SEAT CONFIRMATION
             </p>
           </div>
 
-          {/* Floating Horizontal Search Widget (Matching Reference Card) */}
-          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-2xl border border-slate-100 max-w-5xl mx-auto text-slate-900">
+          {/* Floating Horizontal Search Widget (Pinned at lower Hero edge - Ref UI) */}
+          <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-2xl border border-slate-100 max-w-5xl text-slate-900">
             <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
               
               {/* Departure City */}
               <div className="relative">
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
-                  Departure From
+                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                  From
                 </label>
                 <div className="relative flex items-center">
                   <MapPin className="absolute left-3 w-4 h-4 text-[#B48C56] pointer-events-none" />
                   <select
                     value={fromCity}
                     onChange={(e) => setFromCity(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#B48C56]/30 focus:border-[#B48C56] transition"
+                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#B48C56] transition"
                   >
                     {CITIES.map((city) => (
                       <option key={`from-${city}`} value={city}>
@@ -265,15 +261,15 @@ export default function HomePage() {
 
               {/* Destination City */}
               <div className="relative">
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
-                  Destination To
+                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                  To
                 </label>
                 <div className="relative flex items-center">
                   <MapPin className="absolute left-3 w-4 h-4 text-[#B48C56] pointer-events-none" />
                   <select
                     value={toCity}
                     onChange={(e) => setToCity(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#B48C56]/30 focus:border-[#B48C56] transition"
+                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#B48C56] transition"
                   >
                     {CITIES.map((city) => (
                       <option key={`to-${city}`} value={city}>
@@ -284,10 +280,10 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Journey Date */}
+              {/* Date */}
               <div className="relative">
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
-                  Date of Journey
+                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                  Date
                 </label>
                 <div className="relative flex items-center">
                   <Calendar className="absolute left-3 w-4 h-4 text-[#B48C56] pointer-events-none" />
@@ -295,14 +291,14 @@ export default function HomePage() {
                     type="date"
                     value={journeyDate}
                     onChange={(e) => setJourneyDate(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#B48C56]/30 focus:border-[#B48C56] transition"
+                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#B48C56] transition"
                   />
                 </div>
               </div>
 
-              {/* Passenger Selector */}
+              {/* Passengers */}
               <div className="relative">
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">
                   Passengers
                 </label>
                 <div className="relative flex items-center">
@@ -310,7 +306,7 @@ export default function HomePage() {
                   <select
                     value={passengerCount}
                     onChange={(e) => setPassengerCount(Number(e.target.value))}
-                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#B48C56]/30 focus:border-[#B48C56] transition"
+                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#B48C56] transition"
                   >
                     {[1, 2, 3, 4, 5, 6].map((num) => (
                       <option key={num} value={num}>
@@ -321,11 +317,11 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Find Tickets Button */}
+              {/* Find Tickets CTA Button */}
               <div className="sm:col-span-2 lg:col-span-1 flex items-end">
                 <button
                   type="submit"
-                  className="w-full py-3 px-5 rounded-xl bg-[#B48C56] hover:bg-[#A37B47] text-slate-950 font-bold text-sm tracking-wide shadow-lg hover:shadow-xl transition transform active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3 px-5 rounded-xl bg-[#B48C56] hover:bg-[#A37B47] text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg transition transform active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Search className="w-4 h-4 text-slate-950" />
                   <span>Find Tickets</span>
@@ -334,12 +330,9 @@ export default function HomePage() {
 
             </form>
 
-            {/* Quick 3D Bus Inspection Highlight Bar */}
-            <div className="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-3">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="font-medium text-slate-700">Interactive 3D Fleet Visualizer Active</span>
-              </div>
+            {/* Quick 3D Tour Bar */}
+            <div className="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
+              <span className="font-medium text-slate-600">Direct city-to-city service with interactive 3D seat reservation</span>
               <Link
                 href="/book/bus-1"
                 className="inline-flex items-center gap-1.5 text-[#B48C56] hover:text-[#8E6A38] font-bold transition hover:underline"
@@ -354,11 +347,11 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================== */}
-      {/* 2. POPULAR DESTINATIONS SECTION (Crisp Light Theme - Ref UI) */}
+      {/* 2. POPULAR DESTINATIONS SECTION (Crisp Light Theme - Ref UI)   */}
       {/* ============================================================== */}
       <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Title */}
+        {/* Title */}
         <div className="text-center mb-10">
           <span className="text-xs font-bold text-[#B48C56] uppercase tracking-widest block mb-1">
             LET&apos;S GO TOGETHER
@@ -368,38 +361,20 @@ export default function HomePage() {
           </h2>
         </div>
 
-        {/* Country Filter Pills */}
-        <div className="flex items-center justify-center flex-wrap gap-2 mb-12">
-          {['All', 'Hungary', 'Italy', 'Czech Republic', 'France', 'Germany', 'Austria'].map((country) => (
-            <button
-              key={country}
-              onClick={() => setDestinationFilter(country)}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer ${
-                destinationFilter === country
-                  ? 'bg-[#071526] text-white shadow-md'
-                  : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-              }`}
-            >
-              {country}
-            </button>
-          ))}
-        </div>
-
-        {/* Destination Photo Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* 4 Tall Vertical Photo Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           {POPULAR_DESTINATIONS.map((dest) => (
             <div
               key={dest.city}
               className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-100 transition duration-300 flex flex-col"
             >
-              {/* Photo */}
-              <div className="relative h-56 overflow-hidden">
+              <div className="relative h-64 overflow-hidden">
                 <img
                   src={dest.image}
                   alt={dest.city}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                 
                 {/* Price Tag */}
                 <div className="absolute bottom-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-lg shadow font-bold text-xs text-slate-900">
@@ -416,7 +391,6 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Card Body */}
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <p className="text-xs text-slate-500 leading-relaxed mb-3">
@@ -430,7 +404,7 @@ export default function HomePage() {
 
                 <Link
                   href={`/routes?to=${encodeURIComponent(dest.city)}`}
-                  className="mt-4 w-full py-2.5 rounded-xl bg-slate-50 hover:bg-[#071526] hover:text-white text-slate-700 font-semibold text-xs transition flex items-center justify-center gap-1.5 group-hover:border-[#071526]"
+                  className="mt-4 w-full py-2.5 rounded-xl bg-slate-50 hover:bg-[#071526] hover:text-white text-slate-700 font-semibold text-xs transition flex items-center justify-center gap-1.5"
                 >
                   <span>View Departures</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -440,22 +414,51 @@ export default function HomePage() {
           ))}
         </div>
 
+        {/* 2 Rows of Country/City Pills (Matches Reference Image!) */}
+        <div className="flex items-center justify-center flex-wrap gap-2.5 max-w-4xl mx-auto">
+          {[
+            { flag: '🇭🇺', name: 'Hungary' },
+            { flag: '🇮🇹', name: 'Italy' },
+            { flag: '🇨🇿', name: 'Czech Republic' },
+            { flag: '🇫🇷', name: 'France' },
+            { flag: '🇩🇪', name: 'Germany' },
+            { flag: '🇦🇹', name: 'Austria' },
+            { flag: '🇪🇸', name: 'Spain' },
+            { flag: '🇨🇭', name: 'Switzerland' },
+            { flag: '🇳🇱', name: 'Netherlands' },
+            { flag: '🇧🇪', name: 'Belgium' },
+          ].map((item) => (
+            <button
+              key={item.name}
+              onClick={() => setDestinationFilter(item.name)}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 ${
+                destinationFilter === item.name
+                  ? 'bg-[#071526] text-white shadow-md'
+                  : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shadow-xs'
+              }`}
+            >
+              <span>{item.flag}</span>
+              <span>{item.name}</span>
+            </button>
+          ))}
+        </div>
+
       </section>
 
       {/* ============================================================== */}
-      {/* 3. DAY AND NIGHT ROUTES (Two Column Feature - Matching Ref) */}
+      {/* 3. DAY AND NIGHT ROUTES (Two-Column Feature - Ref UI)           */}
       {/* ============================================================== */}
       <section className="py-16 md:py-24 bg-white border-y border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Left Column: Traveler Photo */}
+            {/* Left Column: Portrait photo of traveler with yellow jacket */}
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                 <img
                   src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=80"
-                  alt="Happy traveler using smartphone with luggage"
-                  className="w-full h-[450px] object-cover"
+                  alt="Happy traveler with yellow jacket and luggage"
+                  className="w-full h-[460px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent" />
               </div>
@@ -476,7 +479,7 @@ export default function HomePage() {
             <div className="lg:col-span-7 space-y-6">
               <div>
                 <span className="text-xs font-bold text-[#B48C56] uppercase tracking-widest block mb-2">
-                  SEAMLESS SCHEDULING
+                  TIMETABLE FLEXIBILITY
                 </span>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
                   DAY AND NIGHT ROUTES AVAILABLE FOR THE BEST TIME FOR YOU
@@ -484,16 +487,16 @@ export default function HomePage() {
               </div>
 
               <p className="text-sm md:text-base text-slate-600 leading-relaxed font-normal">
-                Whether you prefer scenic day journeys through European countryside vistas or overnight sleeper coaches that arrive refreshed at dawn, Novara provides departures tailored to your schedule.
+                Whether you prefer scenic day journeys through scenic countryside vistas or overnight sleeper coaches that arrive refreshed at dawn, Novara provides direct city-to-city departures tailored to your schedule.
               </p>
 
               {/* Bullet Features */}
               <div className="space-y-3.5 pt-2">
                 {[
-                  'Flexible round-the-clock departures connecting 32 major European cities',
-                  'Full-flat reclining sleeper suites with memory foam pillows on all night journeys',
-                  'Electrochromic panoramic smart-tint windows for glare-free daytime sightseeing',
-                  'Guaranteed on-time departures with dedicated express highway transit lanes'
+                  'Flexible round-the-clock departures connecting major city corridors',
+                  'Full-flat reclining sleeper suites with memory foam pillows on night journeys',
+                  'Panoramic electrochromic smart-tint windows for glare-free daytime sightseeing',
+                  'Guaranteed on-time departures with dedicated express highway transit corridors'
                 ].map((feature, idx) => (
                   <div key={idx} className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-[#B48C56] shrink-0 mt-0.5" />
@@ -502,7 +505,7 @@ export default function HomePage() {
                 ))}
               </div>
 
-              {/* Button */}
+              {/* Gold Buy Ticket CTA */}
               <div className="pt-4">
                 <Link
                   href="/routes"
@@ -520,11 +523,11 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================== */}
-      {/* 4. FLEET & AMENITIES SECTION (Deep Navy & Stats - Ref UI) */}
+      {/* 4. FLEET & AMENITIES SECTION (Deep Navy & Stats - Ref UI)       */}
       {/* ============================================================== */}
       <section className="py-20 md:py-28 bg-[#071526] text-white relative overflow-hidden">
         
-        {/* Soft Background Radial */}
+        {/* Ambient Radial Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-[#B48C56]/10 rounded-full blur-[160px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -562,12 +565,12 @@ export default function HomePage() {
             })}
           </div>
 
-          {/* Coach Fleet Spotlight & 3D Interactive Banner */}
+          {/* Large Centerpiece Photo: Luxury Coach Night City View */}
           <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl mb-16 bg-[#0B192C]">
             <img
               src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=1600&q=80"
               alt="Luxury Touring Coach Night City View"
-              className="w-full h-80 sm:h-96 object-cover opacity-60"
+              className="w-full h-80 sm:h-96 object-cover opacity-65"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#071526] via-[#071526]/40 to-transparent flex flex-col justify-end p-6 sm:p-10">
               <div className="max-w-xl">
@@ -591,7 +594,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* 4 Stat Counters (Matching Reference Image) */}
+          {/* 4 Stat Counters (Exact Match to Reference UI!) */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center border-t border-white/10 pt-12">
             <div>
               <div className="text-4xl md:text-5xl font-black text-[#D8B788] mb-1">05</div>
@@ -601,7 +604,7 @@ export default function HomePage() {
             <div>
               <div className="text-4xl md:text-5xl font-black text-[#D8B788] mb-1">32</div>
               <div className="text-xs font-bold uppercase tracking-wider text-slate-300">Intercity Routes</div>
-              <div className="text-[11px] text-slate-500">Across 8 European Nations</div>
+              <div className="text-[11px] text-slate-500">Connecting Direct City Pairs</div>
             </div>
             <div>
               <div className="text-4xl md:text-5xl font-black text-[#D8B788] mb-1">120+</div>
@@ -619,7 +622,7 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================== */}
-      {/* 5. RECENT SCHEDULE / TIMETABLE (Tabbed Table - Ref UI) */}
+      {/* 5. RECENT SCHEDULE / TIMETABLE (Tabbed Table - Ref UI)         */}
       {/* ============================================================== */}
       <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -708,7 +711,7 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================== */}
-      {/* 6. "BUS TRAVEL WITH EASY" (Digital Ticket Pass - Ref UI) */}
+      {/* 6. "BUS TRAVEL WITH EASY" (Digital Ticket Pass - Ref UI)       */}
       {/* ============================================================== */}
       <section className="py-16 md:py-24 bg-white border-y border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -754,7 +757,6 @@ export default function HomePage() {
             {/* Right Column: Visual Boarding Pass Mockup */}
             <div className="lg:col-span-6 flex justify-center">
               <div className="relative w-full max-w-md bg-gradient-to-br from-[#071526] to-[#0B192C] text-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-700/50">
-                {/* Gold Header Band */}
                 <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-lg bg-[#B48C56] text-slate-950 flex items-center justify-center font-bold">
@@ -768,7 +770,6 @@ export default function HomePage() {
                   <span className="text-xs font-mono font-bold text-slate-400">#NOV-8492</span>
                 </div>
 
-                {/* Cities */}
                 <div className="grid grid-cols-3 items-center text-center mb-6">
                   <div>
                     <div className="text-2xl font-black">BUD</div>
@@ -784,7 +785,6 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Info Grid */}
                 <div className="grid grid-cols-3 gap-3 bg-white/5 rounded-2xl p-4 text-center mb-6 border border-white/5">
                   <div>
                     <div className="text-[10px] text-slate-400 uppercase font-semibold">Seat</div>
@@ -800,7 +800,6 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Barcode & QR Simulation */}
                 <div className="bg-white rounded-xl p-4 flex items-center justify-between text-slate-900">
                   <div className="space-y-1">
                     <div className="text-xs font-bold">PASSENGER: GUEST VIP</div>
@@ -819,7 +818,7 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================== */}
-      {/* 7. SCENIC HIGHWAY RIBBON (Aerial Forest View - Ref UI) */}
+      {/* 7. SCENIC HIGHWAY RIBBON (Aerial Forest View - Ref UI)          */}
       {/* ============================================================== */}
       <section className="relative py-24 bg-cover bg-center text-white overflow-hidden"
         style={{
@@ -833,7 +832,7 @@ export default function HomePage() {
             COMFORT, SAFETY AND SPEED — EVERYTHING FOR YOUR JOURNEY
           </h2>
           <p className="text-sm sm:text-base text-slate-200 max-w-2xl mx-auto font-light">
-            Engineered for smooth long-distance travel across Europe with zero compromise on luxury.
+            Engineered for smooth long-distance travel between cities with zero compromise on luxury.
           </p>
           <div>
             <Link
@@ -848,7 +847,7 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================== */}
-      {/* 8. FAQ ACCORDION (With Travel Luggage Visual - Ref UI) */}
+      {/* 8. FAQ ACCORDION (With Travel Luggage Visual - Ref UI)          */}
       {/* ============================================================== */}
       <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -899,7 +898,7 @@ export default function HomePage() {
             <div className="relative rounded-3xl overflow-hidden shadow-xl border border-slate-100 w-full max-w-sm">
               <img
                 src="https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?auto=format&fit=crop&w=800&q=80"
-                alt="Yellow suitcase ready for European journey"
+                alt="Yellow suitcase ready for intercity journey"
                 className="w-full h-96 object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
@@ -913,7 +912,7 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================== */}
-      {/* 9. BLOG & ARTICLES SECTION (Ref UI) */}
+      {/* 9. BLOG & ARTICLES SECTION (Ref UI)                             */}
       {/* ============================================================== */}
       <section className="py-16 md:py-24 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -16,6 +16,7 @@ import { INITIAL_BUSES } from '@/lib/mock-data';
 import SeatDetailsPanel from '@/components/booking/SeatDetailsPanel';
 import FloatingSummaryBar from '@/components/booking/FloatingSummaryBar';
 import SeatMap2DModal from '@/components/booking/SeatMap2DModal';
+import DockedSeatPlan2D from '@/components/booking/DockedSeatPlan2D';
 
 // Dynamically import 3D Bus Scene to bypass SSR WebGL restrictions
 const BusInteriorScene = dynamic(
@@ -194,6 +195,14 @@ export default function BookBusPage({
           isZoomed={isZoomed}
         />
       </div>
+
+      {/* 4b. DOCKED 2D SEAT BLUEPRINT (Quick 1-click access to all 9 rows without zooming out) */}
+      <DockedSeatPlan2D
+        seats={bus.seats}
+        selectedSeats={selectedSeatNumbers}
+        activeFocusedSeat={activeFocusedSeat}
+        onSeatClick={handleSeatClick}
+      />
 
       {/* 5. SEAT DETAILS SLIDE-IN PANEL (When seat is zoomed in) */}
       <SeatDetailsPanel
