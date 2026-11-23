@@ -203,46 +203,48 @@ export default function HomePage() {
       {/* ============================================================== */}
       {/* 1. HERO SECTION (Dynamic Full-Screen Viewport Matching Device) */}
       {/* ============================================================== */}
-      <section className="relative min-h-[calc(100vh-5rem)] min-h-[calc(100dvh-5rem)] bg-[#071526] text-white flex flex-col justify-between pt-8 pb-10 sm:pt-10 sm:pb-12 lg:pt-12 lg:pb-12 overflow-hidden">
-        {/* Full-Bleed Hero Background Image with Uploaded Night Coach at Terminal - Brightened & Highlighted */}
+      <section className="relative min-h-[calc(100vh-5rem)] min-h-[calc(100dvh-5rem)] bg-[#071526] text-white flex flex-col justify-between pt-8 pb-12 sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20 overflow-hidden">
+        {/* Full-Bleed Hero Background Image - Spans 100% full width across entire screen */}
         <div 
-          className="absolute inset-0 bg-cover bg-[center_right_10%] lg:bg-right bg-no-repeat pointer-events-none brightness-115 contrast-105 saturate-110"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none brightness-110 contrast-105 saturate-110"
           style={{
             backgroundImage: `url('/images/hero-coach.jpg')`,
           }}
         />
 
-        {/* Cinematic Deep Navy Gradient Overlay: Solid on left for crystal-clear readability, completely open & bright on right for coach photo */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#071526] from-20% via-[#071526]/80 via-42% to-transparent to-58% lg:from-[#071526] lg:from-25% lg:via-[#071526]/65 lg:via-42% lg:to-transparent lg:to-55% pointer-events-none" />
+        {/* Delicate ambient overlay across the entire background so the full bus is clearly visible */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#071526]/85 via-black/25 to-black/20 pointer-events-none" />
         
         {/* Subtle bottom vignette to smoothly anchor the floating search widget */}
-        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#071526]/70 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#071526]/80 to-transparent pointer-events-none" />
 
         <div className="relative max-w-7xl xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-between py-4 lg:py-6">
           
-          {/* Hero Left-Aligned Typography (Refined Executive Headline) */}
-          <div className="text-left max-w-2xl my-auto pt-6 lg:pt-8">
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#B48C56]/20 border border-[#B48C56]/40 text-[#D8B788] text-xs font-bold uppercase tracking-widest mb-5 backdrop-blur-md shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-[#D8B788]" />
-              <span>PREMIUM INTERCITY MOBILITY</span>
+          {/* Hero Left-Aligned Typography (With Gentle Glass Backdrop Blur Panel Behind Text) */}
+          <div className="text-left max-w-2xl my-auto pt-4 lg:pt-6">
+            <div className="p-6 sm:p-8 rounded-3xl backdrop-blur-md bg-[#071526]/40 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#B48C56]/20 border border-[#B48C56]/40 text-[#D8B788] text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-md shadow-sm">
+                <Sparkles className="w-3.5 h-3.5 text-[#D8B788]" />
+                <span>PREMIUM INTERCITY MOBILITY</span>
+              </div>
+
+              <h1 className="tracking-tight leading-none mb-4">
+                <span className="font-serif italic text-3xl sm:text-5xl md:text-6xl text-[#C5A880] block mb-2 font-normal">
+                  Luxury Coach Travel
+                </span>
+                <span className="text-white text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tight block">
+                  INTERCITY EXPRESS
+                </span>
+              </h1>
+
+              <p className="text-xs sm:text-sm uppercase tracking-widest text-slate-200 font-medium leading-relaxed max-w-xl border-l-2 border-[#B48C56] pl-4 mt-2">
+                FAST, COMFORTABLE DIRECT JOURNEYS ACROSS CITIES • GUARANTEED 3D SEAT CONFIRMATION
+              </p>
             </div>
-
-            <h1 className="tracking-tight leading-none mb-5">
-              <span className="font-serif italic text-3xl sm:text-5xl md:text-6xl text-[#C5A880] block mb-2 font-normal">
-                Luxury Coach Travel
-              </span>
-              <span className="text-white text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tight block">
-                INTERCITY EXPRESS
-              </span>
-            </h1>
-
-            <p className="text-xs sm:text-sm uppercase tracking-widest text-slate-300 font-medium leading-relaxed max-w-xl border-l-2 border-[#B48C56] pl-4 mt-3">
-              FAST, COMFORTABLE DIRECT JOURNEYS ACROSS CITIES • GUARANTEED 3D SEAT CONFIRMATION
-            </p>
           </div>
 
-          {/* Floating Horizontal Search Widget - Obsidian Luxury Glassmorphism */}
-          <div className="w-full max-w-6xl xl:max-w-7xl bg-[#061222]/80 backdrop-blur-2xl rounded-3xl p-5 sm:p-6 lg:p-7 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(255,255,255,0.18)] border border-white/15 text-white mt-6 lg:mt-8 ring-1 ring-white/5">
+          {/* Floating Horizontal Search Widget - Shifted Lower to Reveal Coach Details */}
+          <div className="w-full max-w-6xl xl:max-w-7xl bg-[#061222]/85 backdrop-blur-2xl rounded-3xl p-5 sm:p-6 lg:p-7 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(255,255,255,0.18)] border border-white/15 text-white mt-8 sm:mt-12 lg:mt-16 translate-y-3 sm:translate-y-6 lg:translate-y-8 ring-1 ring-white/5">
             <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
               
               {/* Departure City */}

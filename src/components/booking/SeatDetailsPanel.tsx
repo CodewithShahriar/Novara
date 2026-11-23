@@ -265,46 +265,41 @@ export default function SeatDetailsPanel({
 
         {/* 
           ========================================================================
-          3. TICKET BOTTOM STUB: AUTHENTIC SCANNER BARCODE (Expanded & Balanced)
+          3. TICKET BOTTOM STUB: AUTHENTIC SCANNER BARCODE (Balanced Two-Column)
           ========================================================================
         */}
         <div className="p-4 sm:p-5 pt-2 sm:pt-3 bg-gradient-to-b from-transparent to-[#040C16]/95 space-y-3.5">
           
-          {/* Authentic Full-Width Boarding Scanner Barcode Stub */}
-          <div className="bg-[#0B1E34]/90 rounded-2xl p-3.5 sm:p-4 border border-[#C5A880]/25 shadow-inner space-y-2.5">
+          {/* Authentic Two-Column Boarding Scanner Barcode Stub (Matches User Preference) */}
+          <div className="flex items-center justify-between bg-[#0B1E34]/90 rounded-2xl p-3 sm:p-3.5 border border-[#C5A880]/25 gap-3 sm:gap-4 shadow-inner">
             
-            {/* Header: Label & Live Status */}
-            <div className="flex items-center justify-between text-[10px] sm:text-[11px] font-black tracking-wider">
-              <div className="flex items-center gap-1.5 text-white">
-                <ScanLine className="w-3.5 h-3.5 text-[#C5A880]" />
-                <span className="uppercase">BOARDING BARCODE</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-emerald-400 uppercase font-black text-[10px]">
-                  CONFIRMATION READY
-                </span>
-              </div>
-            </div>
-
-            {/* Prominent High-Density Barcode (Expanded & Perfectly Aligned) */}
-            <div className="w-full bg-[#071322]/70 rounded-xl px-3 py-2.5 border border-white/5 flex flex-col items-center justify-center">
+            {/* Left: Barcode Container with Transparent Background */}
+            <div className="bg-[#071322]/80 rounded-xl px-2.5 py-2 border border-white/10 flex flex-col items-center justify-center shrink-0">
               <img
                 src="/images/transparent-barcode.png"
                 alt="Boarding Scanner Barcode"
-                className="w-full max-w-[340px] sm:max-w-[380px] h-14 sm:h-16 object-fill filter drop-shadow-[0_0_10px_rgba(245,248,255,0.22)]"
+                className="h-10 sm:h-11 w-32 sm:w-40 object-fill filter drop-shadow-[0_0_8px_rgba(245,248,255,0.2)]"
               />
-              <div className="text-[11px] sm:text-xs font-mono font-bold text-slate-300 tracking-[0.28em] mt-1.5 text-center">
+              <div className="text-[9px] font-mono font-bold text-slate-400 tracking-widest mt-1 text-center">
                 {ticketRef}
               </div>
             </div>
 
-            {/* Sub-label: Scanner location */}
-            <div className="flex items-center justify-between text-[9px] text-slate-400 font-medium px-0.5 pt-0.5">
-              <span>Verified Ticket Stub</span>
-              <span className="text-[#D8B788] font-bold tracking-wider uppercase">
-                Scan at Coach Door • Bay 02
-              </span>
+            {/* Right: Boarding Status, Coach Door Instructions & Ready Indicator */}
+            <div className="text-right flex-1 min-w-0">
+              <div className="text-[10px] sm:text-[11px] font-black text-white tracking-wider flex items-center justify-end gap-1.5">
+                <ScanLine className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+                <span className="truncate">BOARDING BARCODE</span>
+              </div>
+              <div className="text-[9px] sm:text-[10px] font-semibold text-slate-300 tracking-wider mt-0.5">
+                SCAN AT COACH DOOR
+              </div>
+              <div className="flex items-center justify-end gap-1.5 mt-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                <span className="text-[10px] font-black text-emerald-400 tracking-wider">
+                  CONFIRMATION READY
+                </span>
+              </div>
             </div>
 
           </div>
