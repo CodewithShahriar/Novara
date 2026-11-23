@@ -223,8 +223,7 @@ export default function HomePage() {
 
           {/* Hero Left-Aligned Typography (Pure & Clean - No Box / Card Outline) */}
           <div className="text-left max-w-2xl my-auto pt-6 lg:pt-10">
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#B48C56]/25 border border-[#B48C56]/40 text-[#D8B788] text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-md shadow-md">
-              <Sparkles className="w-3.5 h-3.5 text-[#D8B788]" />
+            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#B48C56]/25 border border-[#B48C56]/40 text-[#D8B788] text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-md shadow-md">
               <span>PREMIUM INTERCITY MOBILITY</span>
             </div>
 
