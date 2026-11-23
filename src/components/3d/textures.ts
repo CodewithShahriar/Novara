@@ -358,3 +358,75 @@ export function getRadialShadowTexture(): THREE.CanvasTexture {
   cachedShadow = texture;
   return texture;
 }
+
+// Modern Luxury Transport Terminal Tarmac & Parking Bay Ground Texture
+let cachedTarmac: THREE.CanvasTexture | null = null;
+export function getTarmacTexture(): THREE.CanvasTexture {
+  if (typeof document === 'undefined') return new THREE.CanvasTexture(new Image() as any);
+  if (cachedTarmac) return cachedTarmac;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = 1024;
+  canvas.height = 1024;
+  const ctx = canvas.getContext('2d');
+
+  if (ctx) {
+    // High-grade asphalt transit pavement
+    ctx.fillStyle = '#262E3B';
+    ctx.fillRect(0, 0, 1024, 1024);
+
+    // Fine mineral aggregate tarmac grain
+    for (let x = 0; x < 1024; x += 8) {
+      for (let y = 0; y < 1024; y += 8) {
+        const noise = (Math.random() - 0.5) * 18;
+        const gray = Math.min(255, Math.max(0, 42 + noise));
+        ctx.fillStyle = `rgb(${gray}, ${gray + 4}, ${gray + 8})`;
+        ctx.fillRect(x, y, 8, 8);
+      }
+    }
+
+    // Concrete expansion joint grid lines
+    ctx.strokeStyle = '#1E2430';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, 512);
+    ctx.lineTo(1024, 512);
+    ctx.moveTo(512, 0);
+    ctx.lineTo(512, 1024);
+    ctx.stroke();
+
+    // Yellow safety bus bay demarcation line
+    ctx.strokeStyle = '#FACC15';
+    ctx.lineWidth = 14;
+    ctx.strokeRect(120, 80, 784, 864);
+
+    // Diagonal yellow transit hazard hatch stripes
+    ctx.strokeStyle = 'rgba(250, 204, 21, 0.65)';
+    ctx.lineWidth = 8;
+    ctx.beginPath();
+    for (let i = 160; i < 900; i += 70) {
+      ctx.moveTo(i, 80);
+      ctx.lineTo(i + 50, 150);
+      ctx.moveTo(i, 874);
+      ctx.lineTo(i + 50, 944);
+    }
+    ctx.stroke();
+
+    // Clean white dashed guidance center line
+    ctx.strokeStyle = '#F8FAFC';
+    ctx.lineWidth = 6;
+    ctx.setLineDash([40, 30]);
+    ctx.beginPath();
+    ctx.moveTo(512, 160);
+    ctx.lineTo(512, 860);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(2, 2);
+  cachedTarmac = texture;
+  return texture;
+}
