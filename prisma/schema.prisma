@@ -1,0 +1,87 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  phone     String?
+  role      String    @default("USER") // USER, ADMIN
+  createdAt DateTime  @default(now())
+  bookings  Booking[]
+}
+
+model Bus {
+  id          String    @id @default(uuid())
+  name        String
+  operator    String
+  model       String
+  totalSeats  Int       @default(28)
+  basePrice   Float
+  type        String    // "Executive Sleeper", "Cyber Cruiser VIP", "Hyper-Lounge 3D"
+  amenities   String    // JSON string of amenities: WiFi, Power, OLED Screen, Refreshments
+  status      String    @default("ACTIVE")
+  imageUrl    String?
+  routes      Route[]
+  seats       Seat[]
+  bookings    Booking[]
+  createdAt   DateTime  @default(now())
+}
+
+model Route {
+  id            String    @id @default(uuid())
+  busId         String
+  bus           Bus       @relation(fields: [busId], references: [id], onDelete: Cascade)
+  fromCity      String
+  toCity        String
+  departureTime String
+  arrivalTime   String
+  duration      String
+  distance      String
+  date          String
+  createdAt     DateTime  @default(now())
+}
+
+model Seat {
+  id         String   @id @default(uuid())
+  busId      String
+  bus        Bus      @relation(fields: [busId], references: [id], onDelete: Cascade)
+  seatNumber String
+  row        Int
+  col        Int
+  tier       String   // "Executive VIP", "Panorama Window", "Cyber Business", "Standard"
+  price      Float
+  isBooked   Boolean  @default(false)
+  isWindow   Boolean  @default(false)
+  bookedBy   String?
+  
+  @@unique([busId, seatNumber])
+}
+
+model Booking {
+  id             String   @id @default(uuid())
+  bookingRef     String   @unique
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id])
+  busId          String
+  bus            Bus      @relation(fields: [busId], references: [id])
+  passengerName  String
+  passengerPhone String
+  passengerEmail String
+  seatNumbers    String   // comma-separated e.g. "1A, 1B"
+  totalPrice     Float
+  status         String   @default("CONFIRMED") // CONFIRMED, CANCELLED
+  paymentMethod  String   @default("CyberPay")
+  paymentStatus  String   @default("PAID")
+  journeyDate    String
+  departureTime  String
+  fromCity       String
+  toCity         String
+  createdAt      DateTime @default(now())
+}
