@@ -90,10 +90,10 @@ export default function SeatMesh({ seat, status, onClick, onHover }: SeatMeshPro
     const badgeColor = isBooked
       ? '#475569'
       : isSelected
-      ? '#F59E0B'
-      : isVip
-      ? '#D97706'
-      : '#0284C7';
+        ? '#F59E0B'
+        : isVip
+          ? '#D97706'
+          : '#0284C7';
 
     return {
       centerMat,
@@ -161,7 +161,7 @@ export default function SeatMesh({ seat, status, onClick, onHover }: SeatMeshPro
         ========================================================================
       */}
       <group rotation={[0, Math.PI, 0]}>
-        
+
         {/* 
           ======================================================================
           1. DIE-CAST ARCHED PEDESTAL LEG WITH SIGNATURE OBLONG CUTOUT (Picture)
@@ -270,7 +270,7 @@ export default function SeatMesh({ seat, status, onClick, onHover }: SeatMeshPro
           ======================================================================
         */}
         <group position={[0, 0.44, -0.18]} rotation={[-0.10, 0, 0]}>
-          
+
           {/* Smooth Ergonomic Composite Rear Protective Shell */}
           <RoundedBox
             args={[0.44, 0.72, 0.06]}
@@ -327,7 +327,7 @@ export default function SeatMesh({ seat, status, onClick, onHover }: SeatMeshPro
             ====================================================================
           */}
           <group position={[0, 0.26, 0.03]}>
-            
+
             {/* Top Crown & Outer Headrest Frame (Charcoal) */}
             <RoundedBox
               args={[0.38, 0.22, 0.085]}

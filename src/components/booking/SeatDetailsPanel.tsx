@@ -14,6 +14,8 @@ import {
   Calendar,
   Clock,
   QrCode,
+  ShieldCheck,
+  ScanLine,
 } from 'lucide-react';
 
 interface SeatDetailsPanelProps {
@@ -263,72 +265,28 @@ export default function SeatDetailsPanel({
 
         {/* 
           ========================================================================
-          3. TICKET BOTTOM STUB: HIGH-CONTRAST BLACK & WHITE SCANNER QR CODE
+          3. TICKET BOTTOM STUB: AUTHENTIC SCANNER BARCODE (User Reference Match!)
           ========================================================================
         */}
         <div className="p-4 sm:p-5 pt-2 sm:pt-3 bg-gradient-to-b from-transparent to-[#040C16]/95 space-y-3.5">
           
-          {/* Authentic Black & White Scanner QR Code + Verification Label */}
-          <div className="flex items-center justify-between bg-[#0B1E34]/60 rounded-2xl p-2.5 sm:p-3 border border-white/10">
+          {/* Authentic Horizontal Scanner Barcode Matching User Image */}
+          <div className="flex items-center justify-between bg-[#0B1E34]/80 rounded-2xl p-2.5 sm:p-3 border border-white/10 gap-3 shadow-inner">
             
-            {/* Crisp Stark Black & White QR Code with ISO Finder Patterns */}
-            <div className="bg-white rounded-xl p-1.5 shadow-md flex items-center justify-center shrink-0 border border-slate-200">
-              <svg width="48" height="48" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                {/* Top-Left Finder */}
-                <rect x="1" y="1" width="7" height="7" fill="#000000" />
-                <rect x="2" y="2" width="5" height="5" fill="#FFFFFF" />
-                <rect x="3" y="3" width="3" height="3" fill="#000000" />
-
-                {/* Top-Right Finder */}
-                <rect x="17" y="1" width="7" height="7" fill="#000000" />
-                <rect x="18" y="2" width="5" height="5" fill="#FFFFFF" />
-                <rect x="19" y="3" width="3" height="3" fill="#000000" />
-
-                {/* Bottom-Left Finder */}
-                <rect x="1" y="17" width="7" height="7" fill="#000000" />
-                <rect x="2" y="18" width="5" height="5" fill="#FFFFFF" />
-                <rect x="3" y="19" width="3" height="3" fill="#000000" />
-
-                {/* Timing Tracks & High-Density Code Modules */}
-                <rect x="9" y="3" width="1" height="1" fill="#000000" />
-                <rect x="11" y="3" width="1" height="1" fill="#000000" />
-                <rect x="13" y="3" width="1" height="1" fill="#000000" />
-                <rect x="15" y="3" width="1" height="1" fill="#000000" />
-
-                <rect x="3" y="9" width="1" height="1" fill="#000000" />
-                <rect x="3" y="11" width="1" height="1" fill="#000000" />
-                <rect x="3" y="13" width="1" height="1" fill="#000000" />
-                <rect x="3" y="15" width="1" height="1" fill="#000000" />
-
-                <rect x="9" y="9" width="2" height="2" fill="#000000" />
-                <rect x="12" y="9" width="1" height="2" fill="#000000" />
-                <rect x="14" y="9" width="2" height="1" fill="#000000" />
-                <rect x="10" y="12" width="2" height="1" fill="#000000" />
-                <rect x="13" y="12" width="2" height="2" fill="#000000" />
-                <rect x="10" y="14" width="1" height="2" fill="#000000" />
-                <rect x="12" y="15" width="2" height="1" fill="#000000" />
-                <rect x="15" y="14" width="1" height="2" fill="#000000" />
-
-                <rect x="9" y="17" width="2" height="1" fill="#000000" />
-                <rect x="12" y="18" width="1" height="2" fill="#000000" />
-                <rect x="14" y="17" width="2" height="2" fill="#000000" />
-                <rect x="17" y="17" width="2" height="1" fill="#000000" />
-                <rect x="20" y="17" width="1" height="2" fill="#000000" />
-                <rect x="22" y="18" width="2" height="1" fill="#000000" />
-
-                <rect x="9" y="20" width="1" height="2" fill="#000000" />
-                <rect x="11" y="21" width="2" height="1" fill="#000000" />
-                <rect x="14" y="20" width="1" height="3" fill="#000000" />
-                <rect x="17" y="20" width="2" height="2" fill="#000000" />
-                <rect x="20" y="21" width="3" height="2" fill="#000000" />
-              </svg>
+            {/* Crisp Stark White Badge with Horizontal Linear Barcode from Reference */}
+            <div className="bg-white rounded-xl px-2.5 py-1.5 shadow-md flex items-center justify-center shrink-0 border border-slate-200">
+              <img
+                src="/images/scanner-barcode.png"
+                alt="Boarding Scanner Barcode"
+                className="h-9 w-36 sm:w-40 object-contain"
+              />
             </div>
 
-            {/* QR Label & Status */}
-            <div className="text-right pl-3">
+            {/* Barcode Serial & Door Verification Status */}
+            <div className="text-right">
               <div className="text-[10px] font-black text-white tracking-wider flex items-center justify-end gap-1.5">
-                <QrCode className="w-3.5 h-3.5 text-[#C5A880]" />
-                <span>DIGITAL BOARDING PASS</span>
+                <ScanLine className="w-3.5 h-3.5 text-[#C5A880]" />
+                <span>BOARDING BARCODE</span>
               </div>
               <div className="text-[9px] font-mono text-slate-400 tracking-widest mt-0.5">
                 SCAN AT COACH DOOR
