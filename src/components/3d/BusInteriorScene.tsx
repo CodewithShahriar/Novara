@@ -333,7 +333,7 @@ function LuxuryTouringCoachModel({ isZoomed }: { isZoomed: boolean }) {
       </group>
 
       {/* ============================================================ */}
-      {/* 3. EXTERIOR BODY PANELS & SIGNATURE AERO SWOOSH (Image 2)     */}
+      {/* 3. EXTERIOR BODY PANELS & LUGGAGE COMPARTMENTS               */}
       {/* ============================================================ */}
       {/* Left Exterior Side Body Panel */}
       <group position={[-1.25, 0, 0.175]}>
@@ -347,12 +347,6 @@ function LuxuryTouringCoachModel({ isZoomed }: { isZoomed: boolean }) {
           <boxGeometry args={[0.08, 0.12, 12.35]} />
           <primitive object={materials.coachDarkMask} attach="material" />
         </mesh>
-        {/* Signature Dynamic Aerodynamic White Side Swoosh (Image 2 Reference) */}
-        <group position={[-0.045, 1.25, -3.3]}>
-          <RoundedBox args={[0.02, 0.75, 2.20]} radius={0.16} smoothness={3} castShadow>
-            <primitive object={materials.coachBodyPearl} attach="material" />
-          </RoundedBox>
-        </group>
         {/* Flush Luggage Bay Hatches along lower skirt */}
         {[-2.6, -1.0, 0.6, 2.2, 3.8].map((z, idx) => (
           <group key={idx} position={[-0.045, 0.36, z]}>
@@ -381,12 +375,6 @@ function LuxuryTouringCoachModel({ isZoomed }: { isZoomed: boolean }) {
           <boxGeometry args={[0.08, 0.12, 12.35]} />
           <primitive object={materials.coachDarkMask} attach="material" />
         </mesh>
-        {/* Signature Dynamic Aerodynamic White Side Swoosh (Image 2 Reference) */}
-        <group position={[0.045, 1.25, -3.3]}>
-          <RoundedBox args={[0.02, 0.75, 2.20]} radius={0.16} smoothness={3} castShadow>
-            <primitive object={materials.coachBodyPearl} attach="material" />
-          </RoundedBox>
-        </group>
         {/* Front Passenger Boarding Door Outline on Right Side (Image 2) */}
         <group position={[0.045, 0.95, -4.8]}>
           <mesh>
@@ -519,16 +507,16 @@ function LuxuryTouringCoachModel({ isZoomed }: { isZoomed: boolean }) {
       {/* 6. AUTHENTIC FRONT COACH FASCIA & COCKPIT (Image 2 Coach)    */}
       {/* ============================================================ */}
       {/* 
-        Front end connects seamlessly from Z = -4.95 to Z = -6.20
-        No separate bulbous block! Elegant, aerodynamic curved coach bow!
+        Single, cohesive aerodynamic luxury coach front nose!
+        Flushed seamlessly with side skirts at Z = -5.85 (Zero disjointed shelves!)
       */}
       <group position={[0, 0, 0]}>
         {/* Sculpted Curved Aerodynamic Front Bumper (Image 2) */}
         <RoundedBox
-          args={[2.50, 0.65, 0.42]}
-          radius={0.18}
+          args={[2.50, 0.65, 0.35]}
+          radius={0.14}
           smoothness={4}
-          position={[0, 0.38, -6.00]}
+          position={[0, 0.35, -5.75]}
           castShadow
           receiveShadow
         >
@@ -537,36 +525,48 @@ function LuxuryTouringCoachModel({ isZoomed }: { isZoomed: boolean }) {
 
         {/* Lower Front Air Dam / Chin Splitter */}
         <RoundedBox
-          args={[2.35, 0.18, 0.15]}
+          args={[2.40, 0.16, 0.20]}
           radius={0.04}
           smoothness={3}
-          position={[0, 0.12, -6.15]}
+          position={[0, 0.10, -5.82]}
           castShadow
         >
           <primitive object={materials.coachDarkMask} attach="material" />
         </RoundedBox>
 
         {/* Dual Lower Circular Fog Lamps in Chrome Bezels (Image 2) */}
-        <mesh position={[-0.90, 0.14, -6.22]} rotation={[0, 0.15, 0]}>
-          <circleGeometry args={[0.05, 16]} />
+        <mesh position={[-0.92, 0.18, -5.88]} rotation={[0, 0.15, 0]}>
+          <circleGeometry args={[0.055, 16]} />
           <primitive object={materials.fogLampLens} attach="material" />
         </mesh>
-        <mesh position={[0.90, 0.14, -6.22]} rotation={[0, -0.15, 0]}>
-          <circleGeometry args={[0.05, 16]} />
+        <mesh position={[0.92, 0.18, -5.88]} rotation={[0, -0.15, 0]}>
+          <circleGeometry args={[0.055, 16]} />
           <primitive object={materials.fogLampLens} attach="material" />
         </mesh>
 
+        {/* Upper Front Nose Fascia Panel (Connects bumper seamlessly to windshield!) */}
+        <RoundedBox
+          args={[2.48, 0.44, 0.28]}
+          radius={0.10}
+          smoothness={4}
+          position={[0, 0.85, -5.68]}
+          castShadow
+          receiveShadow
+        >
+          <primitive object={materials.coachBodyPearl} attach="material" />
+        </RoundedBox>
+
         {/* Piano Gloss Black Front Grille Band (Image 2) */}
-        <group position={[0, 0.58, -6.12]}>
-          <RoundedBox args={[1.85, 0.32, 0.04]} radius={0.04} smoothness={3}>
+        <group position={[0, 0.82, -5.82]}>
+          <RoundedBox args={[1.85, 0.28, 0.04]} radius={0.04} smoothness={3}>
             <primitive object={materials.coachDarkMask} attach="material" />
           </RoundedBox>
           {/* Horizontal Chrome Wing Emblem & Novara Central Insignia */}
-          <mesh position={[0, 0.02, 0.025]}>
+          <mesh position={[0, 0.015, 0.025]}>
             <boxGeometry args={[1.35, 0.025, 0.015]} />
             <primitive object={materials.chromeTrim} attach="material" />
           </mesh>
-          <mesh position={[0, 0.02, 0.03]}>
+          <mesh position={[0, 0.015, 0.03]}>
             <circleGeometry args={[0.075, 24]} />
             <primitive object={materials.chromeTrim} attach="material" />
           </mesh>
@@ -574,56 +574,50 @@ function LuxuryTouringCoachModel({ isZoomed }: { isZoomed: boolean }) {
 
         {/* Swept-Back Aggressive Projector Headlamps (Image 2) */}
         {/* Left Headlamp Cluster */}
-        <group position={[-0.96, 0.52, -6.08]} rotation={[0, 0.20, 0]}>
-          <RoundedBox args={[0.42, 0.18, 0.05]} radius={0.04} smoothness={3}>
+        <group position={[-0.98, 0.78, -5.76]} rotation={[0, 0.22, 0]}>
+          <RoundedBox args={[0.38, 0.22, 0.05]} radius={0.04} smoothness={3}>
             <primitive object={materials.coachDarkMask} attach="material" />
           </RoundedBox>
-          {/* 4 Circular Projector LED Eyes */}
-          {[-0.14, -0.05, 0.05, 0.14].map((lx, li) => (
-            <mesh key={li} position={[lx, -0.01, 0.03]} rotation={[Math.PI / 2, 0, 0]}>
-              <cylinderGeometry args={[0.036, 0.036, 0.018, 16]} />
+          {/* 3 Circular Projector LED Eyes */}
+          {[-0.11, 0, 0.11].map((lx, li) => (
+            <mesh key={li} position={[lx, -0.02, 0.03]} rotation={[Math.PI / 2, 0, 0]}>
+              <cylinderGeometry args={[0.04, 0.04, 0.02, 16]} />
               <primitive object={materials.headlightLens} attach="material" />
             </mesh>
           ))}
           {/* Top LED DRL Eyebrow */}
-          <mesh position={[0, 0.065, 0.03]}>
-            <boxGeometry args={[0.38, 0.018, 0.01]} />
+          <mesh position={[0, 0.08, 0.03]}>
+            <boxGeometry args={[0.36, 0.02, 0.01]} />
             <primitive object={materials.drlStrip} attach="material" />
           </mesh>
         </group>
 
         {/* Right Headlamp Cluster */}
-        <group position={[0.96, 0.52, -6.08]} rotation={[0, -0.20, 0]}>
-          <RoundedBox args={[0.42, 0.18, 0.05]} radius={0.04} smoothness={3}>
+        <group position={[0.98, 0.78, -5.76]} rotation={[0, -0.22, 0]}>
+          <RoundedBox args={[0.38, 0.22, 0.05]} radius={0.04} smoothness={3}>
             <primitive object={materials.coachDarkMask} attach="material" />
           </RoundedBox>
-          {/* 4 Circular Projector LED Eyes */}
-          {[-0.14, -0.05, 0.05, 0.14].map((lx, li) => (
-            <mesh key={li} position={[lx, -0.01, 0.03]} rotation={[Math.PI / 2, 0, 0]}>
-              <cylinderGeometry args={[0.036, 0.036, 0.018, 16]} />
+          {/* 3 Circular Projector LED Eyes */}
+          {[-0.11, 0, 0.11].map((lx, li) => (
+            <mesh key={li} position={[lx, -0.02, 0.03]} rotation={[Math.PI / 2, 0, 0]}>
+              <cylinderGeometry args={[0.04, 0.04, 0.02, 16]} />
               <primitive object={materials.headlightLens} attach="material" />
             </mesh>
           ))}
           {/* Top LED DRL Eyebrow */}
-          <mesh position={[0, 0.065, 0.03]}>
-            <boxGeometry args={[0.38, 0.018, 0.01]} />
+          <mesh position={[0, 0.08, 0.03]}>
+            <boxGeometry args={[0.36, 0.02, 0.01]} />
             <primitive object={materials.drlStrip} attach="material" />
           </mesh>
         </group>
 
-        {/* Front Hood / Dash Cowl Deck (Sloping up from bumper to base of glass) */}
-        <mesh position={[0, 0.80, -5.70]} rotation={[-0.20, 0, 0]} castShadow>
-          <boxGeometry args={[2.46, 0.06, 0.45]} />
-          <primitive object={materials.coachBodyPearl} attach="material" />
-        </mesh>
-
         {/* Front Left and Right A-Pillars sweeping down from roof to cowl */}
-        <mesh position={[-1.22, 1.55, -5.32]} rotation={[-0.30, 0, 0]} castShadow>
-          <boxGeometry args={[0.08, 1.55, 0.08]} />
+        <mesh position={[-1.23, 1.60, -5.28]} rotation={[-0.35, 0, 0]} castShadow>
+          <boxGeometry args={[0.08, 1.25, 0.12]} />
           <primitive object={materials.coachBodyPearl} attach="material" />
         </mesh>
-        <mesh position={[1.22, 1.55, -5.32]} rotation={[-0.30, 0, 0]} castShadow>
-          <boxGeometry args={[0.08, 1.55, 0.08]} />
+        <mesh position={[1.23, 1.60, -5.28]} rotation={[-0.35, 0, 0]} castShadow>
+          <boxGeometry args={[0.08, 1.25, 0.12]} />
           <primitive object={materials.coachBodyPearl} attach="material" />
         </mesh>
 
@@ -631,34 +625,43 @@ function LuxuryTouringCoachModel({ isZoomed }: { isZoomed: boolean }) {
           Large Sweeping Aerodynamic Panoramic Windshield (Image 2)
           Raked back at ~28° angle with realistic tint & dual wipers!
         */}
-        <mesh position={[0, 1.55, -5.32]} rotation={[-0.30, 0, 0]} raycast={() => null}>
-          <planeGeometry args={[2.42, 1.62]} />
+        <mesh position={[0, 1.60, -5.28]} rotation={[-0.35, 0, 0]} raycast={() => null}>
+          <planeGeometry args={[2.42, 1.28]} />
           <primitive object={materials.windshieldGlass} attach="material" />
         </mesh>
 
         {/* Windshield Dual Articulated Pantograph Wipers */}
-        <mesh position={[-0.42, 0.88, -5.58]} rotation={[0, 0, 0.20]}>
+        <mesh position={[-0.42, 1.08, -5.50]} rotation={[0, 0, 0.20]}>
           <boxGeometry args={[0.55, 0.018, 0.015]} />
           <primitive object={materials.coachDarkMask} attach="material" />
         </mesh>
-        <mesh position={[0.42, 0.88, -5.58]} rotation={[0, 0, 0.20]}>
+        <mesh position={[0.42, 1.08, -5.50]} rotation={[0, 0, 0.20]}>
           <boxGeometry args={[0.55, 0.018, 0.015]} />
           <primitive object={materials.coachDarkMask} attach="material" />
         </mesh>
 
         {/* Aerodynamic Front Roof Crown & Destination Matrix Sign (Image 2) */}
         <group position={[0, 2.16, -4.95]}>
-          <RoundedBox args={[2.50, 0.22, 0.38]} radius={0.06} smoothness={3} castShadow>
+          <RoundedBox args={[2.50, 0.22, 0.42]} radius={0.06} smoothness={3} castShadow>
             <primitive object={materials.coachBodyPearl} attach="material" />
           </RoundedBox>
-          <mesh position={[0, -0.02, -0.19]} rotation={[0.12, 0, 0]}>
+          <mesh position={[0, -0.02, -0.21]} rotation={[0.12, 0, 0]}>
             <planeGeometry args={[1.85, 0.12]} />
             <meshStandardMaterial color="#0B132B" emissive="#0284C7" emissiveIntensity={0.55} />
+          </mesh>
+          {/* Amber Aerodynamic Clearance Marker Lights */}
+          <mesh position={[-1.12, 0.06, -0.20]}>
+            <boxGeometry args={[0.06, 0.02, 0.02]} />
+            <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.8} />
+          </mesh>
+          <mesh position={[1.12, 0.06, -0.20]}>
+            <boxGeometry args={[0.06, 0.02, 0.02]} />
+            <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.8} />
           </mesh>
         </group>
 
         {/* Streamlined Pearl White "Elephant-Ear" Wing Mirrors (Image 2) */}
-        <group position={[-1.36, 1.95, -5.10]}>
+        <group position={[-1.34, 1.95, -5.02]}>
           <mesh castShadow>
             <cylinderGeometry args={[0.016, 0.016, 0.50, 12]} />
             <primitive object={materials.coachDarkMask} attach="material" />
@@ -671,7 +674,7 @@ function LuxuryTouringCoachModel({ isZoomed }: { isZoomed: boolean }) {
             <primitive object={materials.chromeTrim} attach="material" />
           </mesh>
         </group>
-        <group position={[1.36, 1.95, -5.10]}>
+        <group position={[1.34, 1.95, -5.02]}>
           <mesh castShadow>
             <cylinderGeometry args={[0.016, 0.016, 0.50, 12]} />
             <primitive object={materials.coachDarkMask} attach="material" />
