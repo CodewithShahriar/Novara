@@ -23,6 +23,7 @@ import {
   Star,
   QrCode,
   Compass,
+  Sparkles,
 } from 'lucide-react';
 import { CITIES } from '@/lib/mock-data';
 
@@ -203,30 +204,30 @@ export default function HomePage() {
     <div className="relative min-h-screen bg-[#F8FAFC] text-slate-800 font-sans selection:bg-[#B48C56] selection:text-white">
       
       {/* ============================================================== */}
-      {/* 1. HERO SECTION (100% Faithful to Reference Image Layout)      */}
+      {/* 1. HERO SECTION (Exact Match to User's Uploaded Reference Photo) */}
       {/* ============================================================== */}
-      <section className="relative min-h-[580px] md:min-h-[660px] bg-[#071526] text-white flex flex-col justify-between pt-12 pb-16 md:pt-16 md:pb-20 overflow-hidden">
-        {/* Right-Side Prominent Luxury Coach Photograph (Exact Match to Reference UI!) */}
-        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-[58%] pointer-events-none overflow-hidden">
-          <div 
-            className="w-full h-full bg-cover bg-center bg-no-repeat opacity-85 lg:opacity-95"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1800&q=85')`,
-              maskImage: 'linear-gradient(to right, transparent, black 25%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent, black 25%)',
-            }}
-          />
-          {/* Subtle bottom & top depth gradients */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#071526] via-transparent to-[#071526]/50" />
-        </div>
+      <section className="relative min-h-[620px] md:min-h-[700px] bg-[#071526] text-white flex flex-col justify-between pt-12 pb-16 md:pt-16 md:pb-20 overflow-hidden">
+        {/* Full-Bleed Hero Background Image with Uploaded Night Coach at Terminal */}
+        <div 
+          className="absolute inset-0 bg-cover bg-[center_right_15%] lg:bg-right bg-no-repeat pointer-events-none"
+          style={{
+            backgroundImage: `url('/images/hero-coach.jpg')`,
+          }}
+        />
 
-        {/* Left Side Deep Solid Backdrop for Text Legibility */}
-        <div className="absolute inset-y-0 left-0 w-full lg:w-[55%] bg-gradient-to-r from-[#071526] via-[#071526] to-transparent pointer-events-none" />
+        {/* Cinematic Deep Navy Gradient Overlay: Solid on left for crystal-clear readability, open on right for coach photo */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#071526] via-[#071526]/90 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#071526] via-transparent to-[#071526]/50 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-center">
           
           {/* Hero Left-Aligned Typography (Exact 1:1 Match to Reference Hero!) */}
           <div className="text-left max-w-2xl mb-10 md:mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#B48C56]/20 border border-[#B48C56]/30 text-[#D8B788] text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-md">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>PREMIUM INTERCITY MOBILITY</span>
+            </div>
+
             <h1 className="font-extrabold tracking-tight leading-none mb-4">
               <span className="text-[#C5A880] text-3xl sm:text-5xl md:text-6xl font-serif italic block mb-1">
                 INTERCITY
@@ -235,8 +236,9 @@ export default function HomePage() {
                 EXPRESS ROUTES
               </span>
             </h1>
-            <p className="text-xs sm:text-sm uppercase tracking-widest text-slate-300 font-medium">
-              PREMIUM CITY-TO-CITY TOURING COACH NETWORK • GUARANTEED SEAT CONFIRMATION
+
+            <p className="text-xs sm:text-sm uppercase tracking-widest text-slate-300 font-medium leading-relaxed max-w-xl">
+              TICKETS FOR FAST AND COMFORTABLE BUS TRIPS ACROSS CITIES • GUARANTEED 3D SEAT CONFIRMATION
             </p>
           </div>
 
