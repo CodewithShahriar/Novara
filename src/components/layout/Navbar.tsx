@@ -22,7 +22,7 @@ export default function Navbar() {
     <header
       className={`w-full z-50 transition-colors duration-300 ${
         isHome
-          ? 'absolute top-0 left-0 right-0 bg-transparent border-b border-white/10'
+          ? 'absolute top-0 left-0 right-0 bg-transparent border-b-0 border-transparent'
           : 'sticky top-0 bg-[#071526]/95 backdrop-blur-xl border-b border-white/10 shadow-xl'
       }`}
     >
@@ -51,8 +51,8 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1 bg-[#0B1E34]/80 p-1.5 rounded-2xl border border-white/5">
+        {/* Desktop Navigation (Translucent Frosted Glass Pill) */}
+        <nav className="hidden md:flex items-center gap-1 bg-white/5 backdrop-blur-lg p-1.5 rounded-2xl border border-white/10 shadow-sm">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -61,8 +61,8 @@ export default function Navbar() {
                 href={link.href}
                 className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wide transition-all ${
                   isActive
-                    ? 'bg-white/10 text-[#E0C097] shadow-sm font-bold border border-white/10'
-                    : 'text-slate-200 hover:text-white hover:bg-white/5'
+                    ? 'bg-white/15 text-[#E0C097] shadow-sm font-bold border border-white/15 backdrop-blur-sm'
+                    : 'text-slate-200 hover:text-white hover:bg-white/10'
                 }`}
               >
                 {link.name}

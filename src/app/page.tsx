@@ -241,21 +241,21 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Floating Horizontal Search Widget - Positioned Elegantly Lower */}
-          <div className="w-full max-w-6xl xl:max-w-7xl bg-[#061222]/85 backdrop-blur-2xl rounded-3xl p-5 sm:p-6 lg:p-7 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(255,255,255,0.18)] border border-white/15 text-white mt-8 sm:mt-12 lg:mt-14 ring-1 ring-white/5">
+          {/* Floating Horizontal Search Widget - Translucent Luxury Glassmorphism (Background Visible Through Glass) */}
+          <div className="w-full max-w-6xl xl:max-w-7xl bg-[#061222]/40 backdrop-blur-xl rounded-3xl p-5 sm:p-6 lg:p-7 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.7),inset_0_1px_2px_rgba(255,255,255,0.22)] border border-white/20 text-white mt-8 sm:mt-12 lg:mt-14 ring-1 ring-white/10">
             <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
               
               {/* Departure City */}
               <div className="relative">
-                <label className="block text-[11px] font-bold text-[#D8B788] uppercase tracking-wider mb-1.5">
+                <label className="block text-[11px] font-bold text-[#E5C287] uppercase tracking-wider mb-1.5 drop-shadow-sm">
                   From
                 </label>
                 <div className="relative flex items-center">
-                  <MapPin className="absolute left-3.5 w-4 h-4 text-[#B48C56] pointer-events-none" />
+                  <MapPin className="absolute left-3.5 w-4 h-4 text-[#D8B788] pointer-events-none" />
                   <select
                     value={fromCity}
                     onChange={(e) => setFromCity(e.target.value)}
-                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/85 border border-white/15 hover:border-[#B48C56]/60 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
+                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/45 hover:bg-[#0B1E34]/65 backdrop-blur-md border border-white/20 hover:border-[#B48C56]/70 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
                   >
                     {CITIES.map((city) => (
                       <option key={`from-${city}`} value={city} className="bg-[#0B1E34] text-white">
@@ -268,15 +268,15 @@ export default function HomePage() {
 
               {/* Destination City */}
               <div className="relative">
-                <label className="block text-[11px] font-bold text-[#D8B788] uppercase tracking-wider mb-1.5">
+                <label className="block text-[11px] font-bold text-[#E5C287] uppercase tracking-wider mb-1.5 drop-shadow-sm">
                   To
                 </label>
                 <div className="relative flex items-center">
-                  <MapPin className="absolute left-3.5 w-4 h-4 text-[#B48C56] pointer-events-none" />
+                  <MapPin className="absolute left-3.5 w-4 h-4 text-[#D8B788] pointer-events-none" />
                   <select
                     value={toCity}
                     onChange={(e) => setToCity(e.target.value)}
-                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/85 border border-white/15 hover:border-[#B48C56]/60 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
+                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/45 hover:bg-[#0B1E34]/65 backdrop-blur-md border border-white/20 hover:border-[#B48C56]/70 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
                   >
                     {CITIES.map((city) => (
                       <option key={`to-${city}`} value={city} className="bg-[#0B1E34] text-white">
@@ -289,31 +289,31 @@ export default function HomePage() {
 
               {/* Date */}
               <div className="relative">
-                <label className="block text-[11px] font-bold text-[#D8B788] uppercase tracking-wider mb-1.5">
+                <label className="block text-[11px] font-bold text-[#E5C287] uppercase tracking-wider mb-1.5 drop-shadow-sm">
                   Date
                 </label>
                 <div className="relative flex items-center">
-                  <Calendar className="absolute left-3.5 w-4 h-4 text-[#B48C56] pointer-events-none" />
+                  <Calendar className="absolute left-3.5 w-4 h-4 text-[#D8B788] pointer-events-none" />
                   <input
                     type="date"
                     value={journeyDate}
                     onChange={(e) => setJourneyDate(e.target.value)}
-                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/85 border border-white/15 hover:border-[#B48C56]/60 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner [color-scheme:dark]"
+                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/45 hover:bg-[#0B1E34]/65 backdrop-blur-md border border-white/20 hover:border-[#B48C56]/70 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner [color-scheme:dark]"
                   />
                 </div>
               </div>
 
               {/* Passengers */}
               <div className="relative">
-                <label className="block text-[11px] font-bold text-[#D8B788] uppercase tracking-wider mb-1.5">
+                <label className="block text-[11px] font-bold text-[#E5C287] uppercase tracking-wider mb-1.5 drop-shadow-sm">
                   Passengers
                 </label>
                 <div className="relative flex items-center">
-                  <Users className="absolute left-3.5 w-4 h-4 text-[#B48C56] pointer-events-none" />
+                  <Users className="absolute left-3.5 w-4 h-4 text-[#D8B788] pointer-events-none" />
                   <select
                     value={passengerCount}
                     onChange={(e) => setPassengerCount(Number(e.target.value))}
-                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/85 border border-white/15 hover:border-[#B48C56]/60 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
+                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/45 hover:bg-[#0B1E34]/65 backdrop-blur-md border border-white/20 hover:border-[#B48C56]/70 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
                   >
                     {[1, 2, 3, 4, 5, 6].map((num) => (
                       <option key={num} value={num} className="bg-[#0B1E34] text-white">
@@ -338,14 +338,14 @@ export default function HomePage() {
             </form>
 
             {/* Quick 3D Tour Bar */}
-            <div className="mt-4 pt-3.5 border-t border-white/10 flex flex-wrap items-center justify-between text-xs text-slate-300 gap-2">
-              <span className="font-medium text-slate-300 flex items-center gap-2">
+            <div className="mt-4 pt-3.5 border-t border-white/15 flex flex-wrap items-center justify-between text-xs text-slate-200 gap-2">
+              <span className="font-medium text-slate-200 flex items-center gap-2 drop-shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 Direct city-to-city service with interactive 3D seat reservation
               </span>
               <Link
                 href="/book/bus-1"
-                className="inline-flex items-center gap-1.5 text-[#D8B788] hover:text-[#F3E3C3] font-bold transition hover:underline"
+                className="inline-flex items-center gap-1.5 text-[#E5C287] hover:text-white font-bold transition hover:underline drop-shadow-sm"
               >
                 <span>Walk Inside 3D Coach</span>
                 <ArrowRight className="w-3.5 h-3.5" />
