@@ -232,7 +232,7 @@ export default function HomePage() {
               <span className="font-serif italic text-3xl sm:text-5xl md:text-6xl text-[#E5C287] block mb-2 font-normal drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                 Luxury Coach Travel
               </span>
-              <span className="text-white text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tight block drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
+              <span className="shine-text text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tight block drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
                 INTERCITY EXPRESS
               </span>
             </h1>
