@@ -25,10 +25,11 @@ interface BusInteriorSceneProps {
 }
 
 // Elevated 3/4 cutaway camera position: full coach visible from front to rear
-const OVERVIEW_CAMERA_POS = { x: 4.5, y: 6.8, z: 8.2 };
+const OVERVIEW_CAMERA_POS = { x: 4.8, y: 7.2, z: 8.6 };
 const OVERVIEW_TARGET = { x: 0, y: 0.2, z: 0.2 };
 
-// Camera controller with smooth GSAP transitions
+// Camera controller: ALWAYS places camera in the central aisle looking toward the seat
+// This guarantees the camera is NEVER outside the bus wall, eliminating dark wall obstruction!
 function CameraController({
   activeFocusedSeat,
   isZoomed,
@@ -47,13 +48,15 @@ function CameraController({
     gsap.killTweensOf(controls.target);
 
     if (isZoomed && activeFocusedSeat) {
-      // Smooth cinematic zoom toward the clicked passenger seat
       const [sx, sy, sz] = activeFocusedSeat.position;
 
+      // Position camera safely in the center aisle (X around 0) looking outwards at the seat
+      // For left seats (A & B, sx < 0): stand in aisle at x = +0.06 looking left-forward at the seat
+      // For right seats (C & D, sx > 0): stand in aisle at x = -0.06 looking right-forward at the seat
       const targetCameraPos = {
-        x: sx > 0 ? sx + 0.48 : sx - 0.48,
-        y: sy + 0.52,
-        z: sz - 0.75, // Positioned in front of the forward-facing seat looking back
+        x: sx < 0 ? 0.08 : -0.08,
+        y: sy + 0.42,
+        z: sz - 0.72, // In front of the seat looking slightly backward at the passenger suite
       };
 
       gsap.to(camera.position, {
@@ -100,7 +103,7 @@ function CameraController({
       ref={controlsRef}
       enableDamping
       dampingFactor={0.06}
-      minDistance={1.0}
+      minDistance={0.8}
       maxDistance={25}
       maxPolarAngle={Math.PI / 2.05}
       minPolarAngle={0.12}
@@ -108,65 +111,65 @@ function CameraController({
   );
 }
 
-// Photorealistic Volvo 9900 Luxury Touring Coach Model
-function Volvo9900LuxuryCoachModel() {
+// Photorealistic Champagne Metallic Luxury Touring Coach Model (Reference Picture 6)
+function ChampagneLuxuryCoachModel({ isZoomed }: { isZoomed: boolean }) {
   const carpetFloorTexture = useMemo(() => getWoodFloorTexture(), []);
   const aisleRunnerTexture = useMemo(() => getAisleCarpetTexture(), []);
   const dashTexture = useMemo(() => getDashboardClusterTexture(), []);
   const curtainTexture = useMemo(() => getCurtainTexture(), []);
   const shadowTexture = useMemo(() => getRadialShadowTexture(), []);
 
-  // Premium automotive coach materials (Matching Volvo 9900 in Reference Picture 1 & 2)
+  // Premium automotive coach materials (Matching Image 6 Gold/Champagne Touring Coach)
   const materials = useMemo(() => {
-    // Ice Metallic Sky Blue Body Paint (Volvo 9900 hero color, Picture 1)
-    const coachBodyPaint = new THREE.MeshStandardMaterial({
-      color: '#9BB8CD', // Elegant Volvo Ice Sky Blue metallic
-      roughness: 0.18,
-      metalness: 0.42,
+    // Rich Champagne / Gold Metallic Coach Body Paint (Image 6)
+    const coachBodyGold = new THREE.MeshStandardMaterial({
+      color: '#C8AB73', // Elegant metallic champagne gold (Image 6)
+      roughness: 0.22,
+      metalness: 0.38,
     });
 
-    // Deep Obsidian Black Glass Band & Mask (Picture 1)
-    const coachBlackMask = new THREE.MeshStandardMaterial({
-      color: '#111827',
-      roughness: 0.2,
-      metalness: 0.6,
+    // Dark Gloss Trim & Window Surround
+    const coachDarkMask = new THREE.MeshStandardMaterial({
+      color: '#1A202C',
+      roughness: 0.25,
+      metalness: 0.5,
     });
 
-    // Polished Mirror Chrome Accents
+    // Polished Mirror Chrome
     const chromeTrim = new THREE.MeshStandardMaterial({
       color: '#F8FAFC',
       roughness: 0.1,
       metalness: 0.95,
     });
 
-    // High-transparency Solar Tinted Panoramic Window Glass (Picture 1)
+    // High-transparency Solar Tinted Panoramic Window Glass (Image 6)
     const panoramicGlass = new THREE.MeshPhysicalMaterial({
       color: '#0F172A',
       transparent: true,
-      opacity: 0.26,
+      opacity: isZoomed ? 0.15 : 0.25,
       roughness: 0.05,
       metalness: 0.1,
-      transmission: 0.85,
+      transmission: 0.88,
       ior: 1.45,
     });
 
-    // Pleated Royal Blue Window Curtains (Picture 4)
+    // Draped Royal Blue Window Curtains (Picture 4)
     const curtainMat = new THREE.MeshStandardMaterial({
       map: curtainTexture,
-      roughness: 0.7,
+      roughness: 0.65,
       metalness: 0.05,
     });
 
-    // Signature V-shaped LED Headlight Projectors & DRLs (Picture 1)
+    // Triple LED Projector Headlights (Image 6)
     const headlightLens = new THREE.MeshStandardMaterial({
-      color: '#F0F9FF',
-      emissive: '#BAE6FD',
-      emissiveIntensity: 0.9,
+      color: '#FFFDF0',
+      emissive: '#FEF08A',
+      emissiveIntensity: 0.85,
       roughness: 0.1,
-      metalness: 0.3,
+      metalness: 0.2,
     });
 
-    // Ruby Red LED Taillights (Picture 1 & 2)
+    // Ruby Red LED Taillights (Image 6)
     const taillightLens = new THREE.MeshStandardMaterial({
       color: '#DC2626',
       emissive: '#991B1B',
@@ -174,7 +177,15 @@ function Volvo9900LuxuryCoachModel() {
       roughness: 0.2,
     });
 
-    // High-visibility Safety Yellow Grab Rails (Picture 4 & 5)
+    // Circular Fog Lamps (Image 6)
+    const fogLampLens = new THREE.MeshStandardMaterial({
+      color: '#FEF08A',
+      emissive: '#F59E0B',
+      emissiveIntensity: 0.75,
+      roughness: 0.15,
+    });
+
+    // High-visibility Safety Yellow Rails (Picture 4 & 5)
     const safetyYellowRail = new THREE.MeshStandardMaterial({
       color: '#FACC15',
       roughness: 0.25,
@@ -188,7 +199,7 @@ function Volvo9900LuxuryCoachModel() {
       metalness: 0.1,
     });
 
-    // Diamond-cut Multi-spoke Alloy Wheels (Picture 1)
+    // Diamond-cut Multi-spoke Alloy Wheels (Image 6)
     const alloyRim = new THREE.MeshStandardMaterial({
       color: '#CBD5E1',
       roughness: 0.2,
@@ -202,19 +213,20 @@ function Volvo9900LuxuryCoachModel() {
     });
 
     return {
-      coachBodyPaint,
-      coachBlackMask,
+      coachBodyGold,
+      coachDarkMask,
       chromeTrim,
       panoramicGlass,
       curtainMat,
       headlightLens,
       taillightLens,
+      fogLampLens,
       safetyYellowRail,
       tireRubber,
       alloyRim,
       interiorCharcoal,
     };
-  }, [curtainTexture]);
+  }, [curtainTexture, isZoomed]);
 
   return (
     <group position={[0, 0, 0]}>
@@ -229,11 +241,6 @@ function Volvo9900LuxuryCoachModel() {
       {/* ============================================================ */}
       {/* 1. CABIN FLOORING & AISLE (Picture 3 & 4 Alignment)           */}
       {/* ============================================================ */}
-      {/* 
-        Width of coach is 2.55m (interior half-width 1.22m).
-        Left platform: x from -1.22 to -0.24 (width 0.98m, center -0.73).
-        Seats A (-0.92) and B (-0.38) fit with Seat A right against window wall!
-      */}
       {/* Left Raised Seating Platform with Charcoal Transit Carpet */}
       <mesh position={[-0.73, 0.04, 0.3]} receiveShadow>
         <boxGeometry args={[0.98, 0.12, 11.2]} />
@@ -259,27 +266,22 @@ function Volvo9900LuxuryCoachModel() {
       </mesh>
 
       {/* ============================================================ */}
-      {/* 2. EXTERIOR LOWER BODY PANELS & SKIRTING (BOTH SIDES)        */}
+      {/* 2. EXTERIOR LOWER BODY PANELS & SKIRTING (Image 6 Champagne) */}
       {/* ============================================================ */}
-      {/* Left Exterior Body Skirt (Volvo Ice Blue & Lower Grey Panel) */}
+      {/* Left Exterior Body Skirt */}
       <group position={[-1.28, 0, 0.2]}>
-        <mesh position={[0, 0.36, 0]} castShadow receiveShadow>
-          <boxGeometry args={[0.08, 0.72, 14.0]} />
-          <primitive object={materials.coachBodyPaint} attach="material" />
+        <mesh position={[0, 0.38, 0]} castShadow receiveShadow>
+          <boxGeometry args={[0.08, 0.76, 14.0]} />
+          <primitive object={materials.coachBodyGold} attach="material" />
         </mesh>
-        {/* Beltline Black Graphic Band (Picture 1) */}
+        {/* Beltline Dark Mask Band (Image 6) */}
         <mesh position={[0, 0.82, 0]} castShadow receiveShadow>
-          <boxGeometry args={[0.08, 0.22, 14.0]} />
-          <primitive object={materials.coachBlackMask} attach="material" />
-        </mesh>
-        {/* Chrome Dynamic Accent Line */}
-        <mesh position={[-0.045, 0.71, 0]}>
-          <boxGeometry args={[0.01, 0.02, 14.0]} />
-          <primitive object={materials.chromeTrim} attach="material" />
+          <boxGeometry args={[0.08, 0.16, 14.0]} />
+          <primitive object={materials.coachDarkMask} attach="material" />
         </mesh>
         {/* Luggage Bay Hatch Seams */}
         {[-3.6, -1.8, 0.0, 1.8].map((z, idx) => (
-          <group key={idx} position={[-0.045, 0.32, z]}>
+          <group key={idx} position={[-0.045, 0.34, z]}>
             <mesh>
               <boxGeometry args={[0.005, 0.44, 1.55]} />
               <primitive object={materials.interiorCharcoal} attach="material" />
@@ -288,27 +290,22 @@ function Volvo9900LuxuryCoachModel() {
         ))}
       </group>
 
-      {/* Right Exterior Body Skirt (Volvo Ice Blue & Lower Grey Panel) */}
+      {/* Right Exterior Body Skirt */}
       <group position={[1.28, 0, 0.2]}>
-        <mesh position={[0, 0.36, 0]} castShadow receiveShadow>
-          <boxGeometry args={[0.08, 0.72, 14.0]} />
-          <primitive object={materials.coachBodyPaint} attach="material" />
+        <mesh position={[0, 0.38, 0]} castShadow receiveShadow>
+          <boxGeometry args={[0.08, 0.76, 14.0]} />
+          <primitive object={materials.coachBodyGold} attach="material" />
         </mesh>
-        {/* Beltline Black Graphic Band */}
+        {/* Beltline Dark Mask Band */}
         <mesh position={[0, 0.82, 0]} castShadow receiveShadow>
-          <boxGeometry args={[0.08, 0.22, 14.0]} />
-          <primitive object={materials.coachBlackMask} attach="material" />
+          <boxGeometry args={[0.08, 0.16, 14.0]} />
+          <primitive object={materials.coachDarkMask} attach="material" />
         </mesh>
-        {/* Chrome Dynamic Accent Line */}
-        <mesh position={[0.045, 0.71, 0]}>
-          <boxGeometry args={[0.01, 0.02, 14.0]} />
-          <primitive object={materials.chromeTrim} attach="material" />
-        </mesh>
-        {/* Front Passenger Boarding Door Frame on Right Side (Picture 1 & 4) */}
+        {/* Front Passenger Boarding Door Frame on Right Side (Image 6) */}
         <group position={[0.045, 0.95, -4.6]}>
           <mesh>
             <boxGeometry args={[0.01, 1.65, 1.15]} />
-            <primitive object={materials.coachBlackMask} attach="material" />
+            <primitive object={materials.coachDarkMask} attach="material" />
           </mesh>
         </group>
       </group>
@@ -316,10 +313,6 @@ function Volvo9900LuxuryCoachModel() {
       {/* ============================================================ */}
       {/* 3. PANORAMIC WINDOWS & ROYAL BLUE CURTAINS (Picture 4)       */}
       {/* ============================================================ */}
-      {/* 
-        raycast: () => null ensures pointer events pass straight through 
-        the glass directly to the passenger seats!
-      */}
       {/* Left Panoramic Window Glass */}
       <mesh position={[-1.24, 1.48, 0.2]} raycast={() => null}>
         <boxGeometry args={[0.02, 1.1, 12.6]} />
@@ -339,7 +332,7 @@ function Volvo9900LuxuryCoachModel() {
           <group position={[-1.24, 1.48, z]}>
             <mesh castShadow>
               <boxGeometry args={[0.06, 1.12, 0.16]} />
-              <primitive object={materials.coachBlackMask} attach="material" />
+              <primitive object={materials.coachDarkMask} attach="material" />
             </mesh>
             {/* Elegant Draped Royal Blue Window Curtain (Picture 4) */}
             <mesh position={[0.035, 0, 0]} castShadow>
@@ -352,7 +345,7 @@ function Volvo9900LuxuryCoachModel() {
           <group position={[1.24, 1.48, z]}>
             <mesh castShadow>
               <boxGeometry args={[0.06, 1.12, 0.16]} />
-              <primitive object={materials.coachBlackMask} attach="material" />
+              <primitive object={materials.coachDarkMask} attach="material" />
             </mesh>
             {/* Elegant Draped Royal Blue Window Curtain (Picture 4) */}
             <mesh position={[-0.035, 0, 0]} castShadow>
@@ -363,37 +356,23 @@ function Volvo9900LuxuryCoachModel() {
         </React.Fragment>
       ))}
 
-      {/* Aerodynamic Roof Side Rails (Cutaway Silhouette Framing, Picture 1 & 2) */}
+      {/* 
+        Sleek Aerodynamic Roof Side Rails (Cutaway Silhouette Framing, Image 6)
+        NOTE: ROOF IS 100% UNCOVERED/OPEN — NO OBSTRUCTING BOX OVER BACK SEATS!
+      */}
       <group position={[-1.25, 2.08, 0.2]}>
         <RoundedBox args={[0.08, 0.12, 14.2]} radius={0.02} smoothness={3} castShadow>
-          <primitive object={materials.coachBodyPaint} attach="material" />
+          <primitive object={materials.coachBodyGold} attach="material" />
         </RoundedBox>
       </group>
       <group position={[1.25, 2.08, 0.2]}>
         <RoundedBox args={[0.08, 0.12, 14.2]} radius={0.02} smoothness={3} castShadow>
-          <primitive object={materials.coachBodyPaint} attach="material" />
+          <primitive object={materials.coachBodyGold} attach="material" />
         </RoundedBox>
-      </group>
-
-      {/* 
-        Rooftop AC Condenser Unit Pod with Cooling Louvers (Picture 2 CAD Reference)
-        Mounted gracefully at the rear roof section without obstructing the cabin!
-      */}
-      <group position={[0, 2.15, 2.8]}>
-        <RoundedBox args={[1.8, 0.16, 2.6]} radius={0.06} smoothness={3} castShadow>
-          <primitive object={materials.coachBodyPaint} attach="material" />
-        </RoundedBox>
-        {/* AC Ventilation Grilles */}
-        {[-0.6, 0, 0.6].map((gz, gi) => (
-          <mesh key={gi} position={[0, 0.085, gz]}>
-            <boxGeometry args={[1.4, 0.01, 0.26]} />
-            <primitive object={materials.coachBlackMask} attach="material" />
-          </mesh>
-        ))}
       </group>
 
       {/* ============================================================ */}
-      {/* 4. REALISTIC 3-AXLE COACH WHEELS (Picture 1 Volvo 9900)       */}
+      {/* 4. REALISTIC 3-AXLE WHEELS (Image 6 Touring Coach)           */}
       {/* ============================================================ */}
       {[
         [-1.30, -0.05, -3.8],
@@ -404,7 +383,7 @@ function Volvo9900LuxuryCoachModel() {
         [1.30, -0.05, 4.8],
       ].map(([wx, wy, wz], wi) => (
         <group key={wi} position={[wx, wy, wz]}>
-          {/* Wheel Arch Fender Liner */}
+          {/* Wheel Arch Liner */}
           <mesh position={[wx > 0 ? -0.05 : 0.05, 0.15, 0]}>
             <boxGeometry args={[0.05, 0.65, 1.05]} />
             <primitive object={materials.interiorCharcoal} attach="material" />
@@ -414,7 +393,7 @@ function Volvo9900LuxuryCoachModel() {
             <cylinderGeometry args={[0.44, 0.44, 0.24, 24]} />
             <primitive object={materials.tireRubber} attach="material" />
           </mesh>
-          {/* Diamond-cut Multi-spoke Alloy Rim (Picture 1) */}
+          {/* Diamond-cut Multi-spoke Alloy Rim (Image 6) */}
           <mesh rotation={[0, 0, Math.PI / 2]}>
             <cylinderGeometry args={[0.27, 0.27, 0.26, 16]} />
             <primitive object={materials.alloyRim} attach="material" />
@@ -428,64 +407,77 @@ function Volvo9900LuxuryCoachModel() {
       ))}
 
       {/* ============================================================ */}
-      {/* 5. VOLVO 9900 FRONT COACH FACE & DRIVER COCKPIT (Picture 1 & 5) */}
+      {/* 5. SLEEK CHAMPAGNE FRONT COACH FASCIA (Image 6 Exact Match)  */}
       {/* ============================================================ */}
       <group position={[0, 0, -5.6]}>
-        {/* Sculpted Aerodynamic Front Bumper with Lower Air Dam (Picture 1) */}
-        <RoundedBox args={[2.54, 0.48, 0.65]} radius={0.12} smoothness={3} position={[0, 0.12, -0.9]} castShadow>
-          <primitive object={materials.coachBodyPaint} attach="material" />
+        {/* Curved Aerodynamic Front Bumper & Chin (Image 6) */}
+        <RoundedBox args={[2.54, 0.52, 0.8]} radius={0.18} smoothness={4} position={[0, 0.14, -0.92]} castShadow>
+          <primitive object={materials.coachBodyGold} attach="material" />
         </RoundedBox>
 
-        {/* Lower Gloss Black Grille & Air Intakes */}
-        <mesh position={[0, 0.05, -1.23]}>
-          <boxGeometry args={[1.8, 0.24, 0.04]} />
-          <primitive object={materials.coachBlackMask} attach="material" />
+        {/* Lower Central Dark Air Intake Grille (Image 6) */}
+        <mesh position={[0, 0.06, -1.33]}>
+          <boxGeometry args={[1.5, 0.22, 0.04]} />
+          <primitive object={materials.coachDarkMask} attach="material" />
         </mesh>
 
-        {/* Dynamic V-shaped Chrome Slash & Novara Coach Emblem (Picture 1 Volvo iron mark) */}
-        <mesh position={[0, 0.22, -1.22]}>
-          <boxGeometry args={[1.5, 0.025, 0.02]} />
-          <primitive object={materials.chromeTrim} attach="material" />
-        </mesh>
-        <mesh position={[0, 0.22, -1.21]}>
-          <circleGeometry args={[0.09, 20]} />
-          <primitive object={materials.chromeTrim} attach="material" />
-        </mesh>
-
-        {/* Modern Angled LED Headlights with Signature Boomerang DRLs (Picture 1) */}
-        <group position={[-0.98, 0.25, -1.18]}>
-          <RoundedBox args={[0.42, 0.16, 0.08]} radius={0.03} smoothness={3}>
-            <primitive object={materials.headlightLens} attach="material" />
+        {/* Triple Round LED Projector Headlamp Clusters (Image 6) */}
+        {/* Left Headlamp */}
+        <group position={[-0.95, 0.24, -1.24]}>
+          <RoundedBox args={[0.44, 0.16, 0.06]} radius={0.03} smoothness={3}>
+            <primitive object={materials.coachDarkMask} attach="material" />
           </RoundedBox>
+          {[-0.14, 0, 0.14].map((lx, li) => (
+            <mesh key={li} position={[lx, 0, 0.035]} rotation={[Math.PI / 2, 0, 0]}>
+              <cylinderGeometry args={[0.045, 0.045, 0.03, 16]} />
+              <primitive object={materials.headlightLens} attach="material" />
+            </mesh>
+          ))}
         </group>
-        <group position={[0.98, 0.25, -1.18]}>
-          <RoundedBox args={[0.42, 0.16, 0.08]} radius={0.03} smoothness={3}>
-            <primitive object={materials.headlightLens} attach="material" />
+        {/* Right Headlamp */}
+        <group position={[0.95, 0.24, -1.24]}>
+          <RoundedBox args={[0.44, 0.16, 0.06]} radius={0.03} smoothness={3}>
+            <primitive object={materials.coachDarkMask} attach="material" />
           </RoundedBox>
+          {[-0.14, 0, 0.14].map((lx, li) => (
+            <mesh key={li} position={[lx, 0, 0.035]} rotation={[Math.PI / 2, 0, 0]}>
+              <cylinderGeometry args={[0.045, 0.045, 0.03, 16]} />
+              <primitive object={materials.headlightLens} attach="material" />
+            </mesh>
+          ))}
         </group>
 
-        {/* Slanted Curved Panoramic Windshield with Dark Ceramic Border */}
-        <mesh position={[0, 1.15, -0.85]} rotation={[0.32, 0, 0]} raycast={() => null}>
-          <planeGeometry args={[2.46, 1.7]} />
+        {/* Circular Lower Fog Lamps (Image 6) */}
+        <mesh position={[-0.92, -0.04, -1.30]}>
+          <circleGeometry args={[0.05, 16]} />
+          <primitive object={materials.fogLampLens} attach="material" />
+        </mesh>
+        <mesh position={[0.92, -0.04, -1.30]}>
+          <circleGeometry args={[0.05, 16]} />
+          <primitive object={materials.fogLampLens} attach="material" />
+        </mesh>
+
+        {/* Slanted Curved Panoramic Windshield with Dark Border (Image 6) */}
+        <mesh position={[0, 1.18, -0.85]} rotation={[0.34, 0, 0]} raycast={() => null}>
+          <planeGeometry args={[2.46, 1.75]} />
           <primitive object={materials.panoramicGlass} attach="material" />
         </mesh>
 
-        {/* Dual Articulated Windshield Wipers */}
-        <mesh position={[-0.45, 0.46, -1.02]} rotation={[0, 0, 0.18]}>
+        {/* Dual Articulated Windshield Wipers (Image 6) */}
+        <mesh position={[-0.45, 0.46, -1.05]} rotation={[0, 0, 0.18]}>
           <boxGeometry args={[0.55, 0.018, 0.015]} />
           <primitive object={materials.interiorCharcoal} attach="material" />
         </mesh>
-        <mesh position={[0.45, 0.46, -1.02]} rotation={[0, 0, 0.18]}>
+        <mesh position={[0.45, 0.46, -1.05]} rotation={[0, 0, 0.18]}>
           <boxGeometry args={[0.55, 0.018, 0.015]} />
           <primitive object={materials.interiorCharcoal} attach="material" />
         </mesh>
 
-        {/* Upper Windshield Crown Visor & LED Destination Route Display (Picture 1) */}
+        {/* Upper Windshield Crown Visor & LED Destination Route Display (Image 6) */}
         <group position={[0, 2.05, -0.6]}>
           <RoundedBox args={[2.52, 0.36, 0.5]} radius={0.08} smoothness={3} castShadow>
-            <primitive object={materials.coachBodyPaint} attach="material" />
+            <primitive object={materials.coachBodyGold} attach="material" />
           </RoundedBox>
-          {/* Destination Matrix Sign */}
           <mesh position={[0, -0.02, -0.26]} rotation={[0.22, 0, 0]}>
             <planeGeometry args={[1.9, 0.18]} />
             <meshStandardMaterial color="#0B132B" emissive="#0284C7" emissiveIntensity={0.4} />
@@ -493,34 +485,29 @@ function Volvo9900LuxuryCoachModel() {
         </group>
 
         {/* 
-          High-Mounted Aerodynamic Wing Mirrors ("Elephant-Ear" Mirrors, Picture 1)
-          Curving down gracefully from the roofline on both sides!
+          High-Mounted Aerodynamic Wing Mirrors in Champagne Body Color (Image 6)
         */}
         <group position={[-1.42, 1.62, -0.6]}>
-          {/* Curved Stalk */}
           <mesh castShadow>
             <cylinderGeometry args={[0.018, 0.018, 0.48, 12]} />
-            <primitive object={materials.coachBlackMask} attach="material" />
+            <primitive object={materials.coachDarkMask} attach="material" />
           </mesh>
           <RoundedBox args={[0.12, 0.42, 0.18]} radius={0.03} smoothness={3} position={[-0.08, 0.16, -0.08]} castShadow>
-            <primitive object={materials.coachBodyPaint} attach="material" />
+            <primitive object={materials.coachBodyGold} attach="material" />
           </RoundedBox>
-          {/* Mirror Glass Surface */}
           <mesh position={[-0.02, 0.16, -0.08]} rotation={[0, -Math.PI / 2, 0]}>
             <planeGeometry args={[0.16, 0.38]} />
             <primitive object={materials.chromeTrim} attach="material" />
           </mesh>
         </group>
         <group position={[1.42, 1.62, -0.6]}>
-          {/* Curved Stalk */}
           <mesh castShadow>
             <cylinderGeometry args={[0.018, 0.018, 0.48, 12]} />
-            <primitive object={materials.coachBlackMask} attach="material" />
+            <primitive object={materials.coachDarkMask} attach="material" />
           </mesh>
           <RoundedBox args={[0.12, 0.42, 0.18]} radius={0.03} smoothness={3} position={[0.08, 0.16, -0.08]} castShadow>
-            <primitive object={materials.coachBodyPaint} attach="material" />
+            <primitive object={materials.coachBodyGold} attach="material" />
           </RoundedBox>
-          {/* Mirror Glass Surface */}
           <mesh position={[0.02, 0.16, -0.08]} rotation={[0, Math.PI / 2, 0]}>
             <planeGeometry args={[0.16, 0.38]} />
             <primitive object={materials.chromeTrim} attach="material" />
@@ -528,15 +515,14 @@ function Volvo9900LuxuryCoachModel() {
         </group>
 
         {/* 
-          DRIVER COCKPIT & DASHBOARD (Exact Match to Picture 5 Reference)
+          DRIVER COCKPIT & DASHBOARD (Picture 5 Reference)
         */}
         <group position={[-0.45, 0.62, -0.2]}>
-          {/* Curved Ergonomic Dashboard Console */}
           <RoundedBox args={[1.35, 0.46, 0.78]} radius={0.05} smoothness={4} castShadow>
             <primitive object={materials.interiorCharcoal} attach="material" />
           </RoundedBox>
 
-          {/* Authentic Warm Walnut Instrument Cluster & Pushbutton Console (Picture 5) */}
+          {/* Warm Walnut Instrument Cluster & Telemetry (Picture 5) */}
           <mesh position={[0, 0.24, 0.05]} rotation={[-0.35, 0, 0]}>
             <planeGeometry args={[0.82, 0.28]} />
             <meshStandardMaterial map={dashTexture} roughness={0.25} metalness={0.1} />
@@ -544,17 +530,14 @@ function Volvo9900LuxuryCoachModel() {
 
           {/* 3-Spoke Bus Steering Wheel & Column (Picture 5) */}
           <group position={[0, 0.32, 0.24]} rotation={[0.55, 0, 0]}>
-            {/* Steering Column */}
             <mesh position={[0, -0.15, 0]} castShadow>
               <cylinderGeometry args={[0.035, 0.045, 0.3, 16]} />
               <primitive object={materials.interiorCharcoal} attach="material" />
             </mesh>
-            {/* Steering Rim */}
             <mesh castShadow>
               <torusGeometry args={[0.20, 0.02, 16, 32]} />
               <primitive object={materials.interiorCharcoal} attach="material" />
             </mesh>
-            {/* Center Hub */}
             <mesh>
               <cylinderGeometry args={[0.065, 0.065, 0.035, 20]} />
               <primitive object={materials.chromeTrim} attach="material" />
@@ -573,7 +556,7 @@ function Volvo9900LuxuryCoachModel() {
             </mesh>
           </group>
 
-          {/* High-visibility Safety Yellow Grab Stanchions (Picture 4 & 5) */}
+          {/* Safety Yellow Grab Rails (Picture 4 & 5) */}
           <mesh position={[0.62, 0.35, 0.25]} castShadow>
             <cylinderGeometry args={[0.016, 0.016, 1.1, 16]} />
             <primitive object={materials.safetyYellowRail} attach="material" />
@@ -581,27 +564,23 @@ function Volvo9900LuxuryCoachModel() {
 
           {/* Forward-Facing Driver Suspension Seat */}
           <group position={[0, -0.14, 0.62]}>
-            {/* Pedestal */}
             <mesh position={[0, 0.08, 0]} castShadow>
               <cylinderGeometry args={[0.1, 0.12, 0.22, 16]} />
               <primitive object={materials.interiorCharcoal} attach="material" />
             </mesh>
-            {/* Driver Cushion */}
             <RoundedBox args={[0.52, 0.12, 0.50]} radius={0.03} smoothness={3} position={[0, 0.22, -0.05]} castShadow>
               <primitive object={materials.interiorCharcoal} attach="material" />
             </RoundedBox>
-            {/* Driver Backrest (Facing forward toward -Z) */}
             <RoundedBox args={[0.48, 0.68, 0.10]} radius={0.03} smoothness={3} position={[0, 0.62, 0.20]} rotation={[0.12, 0, 0]} castShadow>
               <primitive object={materials.interiorCharcoal} attach="material" />
             </RoundedBox>
-            {/* Driver Headrest */}
             <RoundedBox args={[0.28, 0.16, 0.08]} radius={0.03} smoothness={3} position={[0, 1.02, 0.18]} castShadow>
               <primitive object={materials.interiorCharcoal} attach="material" />
             </RoundedBox>
           </group>
         </group>
 
-        {/* Boarding Steps at Front Right Door with Safety Yellow Nosing (Picture 4) */}
+        {/* Boarding Steps with Safety Yellow Nosing (Picture 4) */}
         <group position={[0.82, -0.08, 0.2]}>
           <mesh receiveShadow>
             <boxGeometry args={[0.72, 0.1, 0.42]} />
@@ -615,18 +594,18 @@ function Volvo9900LuxuryCoachModel() {
       </group>
 
       {/* ============================================================ */}
-      {/* 6. REALISTIC TOURING COACH REAR TAIL & BULKHEAD              */}
+      {/* 6. SCULPTED REAR TOURING COACH TAIL (Image 6 Aerodynamic)    */}
       {/* ============================================================ */}
       <group position={[0, 0.95, 6.25]}>
-        {/* Sculpted Rear Cap with Aerodynamic Corner Pillars (Picture 1 & 2) */}
-        <RoundedBox args={[2.54, 2.05, 0.35]} radius={0.12} smoothness={4} castShadow receiveShadow>
-          <primitive object={materials.coachBodyPaint} attach="material" />
+        {/* Sculpted Rear Cap with Rounded Aerodynamic Corners (Image 6) */}
+        <RoundedBox args={[2.54, 2.05, 0.42]} radius={0.16} smoothness={4} castShadow receiveShadow>
+          <primitive object={materials.coachBodyGold} attach="material" />
         </RoundedBox>
 
         {/* Lower Rear Bumper with Twin Chrome Exhaust Diffusers */}
-        <group position={[0, -0.85, 0.18]}>
+        <group position={[0, -0.85, 0.22]}>
           <RoundedBox args={[2.56, 0.36, 0.25]} radius={0.08} smoothness={3} castShadow>
-            <primitive object={materials.coachBlackMask} attach="material" />
+            <primitive object={materials.coachDarkMask} attach="material" />
           </RoundedBox>
           <mesh position={[-0.82, -0.05, 0.13]}>
             <boxGeometry args={[0.26, 0.07, 0.04]} />
@@ -643,8 +622,8 @@ function Volvo9900LuxuryCoachModel() {
           </mesh>
         </group>
 
-        {/* Vertical LED Tail Light Assemblies on Left & Right (Picture 1 & 2) */}
-        <group position={[-1.12, 0.12, 0.18]}>
+        {/* Vertical LED Tail Light Assemblies (Image 6) */}
+        <group position={[-1.12, 0.12, 0.22]}>
           <RoundedBox args={[0.14, 1.05, 0.05]} radius={0.03} smoothness={3}>
             <primitive object={materials.taillightLens} attach="material" />
           </RoundedBox>
@@ -653,7 +632,7 @@ function Volvo9900LuxuryCoachModel() {
             <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.7} />
           </mesh>
         </group>
-        <group position={[1.12, 0.12, 0.18]}>
+        <group position={[1.12, 0.12, 0.22]}>
           <RoundedBox args={[0.14, 1.05, 0.05]} radius={0.03} smoothness={3}>
             <primitive object={materials.taillightLens} attach="material" />
           </RoundedBox>
@@ -664,15 +643,15 @@ function Volvo9900LuxuryCoachModel() {
         </group>
 
         {/* Rear Privacy Tinted Window (Picture 4) */}
-        <mesh position={[0, 0.35, 0.185]} raycast={() => null}>
+        <mesh position={[0, 0.35, 0.22]} raycast={() => null}>
           <planeGeometry args={[1.8, 0.85]} />
           <primitive object={materials.panoramicGlass} attach="material" />
         </mesh>
 
-        {/* Aerodynamic High-Mount Rear Roof Spoiler & Third Brake Light (Picture 1) */}
-        <group position={[0, 1.05, 0.04]}>
+        {/* Aerodynamic High-Mount Rear Roof Spoiler & Third Brake Light (Image 6) */}
+        <group position={[0, 1.05, 0.06]}>
           <RoundedBox args={[2.52, 0.14, 0.40]} radius={0.03} smoothness={3} castShadow>
-            <primitive object={materials.coachBlackMask} attach="material" />
+            <primitive object={materials.coachDarkMask} attach="material" />
           </RoundedBox>
           <mesh position={[0, 0.02, 0.21]}>
             <boxGeometry args={[0.9, 0.035, 0.02]} />
@@ -707,12 +686,14 @@ export default function BusInteriorScene({
         <PerspectiveCamera
           makeDefault
           position={[OVERVIEW_CAMERA_POS.x, OVERVIEW_CAMERA_POS.y, OVERVIEW_CAMERA_POS.z]}
-          fov={42}
+          fov={40}
+          near={0.1}
+          far={100}
         />
         <CameraController activeFocusedSeat={activeFocusedSeat} isZoomed={isZoomed} />
 
         {/* LUXURY AUTOMOTIVE STUDIO ILLUMINATION */}
-        <hemisphereLight args={['#F8FAFC', '#0F172A', 0.95]} />
+        <hemisphereLight args={['#FFFDF7', '#0F172A', 1.0]} />
 
         {/* Primary Studio Spotlight */}
         <directionalLight
@@ -732,13 +713,13 @@ export default function BusInteriorScene({
         />
 
         {/* Ambient Fill Light */}
-        <directionalLight position={[-10, 12, -8]} intensity={0.8} color="#E2E8F0" />
+        <directionalLight position={[-10, 12, -8]} intensity={0.85} color="#E2E8F0" />
 
-        {/* Warm Rim Light for Coach Body Silhouette */}
-        <directionalLight position={[0, 6, -14]} intensity={0.65} color="#BAE6FD" />
+        {/* Warm Golden Rim Light for Coach Body Silhouette (Image 6) */}
+        <directionalLight position={[0, 6, -14]} intensity={0.8} color="#FEF08A" />
 
-        {/* Realistic Volvo 9900 Luxury Touring Coach Model */}
-        <Volvo9900LuxuryCoachModel />
+        {/* Realistic Champagne Gold Luxury Touring Coach Model (Image 6) */}
+        <ChampagneLuxuryCoachModel isZoomed={isZoomed} />
 
         {/* 
           All 28 Forward-Facing Passenger Seats (100% Unobstructed and Fully Interactive) 

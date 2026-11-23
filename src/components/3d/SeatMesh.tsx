@@ -265,7 +265,7 @@ export default function SeatMesh({ seat, status, onClick, onHover }: SeatMeshPro
             <primitive object={materials.upholsteryMat} attach="material" />
           </RoundedBox>
 
-          {/* Lower Lumbar Ergonomic Pillow */}
+          {/* Lower Lumbar Ergonomic Pillow with Horizontal Contours (Image 4) */}
           <RoundedBox
             args={[0.34, 0.16, 0.05]}
             radius={0.02}
@@ -275,6 +275,14 @@ export default function SeatMesh({ seat, status, onClick, onHover }: SeatMeshPro
           >
             <primitive object={materials.upholsteryMat} attach="material" />
           </RoundedBox>
+
+          {/* Horizontal Lumbar Cushion Segment Contours (Image 4 Wireframe) */}
+          {[-0.14, -0.06, 0.02].map((hy, hi) => (
+            <mesh key={hi} position={[0, hy, 0.072]}>
+              <boxGeometry args={[0.30, 0.012, 0.005]} />
+              <primitive object={materials.bolsterMat} attach="material" />
+            </mesh>
+          ))}
 
           {/* Left Torso Support Bolster */}
           <group position={[-0.19, -0.04, 0.045]}>
@@ -289,6 +297,16 @@ export default function SeatMesh({ seat, status, onClick, onHover }: SeatMeshPro
               <primitive object={materials.bolsterMat} attach="material" />
             </RoundedBox>
           </group>
+
+          {/* Top Shoulder Aisle Grab Handle (Image 4 Wireframe) */}
+          {(seat.col === 1 || seat.col === 2) && (
+            <group position={[seat.col === 1 ? -0.22 : 0.22, 0.32, -0.02]} rotation={[0, 0, seat.col === 1 ? -0.2 : 0.2]}>
+              <mesh castShadow>
+                <torusGeometry args={[0.042, 0.008, 12, 24, Math.PI * 1.1]} />
+                <primitive object={materials.metalMat} attach="material" />
+              </mesh>
+            </group>
+          )}
 
           {/* 
             4. CRISP WHITE LEATHER HEADREST PILLOW / ANTIMACASSAR COVER

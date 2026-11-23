@@ -16,14 +16,14 @@ function LuxuryTouringCoachModel() {
 
   return (
     <group ref={busGroup} position={[0, -0.3, 0]} rotation={[0.08, -0.65, 0]}>
-      {/* 1. Main Coach Body Shell (Gleaming Pearl Metallic White) */}
+      {/* 1. Main Coach Body Shell (Champagne Metallic Gold - Image 6) */}
       <RoundedBox args={[2.5, 1.6, 8.4]} radius={0.14} smoothness={4} position={[0, 0.8, 0]} castShadow>
-        <meshStandardMaterial color="#F1F5F9" roughness={0.15} metalness={0.35} />
+        <meshStandardMaterial color="#C8AB73" roughness={0.2} metalness={0.4} />
       </RoundedBox>
 
-      {/* 2. Royal Navy Lower Body Accent Skirt */}
+      {/* 2. Dark Gloss Lower Body Accent Skirt */}
       <RoundedBox args={[2.52, 0.55, 8.42]} radius={0.08} smoothness={3} position={[0, 0.32, 0]} castShadow>
-        <meshStandardMaterial color="#0F2557" roughness={0.2} metalness={0.7} />
+        <meshStandardMaterial color="#181E29" roughness={0.25} metalness={0.5} />
       </RoundedBox>
 
       {/* 3. Chrome Beltline Ribbon */}
