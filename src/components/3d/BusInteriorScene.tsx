@@ -25,9 +25,13 @@ interface BusInteriorSceneProps {
   isZoomed: boolean;
 }
 
-// Elevated 3/4 cutaway camera position: full luxury coach visible from front to rear (9 rows)
-const OVERVIEW_CAMERA_POS = { x: 8.5, y: 7.2, z: 7.8 };
-const OVERVIEW_TARGET = { x: 0, y: 0.50, z: 0.6 };
+// Initial Intro Position (Pic 1 - 3/4 side profile overview)
+const INTRO_CAMERA_POS = { x: -8.8, y: 7.2, z: 8.4 };
+const INTRO_TARGET = { x: 0, y: 0.5, z: 0.3 };
+
+// Final Aligned Overhead Cabin Position (Pic 2 - Aligned rear looking down center aisle)
+const OVERVIEW_CAMERA_POS = { x: 0.05, y: 10.8, z: 9.4 };
+const OVERVIEW_TARGET = { x: 0, y: 0.4, z: 0.5 };
 
 // Camera controller: ALWAYS places camera in the central aisle looking toward the seat
 function CameraController({
@@ -39,10 +43,40 @@ function CameraController({
 }) {
   const { camera } = useThree();
   const controlsRef = useRef<any>(null);
+  const hasAnimatedIntro = useRef(false);
 
   useEffect(() => {
     if (!controlsRef.current) return;
     const controls = controlsRef.current;
+
+    // First visit intro swoop: starts at Pic 1 (side angle) and smoothly rotates to Pic 2 (cabin overview)
+    if (!hasAnimatedIntro.current && !isZoomed) {
+      hasAnimatedIntro.current = true;
+      camera.position.set(INTRO_CAMERA_POS.x, INTRO_CAMERA_POS.y, INTRO_CAMERA_POS.z);
+      controls.target.set(INTRO_TARGET.x, INTRO_TARGET.y, INTRO_TARGET.z);
+      controls.update();
+
+      gsap.to(camera.position, {
+        x: OVERVIEW_CAMERA_POS.x,
+        y: OVERVIEW_CAMERA_POS.y,
+        z: OVERVIEW_CAMERA_POS.z,
+        duration: 2.2,
+        ease: 'power2.inOut',
+        delay: 0.15,
+        onUpdate: () => controls.update(),
+      });
+
+      gsap.to(controls.target, {
+        x: OVERVIEW_TARGET.x,
+        y: OVERVIEW_TARGET.y,
+        z: OVERVIEW_TARGET.z,
+        duration: 2.2,
+        ease: 'power2.inOut',
+        delay: 0.15,
+        onUpdate: () => controls.update(),
+      });
+      return;
+    }
 
     gsap.killTweensOf(camera.position);
     gsap.killTweensOf(controls.target);
@@ -50,12 +84,15 @@ function CameraController({
     if (isZoomed && activeFocusedSeat) {
       const [sx, sy, sz] = activeFocusedSeat.position;
 
-      // Position camera in the center aisle at comfortable framing matching user reference screenshot (media_1795405618410_63855c4b.jpg)
-      // Elevated slightly above headrest height and set back ~2.20m for a clear 3/4 perspective with breathing room
+      // Position camera in the central open aisle directly adjacent/in front of the seat
+      // In the open aisle (x: ±0.28) where zero geometry ever obstructs the lens.
+      // Elevated comfortably (y: sy + 1.10) with gentle setback (z: sz - 1.25)
+      // and centered on the midpoint of the seat (y: sy + 0.40) so the entire suite
+      // (headrest badge, backrest, cushion, armrest, floor runner) is framed with breathing room.
       const targetCameraPos = {
-        x: sx < 0 ? 0.45 : -0.45,
-        y: sy + 0.82,
-        z: sz - 2.20,
+        x: sx < 0 ? 0.28 : -0.28,
+        y: sy + 1.10,
+        z: sz - 1.25,
       };
 
       gsap.to(camera.position, {
@@ -69,14 +106,14 @@ function CameraController({
 
       gsap.to(controls.target, {
         x: sx,
-        y: sy + 0.30,
+        y: sy + 0.40,
         z: sz,
         duration: 1.15,
         ease: 'power3.inOut',
         onUpdate: () => controls.update(),
       });
     } else {
-      // Smoothly zoom back out to full luxury coach overview (100% visible)
+      // Smoothly zoom back out to aligned cabin overview (Pic 2)
       gsap.to(camera.position, {
         x: OVERVIEW_CAMERA_POS.x,
         y: OVERVIEW_CAMERA_POS.y,
@@ -869,7 +906,7 @@ export default function BusInteriorScene({
 
         <PerspectiveCamera
           makeDefault
-          position={[OVERVIEW_CAMERA_POS.x, OVERVIEW_CAMERA_POS.y, OVERVIEW_CAMERA_POS.z]}
+          position={[INTRO_CAMERA_POS.x, INTRO_CAMERA_POS.y, INTRO_CAMERA_POS.z]}
           fov={38}
           near={0.1}
           far={140}
