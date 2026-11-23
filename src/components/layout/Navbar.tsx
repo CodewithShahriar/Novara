@@ -15,20 +15,23 @@ export default function Navbar() {
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
     { name: 'My Bookings', href: '/dashboard' },
-    { name: 'Fleet Terminal', href: '/admin' },
   ];
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#071526]/95 backdrop-blur-xl border-b border-white/10 shadow-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Brand Logo */}
+        {/* Brand Logo with Custom Transparent N Icon */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#B48C56] to-[#8C6B3D] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
-            <Bus className="w-5 h-5 text-white stroke-[2.5]" />
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#0B1E34] to-[#071526] border border-[#B48C56]/40 flex items-center justify-center p-1.5 shadow-md group-hover:scale-105 group-hover:border-[#B48C56] transition-all">
+            <img 
+              src="/images/novara-logo.png" 
+              alt="Novara Icon" 
+              className="w-full h-full object-contain filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]" 
+            />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-black tracking-tight text-white">
+              <span className="text-2xl font-black tracking-tight text-white group-hover:text-[#E0C097] transition-colors">
                 NOVARA
               </span>
               <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#B48C56]/20 text-[#D8B788] border border-[#B48C56]/30 uppercase tracking-widest">

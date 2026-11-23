@@ -12,8 +12,8 @@ export default function Footer() {
           {/* Brand Info */}
           <div className="space-y-4 md:col-span-1">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#B48C56] to-[#8C6B3D] flex items-center justify-center text-white shadow-md">
-                <Bus className="w-5 h-5 text-white stroke-[2.5]" />
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0B1E34] to-[#071526] border border-[#B48C56]/40 flex items-center justify-center p-1.5 shadow-md">
+                <img src="/images/novara-logo.png" alt="Novara Logo" className="w-full h-full object-contain" />
               </div>
               <div>
                 <span className="text-xl font-black text-white tracking-tight">NOVARA</span>
@@ -58,11 +58,6 @@ export default function Footer() {
               <li>
                 <Link href="/dashboard" className="hover:text-white transition">
                   Manage Digital Boarding Pass
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin" className="hover:text-white transition">
-                  Fleet Operations Terminal
                 </Link>
               </li>
             </ul>
