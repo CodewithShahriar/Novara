@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic';
 
-import React, { useState, useMemo, Suspense } from 'react';
+import React, { useState, useMemo, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import {
@@ -90,6 +90,16 @@ function RoutesContent() {
   const [maxPrice, setMaxPrice] = useState<number>(150);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>('all');
   const [sortOption, setSortOption] = useState<'price-asc' | 'price-desc' | 'duration' | 'rating'>('price-asc');
+  const [isFiltering, setIsFiltering] = useState(false);
+
+  // Trigger brief luxury pulsing loader whenever search criteria or filters change
+  useEffect(() => {
+    setIsFiltering(true);
+    const timer = setTimeout(() => {
+      setIsFiltering(false);
+    }, 450);
+    return () => clearTimeout(timer);
+  }, [date, fromCity, toCity, selectedTimeSlot, selectedOperator, maxPrice, sortOption]);
 
   const handleDateChange = (newDate: string) => {
     setDate(newDate);
@@ -221,8 +231,16 @@ function RoutesContent() {
                   Live Dispatch
                 </span>
                 <div className="text-xs font-bold text-emerald-400 flex items-center gap-1.5 justify-end">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Real-Time 3D Seats
+                  <span
+                    className={`w-2 h-2 rounded-full ${
+                      isFiltering
+                        ? 'bg-[#E5C287] animate-ping'
+                        : 'bg-emerald-400 animate-pulse'
+                    }`}
+                  />
+                  <span className={isFiltering ? 'text-[#E5C287] font-semibold' : ''}>
+                    {isFiltering ? 'Syncing...' : 'Real-Time 3D Seats'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -365,8 +383,57 @@ function RoutesContent() {
               </div>
             </div>
 
-            {/* List */}
-            {filteredBuses.length === 0 ? (
+            {/* List or Pulsing Loader */}
+            {isFiltering ? (
+              <div className="space-y-4 animate-in fade-in duration-200">
+                {/* Pulsing indicator banner */}
+                <div className="flex items-center justify-center gap-3 py-3.5 px-4 rounded-2xl bg-[#0B192C]/80 border border-[#B48C56]/30 text-xs text-[#E5C287] shadow-lg backdrop-blur-md">
+                  <div className="relative flex items-center justify-center">
+                    <span className="w-3 h-3 rounded-full bg-[#B48C56] animate-ping absolute opacity-75" />
+                    <span className="w-2 h-2 rounded-full bg-[#B48C56]" />
+                  </div>
+                  <span className="font-semibold uppercase tracking-wider text-[11px] animate-pulse">
+                    Updating Schedules for {fromCity} → {toCity} ({formatDateDisplay(date)})...
+                  </span>
+                </div>
+
+                {/* 3 Luxury Pulsing Skeleton Cards */}
+                {[1, 2, 3].map((idx) => (
+                  <div
+                    key={idx}
+                    className="bg-[#0B192C]/70 border border-white/5 rounded-2xl p-6 shadow-xl animate-pulse space-y-4"
+                  >
+                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                      <div className="space-y-2.5 flex-1">
+                        <div className="flex items-center gap-2">
+                          <div className="h-4 w-28 bg-white/10 rounded-md" />
+                          <div className="h-4 w-20 bg-white/5 rounded-md" />
+                        </div>
+                        <div className="h-6 w-52 bg-white/10 rounded-lg" />
+                        <div className="h-4 w-36 bg-white/5 rounded-md" />
+                      </div>
+
+                      <div className="flex items-center justify-between sm:justify-center gap-8 py-2">
+                        <div className="space-y-1 text-center">
+                          <div className="h-5 w-16 bg-white/10 rounded mx-auto" />
+                          <div className="h-3 w-14 bg-white/5 rounded mx-auto" />
+                        </div>
+                        <div className="w-24 sm:w-32 h-1 bg-white/10 rounded-full" />
+                        <div className="space-y-1 text-center">
+                          <div className="h-5 w-16 bg-white/10 rounded mx-auto" />
+                          <div className="h-3 w-14 bg-white/5 rounded mx-auto" />
+                        </div>
+                      </div>
+
+                      <div className="flex lg:flex-col items-center lg:items-end justify-between gap-3">
+                        <div className="h-7 w-20 bg-white/10 rounded-lg" />
+                        <div className="h-10 w-36 bg-gradient-to-r from-[#A67C41]/30 to-[#694416]/30 border border-[#E0BE86]/20 rounded-xl" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : filteredBuses.length === 0 ? (
               <div className="bg-[#0B192C] border border-white/10 rounded-2xl p-12 text-center space-y-3 shadow-xl">
                 <Bus className="w-8 h-8 text-slate-500 mx-auto" />
                 <h4 className="text-base font-bold text-white">No Coaches Match Your Filter</h4>
