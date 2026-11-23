@@ -58,9 +58,9 @@ export default function TicketPage({
         <p className="text-xs text-slate-500 mb-6 font-mono">Reference: {bookingRef}</p>
         <Link
           href="/dashboard"
-          className="px-5 py-2.5 rounded-xl bg-[#B48C56] hover:bg-[#A37B47] text-slate-950 font-bold text-xs uppercase"
+          className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] hover:from-[#B5894B] text-white font-bold text-xs uppercase tracking-wider shadow-lg border border-[#E0BE86]/35"
         >
-          Go to Dashboard
+          Go to My Bookings
         </Link>
       </div>
     );
@@ -77,7 +77,7 @@ export default function TicketPage({
             className="inline-flex items-center gap-2 text-xs font-semibold text-[#D8B788] hover:text-white transition"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Passenger Dashboard</span>
+            <span>My Bookings</span>
           </Link>
 
           <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
@@ -96,7 +96,7 @@ export default function TicketPage({
             className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition"
           >
             <LayoutDashboard className="w-4 h-4 text-[#D8B788]" />
-            <span>View All Trips in Passenger Dashboard</span>
+            <span>View All Trips in My Bookings</span>
           </Link>
         </div>
       </div>
