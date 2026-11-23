@@ -201,50 +201,48 @@ export default function HomePage() {
     <div className="relative min-h-screen bg-[#F8FAFC] text-slate-800 font-sans selection:bg-[#B48C56] selection:text-white">
       
       {/* ============================================================== */}
-      {/* 1. HERO SECTION (Dynamic Full-Screen Viewport Matching Device) */}
+      {/* 1. HERO SECTION (Seamless Background Behind Navbar To Bottom)  */}
       {/* ============================================================== */}
-      <section className="relative min-h-[calc(100vh-5rem)] min-h-[calc(100dvh-5rem)] bg-[#071526] text-white flex flex-col justify-between pt-8 pb-12 sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20 overflow-hidden">
-        {/* Full-Bleed Hero Background Image - Spans 100% full width across entire screen */}
+      <section className="relative min-h-screen bg-[#071526] text-white flex flex-col justify-between pt-24 pb-8 sm:pt-28 sm:pb-12 lg:pt-32 lg:pb-14 overflow-hidden">
+        {/* Full-Bleed Hero Background Image - Spans 100% full width and height, seamless behind navbar */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none brightness-110 contrast-105 saturate-110"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none brightness-105 contrast-105 saturate-110"
           style={{
             backgroundImage: `url('/images/hero-coach.jpg')`,
           }}
         />
 
-        {/* Delicate ambient overlay across the entire background so the full bus is clearly visible */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#071526]/85 via-black/25 to-black/20 pointer-events-none" />
+        {/* Ambient overlay - subtle and uniform so the entire coach and terminal lights remain vibrant */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#071526]/80 via-black/20 to-black/30 pointer-events-none" />
         
         {/* Subtle bottom vignette to smoothly anchor the floating search widget */}
-        <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#071526]/80 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#071526]/85 to-transparent pointer-events-none" />
 
-        <div className="relative max-w-7xl xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-between py-4 lg:py-6">
+        <div className="relative max-w-7xl xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-between py-2 lg:py-4">
           
-          {/* Hero Left-Aligned Typography (With Gentle Glass Backdrop Blur Panel Behind Text) */}
-          <div className="text-left max-w-2xl my-auto pt-4 lg:pt-6">
-            <div className="p-6 sm:p-8 rounded-3xl backdrop-blur-md bg-[#071526]/40 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#B48C56]/20 border border-[#B48C56]/40 text-[#D8B788] text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-md shadow-sm">
-                <Sparkles className="w-3.5 h-3.5 text-[#D8B788]" />
-                <span>PREMIUM INTERCITY MOBILITY</span>
-              </div>
-
-              <h1 className="tracking-tight leading-none mb-4">
-                <span className="font-serif italic text-3xl sm:text-5xl md:text-6xl text-[#C5A880] block mb-2 font-normal">
-                  Luxury Coach Travel
-                </span>
-                <span className="text-white text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tight block">
-                  INTERCITY EXPRESS
-                </span>
-              </h1>
-
-              <p className="text-xs sm:text-sm uppercase tracking-widest text-slate-200 font-medium leading-relaxed max-w-xl border-l-2 border-[#B48C56] pl-4 mt-2">
-                FAST, COMFORTABLE DIRECT JOURNEYS ACROSS CITIES • GUARANTEED 3D SEAT CONFIRMATION
-              </p>
+          {/* Hero Left-Aligned Typography (Pure & Clean - No Box / Card Outline) */}
+          <div className="text-left max-w-2xl my-auto pt-6 lg:pt-10">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#B48C56]/25 border border-[#B48C56]/40 text-[#D8B788] text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-md shadow-md">
+              <Sparkles className="w-3.5 h-3.5 text-[#D8B788]" />
+              <span>PREMIUM INTERCITY MOBILITY</span>
             </div>
+
+            <h1 className="tracking-tight leading-none mb-4 drop-shadow-[0_3px_14px_rgba(0,0,0,0.9)]">
+              <span className="font-serif italic text-3xl sm:text-5xl md:text-6xl text-[#E5C287] block mb-2 font-normal drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                Luxury Coach Travel
+              </span>
+              <span className="text-white text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tight block drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
+                INTERCITY EXPRESS
+              </span>
+            </h1>
+
+            <p className="text-xs sm:text-sm uppercase tracking-widest text-slate-100 font-semibold leading-relaxed max-w-xl border-l-2 border-[#B48C56] pl-4 mt-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+              FAST, COMFORTABLE DIRECT JOURNEYS ACROSS CITIES • GUARANTEED 3D SEAT CONFIRMATION
+            </p>
           </div>
 
-          {/* Floating Horizontal Search Widget - Shifted Lower to Reveal Coach Details */}
-          <div className="w-full max-w-6xl xl:max-w-7xl bg-[#061222]/85 backdrop-blur-2xl rounded-3xl p-5 sm:p-6 lg:p-7 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(255,255,255,0.18)] border border-white/15 text-white mt-8 sm:mt-12 lg:mt-16 translate-y-3 sm:translate-y-6 lg:translate-y-8 ring-1 ring-white/5">
+          {/* Floating Horizontal Search Widget - Positioned Elegantly Lower */}
+          <div className="w-full max-w-6xl xl:max-w-7xl bg-[#061222]/85 backdrop-blur-2xl rounded-3xl p-5 sm:p-6 lg:p-7 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(255,255,255,0.18)] border border-white/15 text-white mt-8 sm:mt-12 lg:mt-14 ring-1 ring-white/5">
             <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
               
               {/* Departure City */}
