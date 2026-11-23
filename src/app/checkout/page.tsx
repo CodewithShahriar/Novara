@@ -27,9 +27,18 @@ function CheckoutContent() {
 
   const busId = searchParams.get('busId') || 'bus-1';
   const seatsParam = searchParams.get('seats') || '1A';
+  const dateParam = searchParams.get('date');
+  const fromParam = searchParams.get('from');
+  const toParam = searchParams.get('to');
   const seatNumbers = seatsParam.split(',').filter(Boolean);
 
-  const bus = INITIAL_BUSES.find((b) => b.id === busId) || INITIAL_BUSES[0];
+  const rawBus = INITIAL_BUSES.find((b) => b.id === busId) || INITIAL_BUSES[0];
+  const bus = {
+    ...rawBus,
+    ...(dateParam ? { date: dateParam } : {}),
+    ...(fromParam ? { fromCity: fromParam } : {}),
+    ...(toParam ? { toCity: toParam } : {}),
+  };
 
   const [passengerName, setPassengerName] = useState('Alex Mercer');
   const [passengerEmail, setPassengerEmail] = useState('alex.mercer@novaracoach.com');
@@ -69,6 +78,9 @@ function CheckoutContent() {
           passengerName,
           passengerEmail,
           passengerPhone,
+          journeyDate: bus.date,
+          fromCity: bus.fromCity,
+          toCity: bus.toCity,
           seatNumbers,
           totalPrice: grandTotal,
           paymentMethod:

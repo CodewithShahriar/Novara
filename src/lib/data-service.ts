@@ -93,6 +93,9 @@ export async function createBooking(data: {
   seatNumbers: string[];
   totalPrice: number;
   paymentMethod: string;
+  journeyDate?: string;
+  fromCity?: string;
+  toCity?: string;
 }): Promise<BookingRecord> {
   const bus = await getBusById(data.busId);
   const bookingRef = `NOV-${Math.floor(100000 + Math.random() * 900000)}`;
@@ -104,11 +107,11 @@ export async function createBooking(data: {
     busName: bus?.name || 'Novara HyperCoach',
     operator: bus?.operator || 'Novara Premier AeroLine',
     model: bus?.model || 'NC-9000 Autonomous EV',
-    fromCity: bus?.fromCity || 'Neo-San Francisco',
-    toCity: bus?.toCity || 'Metro Los Angeles',
+    fromCity: data.fromCity || bus?.fromCity || 'San Francisco',
+    toCity: data.toCity || bus?.toCity || 'Los Angeles',
     departureTime: bus?.departureTime || '08:30 AM',
     arrivalTime: bus?.arrivalTime || '01:45 PM',
-    journeyDate: bus?.date || '2026-11-25',
+    journeyDate: data.journeyDate || bus?.date || '2026-11-25',
     passengerName: data.passengerName,
     passengerEmail: data.passengerEmail,
     passengerPhone: data.passengerPhone,
@@ -151,10 +154,10 @@ export async function createBooking(data: {
         status: 'CONFIRMED',
         paymentMethod: data.paymentMethod,
         paymentStatus: 'PAID',
-        journeyDate: bus?.date || '2026-11-25',
+        journeyDate: data.journeyDate || bus?.date || '2026-11-25',
         departureTime: bus?.departureTime || '08:30 AM',
-        fromCity: bus?.fromCity || 'Neo-San Francisco',
-        toCity: bus?.toCity || 'Metro Los Angeles',
+        fromCity: data.fromCity || bus?.fromCity || 'San Francisco',
+        toCity: data.toCity || bus?.toCity || 'Los Angeles',
       },
     });
 

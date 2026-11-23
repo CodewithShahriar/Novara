@@ -51,14 +51,36 @@ function getSlotForTime(timeStr: string): string {
   return '18-00';
 }
 
+function formatDateDisplay(dateStr: string): string {
+  if (!dateStr) return '';
+  try {
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      const year = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const day = parseInt(parts[2], 10);
+      const d = new Date(year, month, day);
+      return d.toLocaleDateString('en-US', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      });
+    }
+    return dateStr;
+  } catch {
+    return dateStr;
+  }
+}
+
 function RoutesContent() {
   const searchParams = useSearchParams();
 
   const [fromCity, setFromCity] = useState(
-    searchParams.get('from') || 'Neo-San Francisco'
+    searchParams.get('from') || 'San Francisco'
   );
   const [toCity, setToCity] = useState(
-    searchParams.get('to') || 'Metro Los Angeles'
+    searchParams.get('to') || 'Los Angeles'
   );
   const [date, setDate] = useState(
     searchParams.get('date') || '2026-11-25'
@@ -69,8 +91,46 @@ function RoutesContent() {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>('all');
   const [sortOption, setSortOption] = useState<'price-asc' | 'price-desc' | 'duration' | 'rating'>('price-asc');
 
+  const handleDateChange = (newDate: string) => {
+    setDate(newDate);
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.set('date', newDate);
+      url.searchParams.set('from', fromCity);
+      url.searchParams.set('to', toCity);
+      window.history.replaceState(null, '', url.toString());
+    }
+  };
+
+  const handleFromCityChange = (city: string) => {
+    setFromCity(city);
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.set('from', city);
+      url.searchParams.set('to', toCity);
+      url.searchParams.set('date', date);
+      window.history.replaceState(null, '', url.toString());
+    }
+  };
+
+  const handleToCityChange = (city: string) => {
+    setToCity(city);
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.set('to', city);
+      url.searchParams.set('from', fromCity);
+      url.searchParams.set('date', date);
+      window.history.replaceState(null, '', url.toString());
+    }
+  };
+
   const filteredBuses = useMemo(() => {
-    let list = [...INITIAL_BUSES];
+    let list = INITIAL_BUSES.map((b) => ({
+      ...b,
+      date,
+      fromCity,
+      toCity,
+    }));
 
     if (selectedOperator !== 'all') {
       list = list.filter((b) => b.operator === selectedOperator);
@@ -91,7 +151,7 @@ function RoutesContent() {
     }
 
     return list;
-  }, [selectedOperator, maxPrice, selectedTimeSlot, sortOption]);
+  }, [selectedOperator, maxPrice, selectedTimeSlot, sortOption, fromCity, toCity, date]);
 
   const operators = Array.from(new Set(INITIAL_BUSES.map((b) => b.operator)));
 
@@ -110,7 +170,7 @@ function RoutesContent() {
               </label>
               <select
                 value={fromCity}
-                onChange={(e) => setFromCity(e.target.value)}
+                onChange={(e) => handleFromCityChange(e.target.value)}
                 className="w-full bg-[#071526] border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-[#B48C56]"
               >
                 {CITIES.map((c) => (
@@ -129,7 +189,7 @@ function RoutesContent() {
               </label>
               <select
                 value={toCity}
-                onChange={(e) => setToCity(e.target.value)}
+                onChange={(e) => handleToCityChange(e.target.value)}
                 className="w-full bg-[#071526] border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-[#B48C56]"
               >
                 {CITIES.map((c) => (
@@ -149,8 +209,8 @@ function RoutesContent() {
               <input
                 type="date"
                 value={date}
-                onChange={(e) => setDate(e.target.value)}
-                className="w-full bg-[#071526] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white font-medium focus:outline-none focus:border-[#B48C56]"
+                onChange={(e) => handleDateChange(e.target.value)}
+                className="w-full bg-[#071526] border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white font-medium focus:outline-none focus:border-[#B48C56] [color-scheme:dark]"
               />
             </div>
 
@@ -285,10 +345,12 @@ function RoutesContent() {
           {/* Bus Results List */}
           <div className="lg:col-span-3 space-y-4">
             {/* Header */}
-            <div className="flex items-center justify-between px-2">
-              <span className="text-xs font-medium text-slate-400">
-                Found <span className="text-[#D8B788] font-bold">{filteredBuses.length}</span> luxury coaches
-              </span>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-2">
+              <div className="text-xs text-slate-300">
+                Found <span className="text-[#D8B788] font-bold">{filteredBuses.length}</span> luxury coaches for{' '}
+                <span className="text-white font-bold">{fromCity} → {toCity}</span> on{' '}
+                <span className="text-[#E5C287] font-bold">{formatDateDisplay(date)}</span>
+              </div>
               <div className="flex items-center gap-2 text-xs">
                 <span className="text-slate-400">Sort by:</span>
                 <select
@@ -319,7 +381,7 @@ function RoutesContent() {
                   <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                     {/* Bus Operator & Model Info */}
                     <div className="space-y-2 lg:max-w-xs">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span className="text-xs font-bold text-[#D8B788] uppercase tracking-wider">
                           {bus.operator}
                         </span>
@@ -333,13 +395,17 @@ function RoutesContent() {
                         <span className="font-bold">{bus.rating}</span>
                         <span className="text-slate-400">• Executive Touring Coach</span>
                       </div>
+                      <div className="inline-flex items-center gap-1.5 text-[11px] text-[#E5C287] font-semibold bg-[#B48C56]/15 border border-[#B48C56]/30 px-2.5 py-0.5 rounded-md mt-1">
+                        <Calendar className="w-3 h-3 text-[#B48C56]" />
+                        <span>{formatDateDisplay(date)}</span>
+                      </div>
                     </div>
 
                     {/* Timeline: Departure -> Duration -> Arrival */}
                     <div className="flex items-center justify-between sm:justify-center gap-6 sm:gap-10 border-y lg:border-y-0 lg:border-x border-white/10 py-4 lg:py-0 lg:px-8">
                       <div className="text-center sm:text-left">
                         <div className="text-lg font-black text-white">{bus.departureTime}</div>
-                        <div className="text-xs text-slate-400">{bus.fromCity}</div>
+                        <div className="text-xs text-[#E5C287] font-semibold">{bus.fromCity}</div>
                       </div>
 
                       <div className="flex flex-col items-center">
@@ -356,7 +422,7 @@ function RoutesContent() {
 
                       <div className="text-center sm:text-right">
                         <div className="text-lg font-black text-white">{bus.arrivalTime}</div>
-                        <div className="text-xs text-slate-400">{bus.toCity}</div>
+                        <div className="text-xs text-[#E5C287] font-semibold">{bus.toCity}</div>
                       </div>
                     </div>
 
@@ -375,7 +441,7 @@ function RoutesContent() {
                       </div>
 
                       <Link
-                        href={`/book/${bus.id}`}
+                        href={`/book/${bus.id}?date=${encodeURIComponent(date)}&from=${encodeURIComponent(fromCity)}&to=${encodeURIComponent(toCity)}`}
                         className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] hover:from-[#B5894B] hover:via-[#9A6F2E] hover:to-[#774E1B] text-white font-bold text-xs uppercase tracking-wider shadow-[0_8px_20px_-4px_rgba(139,98,38,0.5),inset_0_1px_1px_rgba(255,255,255,0.3)] border border-[#E0BE86]/35 transition transform hover:-translate-y-0.5"
                       >
                         <Eye className="w-3.5 h-3.5 text-[#FDEBD0]" />

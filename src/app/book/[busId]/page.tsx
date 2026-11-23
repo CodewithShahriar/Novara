@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, use } from 'react';
+import React, { useState, use, useEffect } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import {
@@ -47,6 +47,24 @@ export default function BookBusPage({
     const found = INITIAL_BUSES.find((b) => b.id === busId);
     return found || INITIAL_BUSES[0];
   });
+
+  // Sync date and corridor route from URL query params (e.g. from /routes search)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const sp = new URLSearchParams(window.location.search);
+      const queryDate = sp.get('date');
+      const queryFrom = sp.get('from');
+      const queryTo = sp.get('to');
+      if (queryDate || queryFrom || queryTo) {
+        setBus((prev) => ({
+          ...prev,
+          ...(queryDate ? { date: queryDate } : {}),
+          ...(queryFrom ? { fromCity: queryFrom } : {}),
+          ...(queryTo ? { toCity: queryTo } : {}),
+        }));
+      }
+    }
+  }, []);
 
   // Seat selection state
   const [selectedSeatNumbers, setSelectedSeatNumbers] = useState<string[]>([]);
@@ -227,6 +245,9 @@ export default function BookBusPage({
         onClearAll={() => setSelectedSeatNumbers([])}
         onToggle2DMap={() => setIs2DMapOpen(true)}
         busId={bus.id}
+        date={bus.date}
+        fromCity={bus.fromCity}
+        toCity={bus.toCity}
       />
 
       {/* 7. 2D BLUEPRINT MODAL */}

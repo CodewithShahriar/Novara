@@ -11,6 +11,9 @@ interface FloatingSummaryBarProps {
   onClearAll: () => void;
   onToggle2DMap: () => void;
   busId: string;
+  date?: string;
+  fromCity?: string;
+  toCity?: string;
 }
 
 export default function FloatingSummaryBar({
@@ -19,6 +22,9 @@ export default function FloatingSummaryBar({
   onClearAll,
   onToggle2DMap,
   busId,
+  date,
+  fromCity,
+  toCity,
 }: FloatingSummaryBarProps) {
   const totalCount = selectedSeatsList.length;
   const totalPrice = selectedSeatsList.reduce((acc, s) => acc + s.price, 0);
@@ -100,11 +106,11 @@ export default function FloatingSummaryBar({
           {/* Checkout CTA */}
           {totalCount > 0 ? (
             <Link
-              href={`/checkout?busId=${busId}&seats=${selectedSeatsList.map((s) => s.seatNumber).join(',')}`}
-              className="flex items-center gap-2 bg-[#B48C56] hover:bg-[#A37B47] text-slate-950 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg transition group"
+              href={`/checkout?busId=${busId}&seats=${selectedSeatsList.map((s) => s.seatNumber).join(',')}${date ? `&date=${encodeURIComponent(date)}` : ''}${fromCity ? `&from=${encodeURIComponent(fromCity)}` : ''}${toCity ? `&to=${encodeURIComponent(toCity)}` : ''}`}
+              className="flex items-center gap-2 bg-gradient-to-r from-[#A67C41] via-[#8B6226] to-[#694416] hover:from-[#B5894B] hover:via-[#9A6F2E] hover:to-[#774E1B] text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-[0_8px_20px_-4px_rgba(139,98,38,0.5),inset_0_1px_1px_rgba(255,255,255,0.3)] border border-[#E0BE86]/35 transition transform hover:-translate-y-0.5 group cursor-pointer"
             >
               <span>Continue</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform text-[#FDEBD0]" />
             </Link>
           ) : (
             <button

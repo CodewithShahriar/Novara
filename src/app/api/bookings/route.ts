@@ -16,7 +16,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { busId, passengerName, passengerPhone, passengerEmail, seatNumbers, totalPrice, paymentMethod } = body;
+    const { busId, passengerName, passengerPhone, passengerEmail, seatNumbers, totalPrice, paymentMethod, journeyDate, fromCity, toCity } = body;
 
     if (!busId || !passengerName || !seatNumbers || seatNumbers.length === 0) {
       return NextResponse.json(
@@ -33,6 +33,9 @@ export async function POST(request: Request) {
       seatNumbers,
       totalPrice: totalPrice || 85,
       paymentMethod: paymentMethod || 'CyberPay Instant',
+      journeyDate,
+      fromCity,
+      toCity,
     });
 
     return NextResponse.json({ success: true, data: booking });
