@@ -389,68 +389,14 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Center Column: Two Overlapping Diagonal Boarding Passes / Reference Graphic */}
-            <div className="lg:col-span-4 flex items-center justify-center relative py-6 lg:py-0">
-              <div className="relative w-full max-w-[340px] sm:max-w-[380px] h-[320px] flex items-center justify-center select-none">
-                
-                {/* Rear Dark Navy Boarding Pass (Rotated ~-14deg) */}
-                <div 
-                  className="absolute w-[290px] h-[135px] sm:w-[310px] sm:h-[145px] rounded-2xl bg-[#071526] text-white p-4 shadow-2xl border border-white/10 flex flex-col justify-between transform -rotate-14 -translate-y-8 -translate-x-3 transition-transform duration-500 hover:-rotate-10 hover:scale-105"
-                  style={{ transformOrigin: 'center center' }}
-                >
-                  <div className="flex items-center justify-between border-b border-white/15 pb-2">
-                    <div className="flex items-center gap-2">
-                      <Bus className="w-3.5 h-3.5 text-[#B48C56]" />
-                      <span className="text-[10px] font-black uppercase tracking-widest text-[#D8B788]">NOVARA PASS</span>
-                    </div>
-                    <span className="text-[10px] font-mono text-slate-400">FLAT ECONOMY</span>
-                  </div>
-                  <div className="flex items-center justify-between py-1">
-                    <div>
-                      <div className="text-[9px] uppercase tracking-wider text-slate-400">From / To</div>
-                      <div className="text-xs font-black text-white">SF → LA</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-[9px] uppercase tracking-wider text-slate-400">Seat</div>
-                      <div className="text-sm font-black text-[#D8B788]">27</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between pt-1 border-t border-dashed border-white/20">
-                    <div className="font-mono text-[9px] tracking-widest text-slate-400">||| |||| || | ||||| ||</div>
-                    <span className="text-[10px] font-bold text-emerald-400">BOARDING OK</span>
-                  </div>
-                </div>
-
-                {/* Front Gold / Tan Boarding Pass (Rotated ~-3deg) */}
-                <div 
-                  className="absolute w-[290px] h-[135px] sm:w-[310px] sm:h-[145px] rounded-2xl bg-gradient-to-r from-[#C5A880] to-[#B48C56] text-slate-950 p-4 shadow-[0_25px_50px_-12px_rgba(180,140,86,0.5)] border border-amber-200/50 flex flex-col justify-between transform -rotate-3 translate-y-6 translate-x-2 transition-transform duration-500 hover:rotate-0 hover:scale-105 z-10"
-                  style={{ transformOrigin: 'center center' }}
-                >
-                  <div className="flex items-center justify-between border-b border-slate-950/15 pb-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-5 h-5 rounded bg-slate-950 text-[#C5A880] flex items-center justify-center">
-                        <Bus className="w-3 h-3" />
-                      </div>
-                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-950">BUS TICKET</span>
-                    </div>
-                    <span className="text-[11px] font-black font-mono bg-slate-950/15 px-2 py-0.5 rounded text-slate-900">NOV-8492</span>
-                  </div>
-                  <div className="flex items-center justify-between py-1">
-                    <div>
-                      <div className="text-[9px] uppercase font-bold tracking-wider text-slate-800">Direct Route</div>
-                      <div className="text-xs font-black text-slate-950 uppercase">SAN FRANCISCO → LA</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-[9px] uppercase font-bold tracking-wider text-slate-800">Confirmed</div>
-                      <div className="text-base font-black text-slate-950">SUITE 1B</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between pt-1 border-t border-dashed border-slate-950/25">
-                    <div className="font-mono text-[10px] tracking-widest font-black text-slate-900">|||| ||| |||| | ||| ||||</div>
-                    <span className="text-[10px] font-black text-slate-950 uppercase tracking-wider">$45 • VERIFIED</span>
-                  </div>
-                </div>
-
+            {/* Center Column: Authentic Diagonal Overlapping Luxury Boarding Passes (Exact Reference Match) */}
+            <div className="lg:col-span-4 flex items-center justify-center relative py-4 lg:py-0">
+              <div className="relative w-full max-w-[380px] sm:max-w-[420px] lg:max-w-[450px] flex items-center justify-center select-none group">
+                <img
+                  src="/images/bus-travel-tickets.png"
+                  alt="Novara Luxury Bus Boarding Passes"
+                  className="w-full h-auto object-contain filter drop-shadow-[0_25px_45px_rgba(0,0,0,0.18)] group-hover:scale-105 group-hover:-translate-y-1 transition-all duration-500 cursor-pointer"
+                />
               </div>
             </div>
 
