@@ -50,7 +50,7 @@ const POPULAR_DESTINATIONS = [
     corridor: 'Pacific Harbor & Coastal Bay',
     trips: '10 Daily Express Trips',
     price: '$35',
-    image: 'https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1569974498991-d3c12a504f95?auto=format&fit=crop&w=800&q=80',
     description: 'Punctual coastal departures to harbor concourses, bay gates, and city centers.',
   },
   {
@@ -183,9 +183,6 @@ export default function HomePage() {
   // FAQ open/close state
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
-  // Destination country filter
-  const [destinationFilter, setDestinationFilter] = useState('All');
-
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     router.push(
@@ -221,47 +218,47 @@ export default function HomePage() {
         {/* Subtle bottom vignette to smoothly anchor the floating search widget */}
         <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#071526]/70 to-transparent pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-between py-4 lg:py-6">
+        <div className="relative max-w-7xl xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-between py-4 lg:py-6">
           
-          {/* Hero Left-Aligned Typography (Exact 1:1 Match to Reference Hero!) */}
-          <div className="text-left max-w-2xl my-auto pt-4 lg:pt-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#B48C56]/20 border border-[#B48C56]/30 text-[#D8B788] text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-md">
-              <Sparkles className="w-3.5 h-3.5" />
+          {/* Hero Left-Aligned Typography (Premium Luxury Editorial Style) */}
+          <div className="text-left max-w-2xl my-auto pt-6 lg:pt-10">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#B48C56]/25 to-[#B48C56]/10 border border-[#B48C56]/40 text-[#E2C799] text-xs font-bold uppercase tracking-[0.2em] mb-5 backdrop-blur-md shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 text-[#E2C799]" />
               <span>PREMIUM INTERCITY MOBILITY</span>
             </div>
 
-            <h1 className="font-extrabold tracking-tight leading-none mb-4">
-              <span className="text-[#C5A880] text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-serif italic block mb-1">
-                INTERCITY
+            <h1 className="font-extrabold tracking-tight leading-none mb-5">
+              <span className="font-serif italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-[#F7E7CE] via-[#D8B788] to-[#B48C56] text-3xl sm:text-5xl md:text-6xl lg:text-7xl block mb-2 tracking-wide drop-shadow-[0_2px_12px_rgba(180,140,86,0.3)]">
+                Intercity Express
               </span>
-              <span className="text-white text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black block tracking-tight uppercase">
-                EXPRESS ROUTES
+              <span className="text-white text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black block tracking-tight uppercase drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                TOURING ROUTES
               </span>
             </h1>
 
-            <p className="text-xs sm:text-sm uppercase tracking-widest text-slate-300 font-medium leading-relaxed max-w-xl">
+            <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-slate-300 font-medium leading-relaxed max-w-xl border-l-2 border-[#B48C56] pl-4 mt-2">
               TICKETS FOR FAST AND COMFORTABLE BUS TRIPS ACROSS CITIES • GUARANTEED 3D SEAT CONFIRMATION
             </p>
           </div>
 
-          {/* Floating Horizontal Search Widget (Pinned at lower Hero edge - Ref UI) */}
-          <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-2xl border border-slate-100 max-w-5xl text-slate-900 mt-6 lg:mt-8">
+          {/* Floating Horizontal Search Widget - Obsidian Luxury Glassmorphism */}
+          <div className="w-full max-w-6xl xl:max-w-7xl bg-[#061222]/80 backdrop-blur-2xl rounded-3xl p-5 sm:p-6 lg:p-7 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(255,255,255,0.18)] border border-white/15 text-white mt-6 lg:mt-8 ring-1 ring-white/5">
             <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
               
               {/* Departure City */}
               <div className="relative">
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                <label className="block text-[11px] font-bold text-[#D8B788] uppercase tracking-wider mb-1.5">
                   From
                 </label>
                 <div className="relative flex items-center">
-                  <MapPin className="absolute left-3 w-4 h-4 text-[#B48C56] pointer-events-none" />
+                  <MapPin className="absolute left-3.5 w-4 h-4 text-[#B48C56] pointer-events-none" />
                   <select
                     value={fromCity}
                     onChange={(e) => setFromCity(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#B48C56] transition"
+                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/85 border border-white/15 hover:border-[#B48C56]/60 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
                   >
                     {CITIES.map((city) => (
-                      <option key={`from-${city}`} value={city}>
+                      <option key={`from-${city}`} value={city} className="bg-[#0B1E34] text-white">
                         {city}
                       </option>
                     ))}
@@ -271,18 +268,18 @@ export default function HomePage() {
 
               {/* Destination City */}
               <div className="relative">
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                <label className="block text-[11px] font-bold text-[#D8B788] uppercase tracking-wider mb-1.5">
                   To
                 </label>
                 <div className="relative flex items-center">
-                  <MapPin className="absolute left-3 w-4 h-4 text-[#B48C56] pointer-events-none" />
+                  <MapPin className="absolute left-3.5 w-4 h-4 text-[#B48C56] pointer-events-none" />
                   <select
                     value={toCity}
                     onChange={(e) => setToCity(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#B48C56] transition"
+                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/85 border border-white/15 hover:border-[#B48C56]/60 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
                   >
                     {CITIES.map((city) => (
-                      <option key={`to-${city}`} value={city}>
+                      <option key={`to-${city}`} value={city} className="bg-[#0B1E34] text-white">
                         {city}
                       </option>
                     ))}
@@ -292,34 +289,34 @@ export default function HomePage() {
 
               {/* Date */}
               <div className="relative">
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                <label className="block text-[11px] font-bold text-[#D8B788] uppercase tracking-wider mb-1.5">
                   Date
                 </label>
                 <div className="relative flex items-center">
-                  <Calendar className="absolute left-3 w-4 h-4 text-[#B48C56] pointer-events-none" />
+                  <Calendar className="absolute left-3.5 w-4 h-4 text-[#B48C56] pointer-events-none" />
                   <input
                     type="date"
                     value={journeyDate}
                     onChange={(e) => setJourneyDate(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#B48C56] transition"
+                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/85 border border-white/15 hover:border-[#B48C56]/60 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner [color-scheme:dark]"
                   />
                 </div>
               </div>
 
               {/* Passengers */}
               <div className="relative">
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                <label className="block text-[11px] font-bold text-[#D8B788] uppercase tracking-wider mb-1.5">
                   Passengers
                 </label>
                 <div className="relative flex items-center">
-                  <Users className="absolute left-3 w-4 h-4 text-[#B48C56] pointer-events-none" />
+                  <Users className="absolute left-3.5 w-4 h-4 text-[#B48C56] pointer-events-none" />
                   <select
                     value={passengerCount}
                     onChange={(e) => setPassengerCount(Number(e.target.value))}
-                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#B48C56] transition"
+                    className="w-full pl-10 pr-3 py-3 bg-[#0B1E34]/85 border border-white/15 hover:border-[#B48C56]/60 rounded-2xl text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-[#B48C56] focus:ring-2 focus:ring-[#B48C56]/30 transition-all shadow-inner"
                   >
                     {[1, 2, 3, 4, 5, 6].map((num) => (
-                      <option key={num} value={num}>
+                      <option key={num} value={num} className="bg-[#0B1E34] text-white">
                         {num} {num === 1 ? 'Passenger' : 'Passengers'}
                       </option>
                     ))}
@@ -331,9 +328,9 @@ export default function HomePage() {
               <div className="sm:col-span-2 lg:col-span-1 flex items-end">
                 <button
                   type="submit"
-                  className="w-full py-3 px-5 rounded-xl bg-[#B48C56] hover:bg-[#A37B47] text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg transition transform active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#D8B788] via-[#B48C56] to-[#8C6B3D] hover:from-[#E2C799] hover:to-[#B48C56] text-slate-950 font-black text-xs uppercase tracking-wider shadow-[0_10px_25px_rgba(180,140,86,0.35)] hover:shadow-[0_14px_32px_rgba(180,140,86,0.5)] transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <Search className="w-4 h-4 text-slate-950" />
+                  <Search className="w-4 h-4 text-slate-950 stroke-[2.5]" />
                   <span>Find Tickets</span>
                 </button>
               </div>
@@ -341,11 +338,14 @@ export default function HomePage() {
             </form>
 
             {/* Quick 3D Tour Bar */}
-            <div className="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
-              <span className="font-medium text-slate-600">Direct city-to-city service with interactive 3D seat reservation</span>
+            <div className="mt-4 pt-3.5 border-t border-white/10 flex flex-wrap items-center justify-between text-xs text-slate-300 gap-2">
+              <span className="font-medium text-slate-300 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                Direct city-to-city service with interactive 3D seat reservation
+              </span>
               <Link
                 href="/book/bus-1"
-                className="inline-flex items-center gap-1.5 text-[#B48C56] hover:text-[#8E6A38] font-bold transition hover:underline"
+                className="inline-flex items-center gap-1.5 text-[#D8B788] hover:text-[#F3E3C3] font-bold transition hover:underline"
               >
                 <span>Walk Inside 3D Coach</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -424,35 +424,6 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* Domestic Intercity Network Corridor Pills (City-to-City Service) */}
-        <div className="flex items-center justify-center flex-wrap gap-2.5 max-w-4xl mx-auto">
-          {[
-            'All Corridors',
-            'Los Angeles',
-            'San Francisco',
-            'San Diego',
-            'Las Vegas',
-            'Sacramento',
-            'San Jose',
-            'Seattle',
-            'Portland',
-            'Phoenix',
-          ].map((cityName) => (
-            <button
-              key={cityName}
-              onClick={() => setDestinationFilter(cityName)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 ${
-                destinationFilter === cityName
-                  ? 'bg-[#071526] text-[#D8B788] shadow-md border border-[#B48C56]/40'
-                  : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-xs'
-              }`}
-            >
-              <MapPin className="w-3 h-3 text-[#B48C56]" />
-              <span>{cityName}</span>
-            </button>
-          ))}
-        </div>
-
       </section>
 
       {/* ============================================================== */}
@@ -462,12 +433,12 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Left Column: Portrait photo of traveler with yellow jacket and smartphone */}
+            {/* Left Column: Portrait photo of passengers selfie inside coach */}
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100">
                 <img
-                  src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=1000&q=85"
-                  alt="Happy traveler with yellow jacket checking bus schedule on smartphone"
+                  src="/images/timetable-passengers.jpg"
+                  alt="Happy passengers enjoying direct intercity travel inside Novara touring coach"
                   className="w-full h-[480px] object-cover hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#071526]/50 via-transparent to-transparent" />
