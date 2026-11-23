@@ -357,15 +357,19 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================== */}
-      {/* 2. BUS TRAVEL WITH EASY SECTION (Faithful Reference Match UI)  */}
+      {/* 2. BUS TRAVEL WITH EASY SECTION (Full Uncut Ticket + Details)  */}
       {/* ============================================================== */}
       <section className="py-16 md:py-24 bg-white border-b border-slate-100 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
             
-            {/* Left Column: Big Statement Headline & Read More */}
+            {/* Left Column: Big Statement Headline, Highlights & Read More */}
             <div className="lg:col-span-4 space-y-5 text-left">
               <div>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#B48C56]/15 border border-[#B48C56]/30 text-[#8C6B3D] text-[10px] font-black uppercase tracking-widest mb-3">
+                  <Sparkles className="w-3 h-3 text-[#B48C56]" />
+                  <span>DIGITAL PASS CONCIERGE</span>
+                </span>
                 <h2 className="tracking-tight leading-[0.95]">
                   <span className="font-extrabold text-4xl sm:text-5xl lg:text-6xl text-[#B48C56] block tracking-tight uppercase">
                     BUS TRAVEL
@@ -375,57 +379,82 @@ export default function HomePage() {
                   </span>
                 </h2>
               </div>
+
               <p className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-slate-800 leading-relaxed max-w-sm">
                 AFFORDABLE TICKETS FOR FAST AND COMFORTABLE BUS TRIPS ACROSS CITIES
               </p>
+
+              {/* Detailed Value Checkmarks */}
+              <div className="space-y-2 pt-1 border-t border-slate-100">
+                <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                  <CheckCircle2 className="w-4 h-4 text-[#B48C56] shrink-0" />
+                  <span>Instant Scannable Barcode & Wallet Pass</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                  <CheckCircle2 className="w-4 h-4 text-[#B48C56] shrink-0" />
+                  <span>Flexible Date Rescheduling Up to 2h Prior</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                  <CheckCircle2 className="w-4 h-4 text-[#B48C56] shrink-0" />
+                  <span>Guaranteed 3D Seat Allocation (Zero Overbooking)</span>
+                </div>
+              </div>
+
               <div className="pt-2">
                 <Link
                   href="/routes"
-                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#B48C56] hover:text-[#946F38] transition-all group"
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#B48C56] hover:text-[#8C6B3D] transition-all group"
                 >
-                  <span className="border-b border-[#B48C56] pb-0.5">READ MORE</span>
+                  <span className="border-b-2 border-[#B48C56] pb-0.5">EXPLORE TICKETS</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>
 
-            {/* Center Column: Authentic Diagonal Overlapping Luxury Boarding Passes (Exact Reference Match) */}
-            <div className="lg:col-span-4 flex items-center justify-center relative py-4 lg:py-0">
-              <div className="relative w-full max-w-[380px] sm:max-w-[420px] lg:max-w-[450px] flex items-center justify-center select-none group">
+            {/* Center Column: Full Uncut Diagonal Overlapping Luxury Boarding Passes */}
+            <div className="lg:col-span-4 flex items-center justify-center relative py-6 lg:py-0">
+              <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[410px] flex items-center justify-center select-none group">
+                {/* Soft ambient aura behind ticket */}
+                <div className="absolute -inset-4 bg-gradient-to-tr from-[#C5A880]/20 via-transparent to-[#071526]/10 rounded-full blur-2xl pointer-events-none group-hover:scale-110 transition-transform duration-700" />
+                
+                {/* Complete Uncut High-Res Luxury Tickets */}
                 <img
                   src="/images/bus-travel-tickets.png"
-                  alt="Novara Luxury Bus Boarding Passes"
-                  className="w-full h-auto object-contain filter drop-shadow-[0_25px_45px_rgba(0,0,0,0.18)] group-hover:scale-105 group-hover:-translate-y-1 transition-all duration-500 cursor-pointer"
+                  alt="Novara Luxury Bus Boarding Passes (Uncut)"
+                  className="w-full h-auto object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.16)] group-hover:scale-105 group-hover:-translate-y-1.5 transition-all duration-500 cursor-pointer"
                 />
               </div>
             </div>
 
-            {/* Right Column: Transport You Can Trust + View Schedule Button */}
+            {/* Right Column: Transport You Can Trust & Key Features */}
             <div className="lg:col-span-4 space-y-6 text-left">
-              <div>
-                <h4 className="text-xs sm:text-sm font-black text-[#071526] uppercase tracking-widest mb-1.5">
-                  TRANSPORT YOU CAN TRUST
-                </h4>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Guaranteed departure times with premium direct intercity corridors. Zero layovers, no stress, and real-time live vehicle status.
+              <div className="bg-slate-50/80 rounded-2xl p-4 border border-slate-100">
+                <div className="flex items-center gap-2 text-xs font-black text-[#071526] uppercase tracking-wider mb-1">
+                  <Bus className="w-4 h-4 text-[#B48C56]" />
+                  <span>Punctual Express Corridors</span>
+                </div>
+                <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                  Guaranteed departure times across national highway corridors with zero transit transfers and real-time GPS tracking.
                 </p>
               </div>
 
-              <div>
-                <h4 className="text-xs sm:text-sm font-black text-[#071526] uppercase tracking-widest mb-1.5">
-                  TRANSPORT YOU CAN TRUST
-                </h4>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Ergonomic reclining suites, certified sanitation standards, and guaranteed 3D seat reservation for every single passenger.
+              <div className="bg-slate-50/80 rounded-2xl p-4 border border-slate-100">
+                <div className="flex items-center gap-2 text-xs font-black text-[#071526] uppercase tracking-wider mb-1">
+                  <Armchair className="w-4 h-4 text-[#B48C56]" />
+                  <span>Executive First-Class Suites</span>
+                </div>
+                <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                  Ergonomic winged leather recliners, inductive Qi wireless charging, and high-speed Starlink Wi-Fi for productive travel.
                 </p>
               </div>
 
-              <div className="pt-2">
+              <div className="pt-1">
                 <Link
                   href="/routes"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-[#C5A880] hover:bg-[#B48C56] text-white font-extrabold text-xs uppercase tracking-widest shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#D8B788] via-[#B48C56] to-[#8C6B3D] hover:from-[#E2C799] hover:to-[#B48C56] text-slate-950 font-black text-xs uppercase tracking-widest shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 cursor-pointer"
                 >
-                  VIEW SCHEDULE
+                  <span>VIEW TIMETABLES</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>
