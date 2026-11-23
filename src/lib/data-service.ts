@@ -30,9 +30,9 @@ export async function getAllBuses(from?: string, to?: string, date?: string): Pr
           isWindow: s.isWindow,
           features: ['Ergonomic Memory Foam', 'High-speed Wi-Fi 7', 'USB-C 100W PD'],
           position: [
-            [-1.35, -0.62, 0.62, 1.35][s.col] ?? 0,
+            [-0.92, -0.38, 0.38, 0.92][s.col] ?? 0,
             0.35,
-            -3.4 + (s.row - 1) * 1.25,
+            -3.20 + (s.row - 1) * 1.08,
           ],
         }));
 

@@ -13,26 +13,27 @@ export const CITIES = [
 
 export function generateSeatsForBus(busId: string, basePrice: number): SeatData[] {
   const seats: SeatData[] = [];
-  const rowsCount = 7; // 7 rows x 4 seats = 28 luxury seats
+  const rowsCount = 9; // 9 rows x 4 seats = 36 luxury suites (Expanded per user specification)
   
   // Specific pre-booked seats for realistic demonstration
   const preBookedMap: Record<string, string[]> = {
-    'bus-1': ['1B', '2D', '4A', '5C', '6B'],
-    'bus-2': ['1A', '3B', '3C', '6A'],
-    'bus-3': ['2A', '2B', '5D', '7C'],
-    'bus-4': ['1D', '4C', '7A', '7B'],
+    'bus-1': ['1B', '2D', '4A', '5C', '6B', '8A', '9D'],
+    'bus-2': ['1A', '3B', '3C', '6A', '8C', '9B'],
+    'bus-3': ['2A', '2B', '5D', '7C', '8B', '9C'],
+    'bus-4': ['1D', '4C', '7A', '7B', '8D', '9A'],
   };
 
-  const bookedList = preBookedMap[busId] || ['2B', '4C', '6A'];
+  const bookedList = preBookedMap[busId] || ['2B', '4C', '6A', '8B'];
 
   const colNames = ['A', 'B', 'C', 'D'];
   // Coordinates in Three.js bus coordinate space:
   // Perfectly aligned with window walls (no gap) and standard center aisle:
   // X: -0.92 (Window Left), -0.38 (Aisle Left), +0.38 (Aisle Right), +0.92 (Window Right)
   const xCoords = [-0.92, -0.38, 0.38, 0.92];
-  // Z starts behind front cockpit cabin (-3.4) and steps comfortably backward
-  const zStart = -3.4;
-  const zStep = 1.25;
+  // Z starts safely behind the front boarding vestibule & driver partition (-3.20)
+  // Each row is spaced at 1.08m, spanning up to row 9 at +5.44
+  const zStart = -3.20;
+  const zStep = 1.08;
 
   for (let r = 1; r <= rowsCount; r++) {
     const zPos = zStart + (r - 1) * zStep;
@@ -100,8 +101,8 @@ export const INITIAL_BUSES: BusDetails[] = [
     operator: 'Novara Premier AeroLine',
     model: 'NC-9000 Autonomous EV',
     type: 'Executive Biometric Sleeper',
-    totalSeats: 28,
-    availableSeats: 23,
+    totalSeats: 36,
+    availableSeats: 29,
     basePrice: 85,
     rating: 4.95,
     reviewsCount: 342,
@@ -135,8 +136,8 @@ export const INITIAL_BUSES: BusDetails[] = [
     operator: 'Aether Dynamics Transit',
     model: 'AD-HyperLiner V3',
     type: 'Ultra-Luxury VIP Express',
-    totalSeats: 28,
-    availableSeats: 24,
+    totalSeats: 36,
+    availableSeats: 30,
     basePrice: 110,
     rating: 4.98,
     reviewsCount: 489,
@@ -169,8 +170,8 @@ export const INITIAL_BUSES: BusDetails[] = [
     operator: 'Chronos Transit Systems',
     model: 'Apex-Bio 750',
     type: 'Cyber Business Suite',
-    totalSeats: 28,
-    availableSeats: 24,
+    totalSeats: 36,
+    availableSeats: 30,
     basePrice: 75,
     rating: 4.88,
     reviewsCount: 215,
@@ -203,8 +204,8 @@ export const INITIAL_BUSES: BusDetails[] = [
     operator: 'Lumina TransGlobal',
     model: 'Stellar NV-10X',
     type: 'Night Sleeper Capsule',
-    totalSeats: 28,
-    availableSeats: 24,
+    totalSeats: 36,
+    availableSeats: 30,
     basePrice: 95,
     rating: 4.92,
     reviewsCount: 310,
