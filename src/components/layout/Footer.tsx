@@ -17,15 +17,15 @@ export default function Footer() {
               </div>
               <div>
                 <span className="text-xl font-black text-white tracking-tight">NOVARA</span>
-                <span className="ml-1 text-[10px] font-bold text-[#D8B788] uppercase tracking-widest">EUROPE</span>
+                <span className="ml-1 text-[10px] font-bold text-[#D8B788] uppercase tracking-widest">INTERCITY</span>
               </div>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Premier European intercity coach operator providing high-frequency routes between iconic cultural capitals with interactive 3D seat reservation and guaranteed comfort.
+              Premier intercity touring coach operator providing high-frequency routes with interactive 3D seat reservation and guaranteed first-class comfort.
             </p>
             <div className="flex items-center gap-2 text-xs text-emerald-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Fleet Status: All European Corridors Active</span>
+              <span>Fleet Status: All Intercity Corridors Active</span>
             </div>
           </div>
 
@@ -37,12 +37,22 @@ export default function Footer() {
             <ul className="space-y-2.5 text-xs text-slate-400">
               <li>
                 <Link href="/routes" className="hover:text-white transition">
-                  European Intercity Timetable
+                  Intercity Timetable & Routes
                 </Link>
               </li>
               <li>
                 <Link href="/book/bus-1" className="hover:text-white transition">
                   Interactive 3D Seat Booking
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-white transition">
+                  About Novara Express
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white transition">
+                  Passenger Concierge & Contact
                 </Link>
               </li>
               <li>

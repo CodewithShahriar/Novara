@@ -26,120 +26,120 @@ import {
 } from 'lucide-react';
 import { CITIES } from '@/lib/mock-data';
 
-// Destinations data matching reference layout
+// Domestic Intercity Destinations (All within the country's national express network)
 const POPULAR_DESTINATIONS = [
   {
-    city: 'Budapest',
-    country: 'Hungary',
-    flag: '🇭🇺',
-    trips: '8 Daily Trips',
-    price: '€35',
-    image: 'https://images.unsplash.com/photo-1549877452-9c387954fbc2?auto=format&fit=crop&w=800&q=80',
-    description: 'Scenic Danube river vistas and majestic historic architecture.',
+    city: 'Los Angeles',
+    corridor: 'Downtown & Metro Concourse',
+    trips: '16 Daily Express Trips',
+    price: '$45',
+    image: 'https://images.unsplash.com/photo-1580655653885-65763b2597d0?auto=format&fit=crop&w=800&q=80',
+    description: 'Direct express service to Downtown Grand Central and Westside terminal hubs.',
   },
   {
-    city: 'Rome',
-    country: 'Italy',
-    flag: '🇮🇹',
-    trips: '12 Daily Trips',
-    price: '€42',
-    image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80',
-    description: 'Historic piazzas, world-renowned cafes, and direct express hubs.',
+    city: 'San Francisco',
+    corridor: 'Bay Concourse & Financial Gate',
+    trips: '14 Daily Express Trips',
+    price: '$42',
+    image: 'https://images.unsplash.com/photo-1506146332389-18140dc7b2fb?auto=format&fit=crop&w=800&q=80',
+    description: 'Scenic highway routes connecting the Bay Area, peninsula, and tech corridors.',
   },
   {
-    city: 'Prague',
-    country: 'Czech Republic',
-    flag: '🇨🇿',
-    trips: '6 Daily Trips',
-    price: '€29',
-    image: 'https://images.unsplash.com/photo-1541849546-216549ae216d?auto=format&fit=crop&w=800&q=80',
-    description: 'Fairy-tale castles, Gothic towers, and scenic riverside routes.',
+    city: 'San Diego',
+    corridor: 'Pacific Harbor & Coastal Bay',
+    trips: '10 Daily Express Trips',
+    price: '$35',
+    image: 'https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=800&q=80',
+    description: 'Punctual coastal departures to harbor concourses, bay gates, and city centers.',
   },
   {
-    city: 'Paris',
-    country: 'France',
-    flag: '🇫🇷',
-    trips: '14 Daily Trips',
-    price: '€49',
-    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80',
-    description: 'Iconic grand boulevards, romantic riverbanks, and art districts.',
+    city: 'Las Vegas',
+    corridor: 'Grand Strip Express Terminal',
+    trips: '18 Daily Express Trips',
+    price: '$38',
+    image: 'https://images.unsplash.com/photo-1581351123004-757df051db8e?auto=format&fit=crop&w=800&q=80',
+    description: 'High-frequency non-stop routes to Boulevard Gate and entertainment concourses.',
   },
 ];
 
 const SCHEDULE_DATA = [
   {
     id: 'bus-1',
-    route: 'Budapest → Vienna',
+    route: 'San Francisco → Los Angeles',
     departure: '08:30 AM',
-    arrival: '11:15 AM',
-    duration: '2h 45m',
+    arrival: '01:45 PM',
+    duration: '5h 15m',
     type: 'Morning Express',
     model: 'Apex Touring GT',
-    price: '€32',
+    price: '$45',
     status: 'On Time',
   },
   {
     id: 'bus-2',
-    route: 'Prague → Berlin',
+    route: 'Los Angeles → San Diego',
     departure: '10:15 AM',
-    arrival: '02:30 PM',
-    duration: '4h 15m',
+    arrival: '12:45 PM',
+    duration: '2h 30m',
     type: 'Morning Express',
     model: 'Quantum HyperLiner',
-    price: '€38',
+    price: '$35',
     status: 'On Time',
   },
   {
     id: 'bus-3',
-    route: 'Rome → Milan',
+    route: 'San Francisco → Las Vegas',
     departure: '02:00 PM',
-    arrival: '07:30 PM',
-    duration: '5h 30m',
+    arrival: '08:30 PM',
+    duration: '6h 30m',
     type: 'Evening',
     model: 'BioDrive Executive',
-    price: '€45',
+    price: '$48',
     status: 'Fast Filling',
   },
   {
     id: 'bus-4',
-    route: 'Paris → Brussels',
+    route: 'San Jose → Sacramento',
     departure: '05:30 PM',
-    arrival: '09:00 PM',
-    duration: '3h 30m',
+    arrival: '07:45 PM',
+    duration: '2h 15m',
     type: 'Evening',
     model: 'CyberCruiser Alpha',
-    price: '€29',
+    price: '$29',
     status: 'On Time',
   },
   {
     id: 'bus-1',
-    route: 'Munich → Zurich',
+    route: 'Los Angeles → San Francisco',
     departure: '11:00 PM',
     arrival: '05:30 AM',
     duration: '6h 30m',
     type: 'Overnight Sleeper',
     model: 'Stellar NightVoyager',
-    price: '€55',
+    price: '$58',
     status: 'Sleeper Suite',
   },
 ];
 
 const FAQS = [
   {
-    q: 'How much luggage can I bring on board?',
-    a: 'Each passenger ticket includes one large checked suitcase (up to 25 kg / 55 lbs) placed securely in the underfloor climate-controlled luggage bay, plus one compact carry-on bag and personal item inside the overhead or under-seat cabin area.',
+    q: 'Can I book a ticket online?',
+    a: 'Yes, you can easily book your ticket online through our platform. Choose your departure and destination cities, select your travel date, view and inspect your exact seat in our interactive 3D coach, and pay securely within minutes.',
   },
   {
-    q: 'Can I view and select my exact 3D seat before departure?',
-    a: 'Yes! Novara features an industry-first interactive 3D cabin inspection tool. You can walk through the coach, inspect seat legroom, verify window alignment, and reserve your exact suite with real-time confirmation.',
+    q: 'Does the bus make stops along the way?',
+    a: 'Our direct intercity express routes make minimal, scheduled stops only at major designated transit concourses and highway rest pavilions for scheduled passenger boarding and comfort.',
   },
   {
-    q: 'What amenities are available on board during the journey?',
-    a: 'Every luxury touring coach in our fleet is equipped with Starlink ultra-fast Wi-Fi, 100W USB-C & AC power outlets at every seat, dual-zone HEPA ionized air conditioning, ergonomic recliners with footrests, and a touchless onboard restroom.',
+    q: 'Are there discounts for children, seniors, and students?',
+    a: 'Yes! We offer concessionary discounts of up to 20% for students with valid ID, children under 12, and seniors aged 65 and older across all standard and business suites.',
   },
   {
-    q: 'Can I reschedule or cancel my booking?',
-    a: 'Tickets can be rescheduled or cancelled up to 2 hours before the scheduled departure time directly from your "My Bookings" portal with zero cancellation penalty when opting for Novara travel credit.',
+    q: 'How can I return or exchange a ticket?',
+    a: 'You can reschedule or cancel your reservation up to 2 hours before the scheduled coach departure time directly via the My Bookings portal with instant refund confirmation.',
+  },
+  {
+    q: 'Do the buses have Wi-Fi and charging ports?',
+    a: 'Every luxury touring coach in our fleet features complimentary high-speed Starlink Wi-Fi, 100W USB-C PD charging ports, and standard AC power outlets at every single seat.',
   },
 ];
 
@@ -206,16 +206,22 @@ export default function HomePage() {
       {/* 1. HERO SECTION (100% Faithful to Reference Image Layout)      */}
       {/* ============================================================== */}
       <section className="relative min-h-[580px] md:min-h-[660px] bg-[#071526] text-white flex flex-col justify-between pt-12 pb-16 md:pt-16 md:pb-20 overflow-hidden">
-        {/* Full-Bleed Cinematic Photography of Luxury Coach at Terminal (Matches Reference Image!) */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-45 mix-blend-luminosity scale-100 pointer-events-none transition-transform duration-1000"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=2000&q=85')`,
-          }}
-        />
-        {/* Dark Vignette Overlay Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#071526] via-[#071526]/85 to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#071526] via-transparent to-transparent pointer-events-none" />
+        {/* Right-Side Prominent Luxury Coach Photograph (Exact Match to Reference UI!) */}
+        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-[58%] pointer-events-none overflow-hidden">
+          <div 
+            className="w-full h-full bg-cover bg-center bg-no-repeat opacity-85 lg:opacity-95"
+            style={{
+              backgroundImage: `url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1800&q=85')`,
+              maskImage: 'linear-gradient(to right, transparent, black 25%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent, black 25%)',
+            }}
+          />
+          {/* Subtle bottom & top depth gradients */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#071526] via-transparent to-[#071526]/50" />
+        </div>
+
+        {/* Left Side Deep Solid Backdrop for Text Legibility */}
+        <div className="absolute inset-y-0 left-0 w-full lg:w-[55%] bg-gradient-to-r from-[#071526] via-[#071526] to-transparent pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-center">
           
@@ -374,20 +380,20 @@ export default function HomePage() {
                   alt={dest.city}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
                 
                 {/* Price Tag */}
                 <div className="absolute bottom-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-lg shadow font-bold text-xs text-slate-900">
                   from <span className="text-[#B48C56] text-sm font-extrabold">{dest.price}</span>
                 </div>
 
-                {/* City & Country */}
+                {/* City & Corridor */}
                 <div className="absolute bottom-3 left-3 text-white">
-                  <div className="flex items-center gap-1.5 text-xs font-medium text-slate-200">
-                    <span>{dest.flag}</span>
-                    <span>{dest.country}</span>
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-[#D8B788]">
+                    <Compass className="w-3.5 h-3.5" />
+                    <span>{dest.corridor}</span>
                   </div>
-                  <h3 className="text-xl font-bold leading-tight drop-shadow-sm">{dest.city}</h3>
+                  <h3 className="text-xl font-black leading-tight drop-shadow-sm">{dest.city}</h3>
                 </div>
               </div>
 
@@ -414,31 +420,31 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* 2 Rows of Country/City Pills (Matches Reference Image!) */}
+        {/* Domestic Intercity Network Corridor Pills (City-to-City Service) */}
         <div className="flex items-center justify-center flex-wrap gap-2.5 max-w-4xl mx-auto">
           {[
-            { flag: '🇭🇺', name: 'Hungary' },
-            { flag: '🇮🇹', name: 'Italy' },
-            { flag: '🇨🇿', name: 'Czech Republic' },
-            { flag: '🇫🇷', name: 'France' },
-            { flag: '🇩🇪', name: 'Germany' },
-            { flag: '🇦🇹', name: 'Austria' },
-            { flag: '🇪🇸', name: 'Spain' },
-            { flag: '🇨🇭', name: 'Switzerland' },
-            { flag: '🇳🇱', name: 'Netherlands' },
-            { flag: '🇧🇪', name: 'Belgium' },
-          ].map((item) => (
+            'All Corridors',
+            'Los Angeles',
+            'San Francisco',
+            'San Diego',
+            'Las Vegas',
+            'Sacramento',
+            'San Jose',
+            'Seattle',
+            'Portland',
+            'Phoenix',
+          ].map((cityName) => (
             <button
-              key={item.name}
-              onClick={() => setDestinationFilter(item.name)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 ${
-                destinationFilter === item.name
-                  ? 'bg-[#071526] text-white shadow-md'
-                  : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shadow-xs'
+              key={cityName}
+              onClick={() => setDestinationFilter(cityName)}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 ${
+                destinationFilter === cityName
+                  ? 'bg-[#071526] text-[#D8B788] shadow-md border border-[#B48C56]/40'
+                  : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-xs'
               }`}
             >
-              <span>{item.flag}</span>
-              <span>{item.name}</span>
+              <MapPin className="w-3 h-3 text-[#B48C56]" />
+              <span>{cityName}</span>
             </button>
           ))}
         </div>
@@ -711,105 +717,149 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================== */}
-      {/* 6. "BUS TRAVEL WITH EASY" (Digital Ticket Pass - Ref UI)       */}
+      {/* 6. "BUS TRAVEL WITH EASY" (3-Column Layout Matching Ref UI!)   */}
       {/* ============================================================== */}
-      <section className="py-16 md:py-24 bg-white border-y border-slate-100">
+      <section className="py-20 md:py-28 bg-[#F4F7FA] border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Left Column: Heading & Value Prop */}
-            <div className="lg:col-span-6 space-y-5">
-              <span className="text-xs font-bold text-[#B48C56] uppercase tracking-widest block">
-                PAPERLESS BOARDING
-              </span>
-              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                BUS TRAVEL <br />
-                <span className="text-[#B48C56]">WITH EASY</span>
+            {/* Column 1: Big Heading, Subtitle & Read More */}
+            <div className="lg:col-span-4 space-y-4">
+              <h2 className="leading-none">
+                <span className="text-[#C5A880] text-4xl sm:text-5xl md:text-6xl font-serif font-black block tracking-tight">
+                  BUS TRAVEL
+                </span>
+                <span className="text-[#071526] text-4xl sm:text-5xl md:text-6xl font-black block tracking-tight -mt-1">
+                  WITH EASY
+                </span>
               </h2>
-              <p className="text-sm md:text-base text-slate-600 leading-relaxed font-normal">
-                Everything you need for your trip is stored right on your smartphone. Flash your digital QR boarding pass at the bus platform, skip counter queues, and walk directly to your reserved suite.
-              </p>
 
-              <div className="space-y-3 pt-2">
-                {[
-                  'Instant digital boarding pass saved to Apple Wallet & Google Wallet',
-                  'Real-time coach GPS tracking and live terminal bay notifications',
-                  'Instant seat re-selection up to 60 minutes before departure'
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-[#B48C56] shrink-0" />
-                    <span className="text-xs sm:text-sm font-medium text-slate-700">{item}</span>
-                  </div>
-                ))}
-              </div>
+              <p className="text-xs sm:text-sm font-black text-[#071526] uppercase tracking-wide leading-snug pt-2 max-w-xs">
+                AFFORDABLE TICKETS FOR FAST AND COMFORTABLE BUS TRIPS ACROSS CITIES
+              </p>
 
               <div className="pt-4">
                 <Link
-                  href="/routes"
-                  className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-[#071526] hover:bg-[#B48C56] hover:text-slate-950 text-white font-bold text-xs uppercase tracking-wider transition"
+                  href="/about"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 hover:text-[#B48C56] transition tracking-wider group cursor-pointer"
                 >
-                  <span>Book Digital Pass</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>READ MORE</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#B48C56] group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>
 
-            {/* Right Column: Visual Boarding Pass Mockup */}
-            <div className="lg:col-span-6 flex justify-center">
-              <div className="relative w-full max-w-md bg-gradient-to-br from-[#071526] to-[#0B192C] text-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-700/50">
-                <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#B48C56] text-slate-950 flex items-center justify-center font-bold">
-                      <Bus className="w-4 h-4" />
+            {/* Column 2: Center Slanted Realistic Boarding Tickets (Exact Ref Composition) */}
+            <div className="lg:col-span-4 flex items-center justify-center py-6 sm:py-8">
+              <div className="relative w-full max-w-[320px] h-[340px] flex items-center justify-center">
+                
+                {/* Background Under-Ticket (Deep Navy / Slanted ~30deg) */}
+                <div 
+                  className="absolute w-44 sm:w-48 bg-[#0B1E34] text-white rounded-2xl shadow-2xl p-4 border border-white/10 transform rotate-[32deg] translate-x-10 -translate-y-4 transition-transform hover:rotate-[30deg]"
+                >
+                  <div className="flex items-center justify-between pb-2 border-b border-white/10 text-[9px] font-mono text-slate-400">
+                    <span className="font-bold text-[#D8B788]">NOVARA PASS</span>
+                    <span>GATE 04</span>
+                  </div>
+                  <div className="py-2.5 text-center">
+                    <div className="text-sm font-black tracking-tight text-white">INTERCITY EXPRESS</div>
+                    <div className="text-[9px] text-slate-400">DIRECT HIGHWAY CORRIDOR</div>
+                  </div>
+                  <div className="h-5 w-full flex items-center justify-center">
+                    <div className="w-full flex justify-between h-3.5 px-1 items-end opacity-75">
+                      {[2, 4, 1, 3, 2, 5, 2, 1, 4, 2, 3, 1, 5, 2, 4, 1, 3, 2].map((w, i) => (
+                        <div key={i} className="bg-white rounded-xs" style={{ width: `${w * 1.4}px`, height: '100%' }} />
+                      ))}
                     </div>
-                    <div>
-                      <div className="text-xs font-bold uppercase tracking-wider text-[#D8B788]">Novara Express</div>
-                      <div className="text-[10px] text-slate-400">Boarding Pass</div>
+                  </div>
+                </div>
+
+                {/* Foreground Slanted Ticket (Gold stub + Clean White Card - Matches Reference!) */}
+                <div 
+                  className="absolute w-52 sm:w-56 bg-white text-slate-900 rounded-2xl shadow-2xl overflow-hidden border border-slate-200 transform rotate-[25deg] -translate-x-4 translate-y-3 transition-transform hover:rotate-[22deg]"
+                >
+                  <div className="flex">
+                    {/* Gold Left Stub */}
+                    <div className="w-14 bg-[#C5A880] p-2.5 flex flex-col justify-between items-center text-slate-950 border-r-2 border-dashed border-white/50">
+                      <Bus className="w-4 h-4 text-slate-950" />
+                      <div className="text-[8px] font-black uppercase tracking-widest [writing-mode:vertical-lr] rotate-180 text-slate-950/90 my-2">
+                        BUS TICKET
+                      </div>
+                      <div className="text-[8px] font-mono font-bold">2026</div>
+                    </div>
+
+                    {/* White Card Body */}
+                    <div className="flex-1 p-3 flex flex-col justify-between space-y-1.5 bg-gradient-to-br from-slate-50 to-white">
+                      <div className="flex items-center justify-between text-[8px] text-slate-400 border-b border-slate-100 pb-1 font-semibold">
+                        <span>BOARDING PASS</span>
+                        <span className="text-[#B48C56] font-bold">SEAT 27</span>
+                      </div>
+
+                      <div className="space-y-0.5">
+                        <div className="flex items-center gap-1.5 text-[11px] font-black text-slate-900">
+                          <span className="text-[8px] text-slate-400">FROM</span>
+                          <span>SAN FRANCISCO</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-[11px] font-black text-[#B48C56]">
+                          <span className="text-[8px] text-slate-400">TO</span>
+                          <span>LOS ANGELES</span>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-100 text-[8px] text-slate-500">
+                        <div>
+                          <span className="block text-[7px] text-slate-400 uppercase">Departure</span>
+                          <strong className="text-slate-800">14:30 PM</strong>
+                        </div>
+                        <div>
+                          <span className="block text-[7px] text-slate-400 uppercase">Platform</span>
+                          <strong className="text-slate-800">BAY 02</strong>
+                        </div>
+                      </div>
+
+                      {/* Barcode line */}
+                      <div className="pt-1 flex items-center justify-between">
+                        <div className="flex gap-0.5 h-2.5">
+                          {[2, 1, 3, 1, 2, 4, 1, 2, 3, 1, 2, 1, 3].map((w, i) => (
+                            <div key={i} className="bg-slate-800" style={{ width: `${w}px` }} />
+                          ))}
+                        </div>
+                        <span className="text-[8px] font-mono text-slate-400">#46B-27</span>
+                      </div>
                     </div>
                   </div>
-                  <span className="text-xs font-mono font-bold text-slate-400">#NOV-8492</span>
                 </div>
 
-                <div className="grid grid-cols-3 items-center text-center mb-6">
-                  <div>
-                    <div className="text-2xl font-black">BUD</div>
-                    <div className="text-xs text-slate-400">Budapest</div>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <Compass className="w-5 h-5 text-[#B48C56] animate-pulse" />
-                    <span className="text-[10px] font-semibold text-slate-400">2h 45m</span>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-black">VIE</div>
-                    <div className="text-xs text-slate-400">Vienna</div>
-                  </div>
-                </div>
+              </div>
+            </div>
 
-                <div className="grid grid-cols-3 gap-3 bg-white/5 rounded-2xl p-4 text-center mb-6 border border-white/5">
-                  <div>
-                    <div className="text-[10px] text-slate-400 uppercase font-semibold">Seat</div>
-                    <div className="text-sm font-bold text-[#D8B788]">3A (Window)</div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] text-slate-400 uppercase font-semibold">Departure</div>
-                    <div className="text-sm font-bold text-white">08:30 AM</div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] text-slate-400 uppercase font-semibold">Bay / Gate</div>
-                    <div className="text-sm font-bold text-emerald-400">Bay 04</div>
-                  </div>
-                </div>
+            {/* Column 3: Trust Features & View Schedule Button */}
+            <div className="lg:col-span-4 space-y-6">
+              <div>
+                <h4 className="text-sm font-black text-[#071526] uppercase tracking-wider mb-2">
+                  TRANSPORT YOU CAN TRUST
+                </h4>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Guaranteed on-time departures, live GPS tracking, and transparent intercity fares with zero hidden booking surcharges across every route.
+                </p>
+              </div>
 
-                <div className="bg-white rounded-xl p-4 flex items-center justify-between text-slate-900">
-                  <div className="space-y-1">
-                    <div className="text-xs font-bold">PASSENGER: GUEST VIP</div>
-                    <div className="text-[10px] font-mono text-slate-500">PLATFORM TICKET • PAID €32</div>
-                  </div>
-                  <div className="w-12 h-12 bg-slate-100 border border-slate-300 rounded-lg flex items-center justify-center">
-                    <QrCode className="w-8 h-8 text-slate-900" />
-                  </div>
-                </div>
+              <div>
+                <h4 className="text-sm font-black text-[#071526] uppercase tracking-wider mb-2">
+                  TRANSPORT YOU CAN TRUST
+                </h4>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Direct express city-to-city corridors with guaranteed seating, spacious underfloor luggage bays, and contactless digital boarding pass verification.
+                </p>
+              </div>
 
+              <div className="pt-2">
+                <Link
+                  href="/routes"
+                  className="inline-block px-7 py-3 bg-[#C5A880] hover:bg-[#B48C56] text-slate-950 font-black text-xs uppercase tracking-widest transition shadow-md cursor-pointer"
+                >
+                  VIEW SCHEDULE
+                </Link>
               </div>
             </div>
 
@@ -847,43 +897,39 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================== */}
-      {/* 8. FAQ ACCORDION (With Travel Luggage Visual - Ref UI)          */}
+      {/* 8. FAQ ACCORDION (Exact Match to Reference Screenshot 2!)       */}
       {/* ============================================================== */}
-      <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 md:py-28 bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left Column: Questions Accordion */}
-          <div className="lg:col-span-7 space-y-6">
+          {/* Left Column: Questions Accordion with Clean Plus/Minus Toggles */}
+          <div className="lg:col-span-7 space-y-4">
             <div>
-              <span className="text-xs font-bold text-[#B48C56] uppercase tracking-widest block mb-1">
-                NEED ASSISTANCE?
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest block mb-2">
+                QUESTIONS &amp; ANSWERS
               </span>
-              <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
-                POPULAR QUESTIONS ABOUT BUS ROUTES
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#071526] tracking-tight mb-8">
+                POPULAR QUESTIONS <br />ABOUT TRANSFERS
               </h2>
             </div>
 
-            <div className="space-y-3 pt-2">
+            {/* Accordion Items with Clean Thin Border Dividers */}
+            <div className="divide-y divide-slate-200 border-t border-slate-200">
               {FAQS.map((faq, index) => {
                 const isOpen = openFaqIndex === index;
                 return (
-                  <div
-                    key={index}
-                    className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition"
-                  >
+                  <div key={index} className="py-4">
                     <button
                       onClick={() => setOpenFaqIndex(isOpen ? null : index)}
-                      className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-sm text-slate-800 hover:text-[#B48C56] transition cursor-pointer"
+                      className="w-full flex items-center gap-3 text-left font-bold text-xs sm:text-sm text-[#071526] hover:text-[#B48C56] transition cursor-pointer"
                     >
+                      <span className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-500 shrink-0">
+                        {isOpen ? '−' : '+'}
+                      </span>
                       <span>{faq.q}</span>
-                      {isOpen ? (
-                        <ChevronUp className="w-4 h-4 text-[#B48C56] shrink-0" />
-                      ) : (
-                        <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
-                      )}
                     </button>
                     {isOpen && (
-                      <div className="px-5 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                      <div className="pl-8 pt-3 text-xs text-slate-600 leading-relaxed animate-in fade-in">
                         {faq.a}
                       </div>
                     )}
@@ -891,20 +937,27 @@ export default function HomePage() {
                 );
               })}
             </div>
+
+            {/* Bottom Read More Link */}
+            <div className="pt-6">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#071526] hover:text-[#B48C56] transition tracking-wider group cursor-pointer"
+              >
+                <span>READ MORE</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#B48C56] group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </div>
 
-          {/* Right Column: Clean Yellow Travel Luggage Photo (Matching Reference) */}
-          <div className="lg:col-span-5 flex justify-center">
-            <div className="relative rounded-3xl overflow-hidden shadow-xl border border-slate-100 w-full max-w-sm">
+          {/* Right Column: Clean Yellow Suitcase with Straw Hat & Sunglasses (From Ref Pic!) */}
+          <div className="lg:col-span-5 flex items-center justify-center">
+            <div className="relative w-full max-w-sm h-[440px] overflow-hidden flex items-center justify-center">
               <img
-                src="https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?auto=format&fit=crop&w=800&q=80"
-                alt="Yellow suitcase ready for intercity journey"
-                className="w-full h-96 object-cover"
+                src="/images/faq-suitcase.jpg"
+                alt="Yellow suitcase with straw hat and sunglasses"
+                className="w-full h-full object-cover object-right"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
-                <span className="text-xs font-semibold text-[#D8B788]">LUGGAGE INCLUDED</span>
-                <p className="text-sm font-bold">25kg checked bag + carry-on with every seat</p>
-              </div>
             </div>
           </div>
 

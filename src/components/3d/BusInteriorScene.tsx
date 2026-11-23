@@ -50,11 +50,12 @@ function CameraController({
     if (isZoomed && activeFocusedSeat) {
       const [sx, sy, sz] = activeFocusedSeat.position;
 
-      // Position camera safely in the center aisle looking outwards at the seat
+      // Position camera in the center aisle at a comfortable viewing distance (~1.65m away, elevated)
+      // This gives an expansive, elegant view of the entire passenger suite and surrounding aisle/window
       const targetCameraPos = {
-        x: sx < 0 ? 0.08 : -0.08,
-        y: sy + 0.42,
-        z: sz - 0.72,
+        x: sx < 0 ? 0.35 : -0.35,
+        y: sy + 0.65,
+        z: sz - 1.65,
       };
 
       gsap.to(camera.position, {
@@ -67,8 +68,8 @@ function CameraController({
       });
 
       gsap.to(controls.target, {
-        x: sx,
-        y: sy + 0.22,
+        x: sx * 0.90,
+        y: sy + 0.28,
         z: sz,
         duration: 1.15,
         ease: 'power3.inOut',

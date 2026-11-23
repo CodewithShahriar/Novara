@@ -12,6 +12,8 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Routes & Schedules', href: '/routes' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
     { name: 'My Bookings', href: '/dashboard' },
     { name: 'Fleet Terminal', href: '/admin' },
   ];
