@@ -61,7 +61,7 @@ Direct city-to-city catalog with real-time schedule filtering, price sorting, am
 Airline-grade boarding pass modal featuring verified QR code with ISO finder patterns, barcode, baggage allowances, terminal gate details, and print/save PDF actions.
 
 <div align="center">
-  <img src="./public/images/screenshots/boarding-pass-preview.jpg" alt="Verified Encrypted Boarding Pass" width="70%" style="border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);" />
+  <img src="./public/images/screenshots/boarding-pass-preview.jpg" alt="Verified Encrypted Boarding Pass" width="100%" style="border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);" />
 </div>
 
 ---

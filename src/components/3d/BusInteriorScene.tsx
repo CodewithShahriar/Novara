@@ -26,12 +26,13 @@ interface BusInteriorSceneProps {
 }
 
 // Initial Intro Position (Pic 1 - 3/4 side profile overview)
-const INTRO_CAMERA_POS = { x: -8.8, y: 7.2, z: 8.4 };
-const INTRO_TARGET = { x: 0, y: 0.5, z: 0.3 };
+const INTRO_CAMERA_POS = { x: -9.2, y: 6.8, z: 6.4 };
+const INTRO_TARGET = { x: 0, y: 0.5, z: 0.4 };
 
-// Final Aligned Overhead Cabin Position (Pic 2 - Aligned rear looking down center aisle)
-const OVERVIEW_CAMERA_POS = { x: 0.05, y: 10.8, z: 9.4 };
-const OVERVIEW_TARGET = { x: 0, y: 0.4, z: 0.5 };
+// Final Aligned Overhead Cabin Position (Pic 2 - Looking from front cockpit towards rear)
+// Row 1 (VIP cognac seats) at bottom facing viewer, row 9 at top, exactly matching reference!
+const OVERVIEW_CAMERA_POS = { x: 0.05, y: 11.2, z: -8.6 };
+const OVERVIEW_TARGET = { x: 0, y: 0.4, z: 0.6 };
 
 // Camera controller: ALWAYS places camera in the central aisle looking toward the seat
 function CameraController({
@@ -49,31 +50,37 @@ function CameraController({
     if (!controlsRef.current) return;
     const controls = controlsRef.current;
 
-    // First visit intro swoop: starts at Pic 1 (side angle) and smoothly rotates to Pic 2 (cabin overview)
+    // First visit intro swoop: starts at Pic 1 (side angle) and smoothly rotates to Pic 2 (front-to-back overview)
     if (!hasAnimatedIntro.current && !isZoomed) {
       hasAnimatedIntro.current = true;
       camera.position.set(INTRO_CAMERA_POS.x, INTRO_CAMERA_POS.y, INTRO_CAMERA_POS.z);
       controls.target.set(INTRO_TARGET.x, INTRO_TARGET.y, INTRO_TARGET.z);
-      controls.update();
+      controls.enabled = false;
 
       gsap.to(camera.position, {
         x: OVERVIEW_CAMERA_POS.x,
         y: OVERVIEW_CAMERA_POS.y,
         z: OVERVIEW_CAMERA_POS.z,
-        duration: 2.2,
+        duration: 2.3,
         ease: 'power2.inOut',
-        delay: 0.15,
-        onUpdate: () => controls.update(),
+        delay: 0.1,
+        onUpdate: () => {
+          camera.lookAt(controls.target);
+        },
+        onComplete: () => {
+          controls.enabled = true;
+          controls.target.set(OVERVIEW_TARGET.x, OVERVIEW_TARGET.y, OVERVIEW_TARGET.z);
+          controls.update();
+        },
       });
 
       gsap.to(controls.target, {
         x: OVERVIEW_TARGET.x,
         y: OVERVIEW_TARGET.y,
         z: OVERVIEW_TARGET.z,
-        duration: 2.2,
+        duration: 2.3,
         ease: 'power2.inOut',
-        delay: 0.15,
-        onUpdate: () => controls.update(),
+        delay: 0.1,
       });
       return;
     }
@@ -84,16 +91,16 @@ function CameraController({
     if (isZoomed && activeFocusedSeat) {
       const [sx, sy, sz] = activeFocusedSeat.position;
 
-      // Position camera in the central open aisle directly adjacent/in front of the seat
-      // In the open aisle (x: ±0.28) where zero geometry ever obstructs the lens.
-      // Elevated comfortably (y: sy + 1.10) with gentle setback (z: sz - 1.25)
-      // and centered on the midpoint of the seat (y: sy + 0.40) so the entire suite
-      // (headrest badge, backrest, cushion, armrest, floor runner) is framed with breathing room.
+      // Position camera in the central open aisle directly in front of the seat
+      // Elevated comfortably from above (y: sy + 1.45) with generous setback (z: sz - 1.70)
+      // providing a zoomed-out, spacious downward 3/4 perspective with full suite breathing room.
       const targetCameraPos = {
-        x: sx < 0 ? 0.28 : -0.28,
-        y: sy + 1.10,
-        z: sz - 1.25,
+        x: sx < 0 ? 0.35 : -0.35,
+        y: sy + 1.45,
+        z: sz - 1.70,
       };
+
+      controls.enabled = false;
 
       gsap.to(camera.position, {
         x: targetCameraPos.x,
@@ -101,26 +108,41 @@ function CameraController({
         z: targetCameraPos.z,
         duration: 1.15,
         ease: 'power3.inOut',
-        onUpdate: () => controls.update(),
+        onUpdate: () => {
+          camera.lookAt(controls.target);
+        },
+        onComplete: () => {
+          controls.enabled = true;
+          controls.target.set(sx, sy + 0.35, sz);
+          controls.update();
+        },
       });
 
       gsap.to(controls.target, {
         x: sx,
-        y: sy + 0.40,
+        y: sy + 0.35,
         z: sz,
         duration: 1.15,
         ease: 'power3.inOut',
-        onUpdate: () => controls.update(),
       });
     } else {
       // Smoothly zoom back out to aligned cabin overview (Pic 2)
+      controls.enabled = false;
+
       gsap.to(camera.position, {
         x: OVERVIEW_CAMERA_POS.x,
         y: OVERVIEW_CAMERA_POS.y,
         z: OVERVIEW_CAMERA_POS.z,
         duration: 1.1,
         ease: 'power3.inOut',
-        onUpdate: () => controls.update(),
+        onUpdate: () => {
+          camera.lookAt(controls.target);
+        },
+        onComplete: () => {
+          controls.enabled = true;
+          controls.target.set(OVERVIEW_TARGET.x, OVERVIEW_TARGET.y, OVERVIEW_TARGET.z);
+          controls.update();
+        },
       });
 
       gsap.to(controls.target, {
@@ -129,7 +151,6 @@ function CameraController({
         z: OVERVIEW_TARGET.z,
         duration: 1.1,
         ease: 'power3.inOut',
-        onUpdate: () => controls.update(),
       });
     }
   }, [isZoomed, activeFocusedSeat, camera]);
