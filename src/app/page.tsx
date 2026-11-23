@@ -204,35 +204,37 @@ export default function HomePage() {
     <div className="relative min-h-screen bg-[#F8FAFC] text-slate-800 font-sans selection:bg-[#B48C56] selection:text-white">
       
       {/* ============================================================== */}
-      {/* 1. HERO SECTION (Exact Match to User's Uploaded Reference Photo) */}
+      {/* 1. HERO SECTION (Dynamic Full-Screen Viewport Matching Device) */}
       {/* ============================================================== */}
-      <section className="relative min-h-[620px] md:min-h-[700px] bg-[#071526] text-white flex flex-col justify-between pt-12 pb-16 md:pt-16 md:pb-20 overflow-hidden">
-        {/* Full-Bleed Hero Background Image with Uploaded Night Coach at Terminal */}
+      <section className="relative min-h-[calc(100vh-5rem)] min-h-[calc(100dvh-5rem)] bg-[#071526] text-white flex flex-col justify-between pt-8 pb-10 sm:pt-10 sm:pb-12 lg:pt-12 lg:pb-12 overflow-hidden">
+        {/* Full-Bleed Hero Background Image with Uploaded Night Coach at Terminal - Brightened & Highlighted */}
         <div 
-          className="absolute inset-0 bg-cover bg-[center_right_15%] lg:bg-right bg-no-repeat pointer-events-none"
+          className="absolute inset-0 bg-cover bg-[center_right_10%] lg:bg-right bg-no-repeat pointer-events-none brightness-115 contrast-105 saturate-110"
           style={{
             backgroundImage: `url('/images/hero-coach.jpg')`,
           }}
         />
 
-        {/* Cinematic Deep Navy Gradient Overlay: Solid on left for crystal-clear readability, open on right for coach photo */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#071526] via-[#071526]/90 to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#071526] via-transparent to-[#071526]/50 pointer-events-none" />
+        {/* Cinematic Deep Navy Gradient Overlay: Solid on left for crystal-clear readability, completely open & bright on right for coach photo */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#071526] from-20% via-[#071526]/80 via-42% to-transparent to-58% lg:from-[#071526] lg:from-25% lg:via-[#071526]/65 lg:via-42% lg:to-transparent lg:to-55% pointer-events-none" />
+        
+        {/* Subtle bottom vignette to smoothly anchor the floating search widget */}
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#071526]/70 to-transparent pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-between py-4 lg:py-6">
           
           {/* Hero Left-Aligned Typography (Exact 1:1 Match to Reference Hero!) */}
-          <div className="text-left max-w-2xl mb-10 md:mb-14">
+          <div className="text-left max-w-2xl my-auto pt-4 lg:pt-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#B48C56]/20 border border-[#B48C56]/30 text-[#D8B788] text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5" />
               <span>PREMIUM INTERCITY MOBILITY</span>
             </div>
 
             <h1 className="font-extrabold tracking-tight leading-none mb-4">
-              <span className="text-[#C5A880] text-3xl sm:text-5xl md:text-6xl font-serif italic block mb-1">
+              <span className="text-[#C5A880] text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-serif italic block mb-1">
                 INTERCITY
               </span>
-              <span className="text-white text-4xl sm:text-6xl md:text-7xl font-black block tracking-tight uppercase">
+              <span className="text-white text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black block tracking-tight uppercase">
                 EXPRESS ROUTES
               </span>
             </h1>
@@ -243,7 +245,7 @@ export default function HomePage() {
           </div>
 
           {/* Floating Horizontal Search Widget (Pinned at lower Hero edge - Ref UI) */}
-          <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-2xl border border-slate-100 max-w-5xl text-slate-900">
+          <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-2xl border border-slate-100 max-w-5xl text-slate-900 mt-6 lg:mt-8">
             <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
               
               {/* Departure City */}
@@ -460,15 +462,15 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Left Column: Portrait photo of traveler with yellow jacket */}
+            {/* Left Column: Portrait photo of traveler with yellow jacket and smartphone */}
             <div className="lg:col-span-5 relative">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100">
                 <img
-                  src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=80"
-                  alt="Happy traveler with yellow jacket and luggage"
-                  className="w-full h-[460px] object-cover"
+                  src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=1000&q=85"
+                  alt="Happy traveler with yellow jacket checking bus schedule on smartphone"
+                  className="w-full h-[480px] object-cover hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#071526]/50 via-transparent to-transparent" />
               </div>
               
               {/* Floating Quality Badge */}
