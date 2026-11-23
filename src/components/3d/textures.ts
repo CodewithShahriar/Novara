@@ -425,7 +425,7 @@ export function getTarmacTexture(): THREE.CanvasTexture {
 // ============================================================================
 const badgeTextureCache = new Map<string, THREE.CanvasTexture>();
 
-export function getSeatBadgeTexture(seatNumber: string, bgColor: string = '#0284C7'): THREE.CanvasTexture {
+export function getSeatBadgeTexture(seatNumber: string, bgColor: string = '#1E242C'): THREE.CanvasTexture {
   if (typeof document === 'undefined') return new THREE.CanvasTexture(new Image() as any);
   
   const key = `${seatNumber}-${bgColor}`;
@@ -439,25 +439,48 @@ export function getSeatBadgeTexture(seatNumber: string, bgColor: string = '#0284
   const ctx = canvas.getContext('2d');
 
   if (ctx) {
-    // Crisp rounded badge background
-    ctx.fillStyle = bgColor;
+    // Sleek luxury metallic plaque background
+    const isGold = bgColor === '#D97706' || bgColor === '#F59E0B';
+    
+    // Base fill with subtle gradient
+    const grad = ctx.createLinearGradient(0, 0, 0, 64);
+    if (isGold) {
+      grad.addColorStop(0, '#E5C287');
+      grad.addColorStop(0.5, '#B48C56');
+      grad.addColorStop(1, '#7C5828');
+    } else {
+      // Dark titanium brushed metal finish
+      grad.addColorStop(0, '#262D37');
+      grad.addColorStop(0.5, '#181E26');
+      grad.addColorStop(1, '#0F1318');
+    }
+    
+    ctx.fillStyle = grad;
     if (ctx.roundRect) {
-      ctx.roundRect(0, 0, 160, 64, 10);
+      ctx.roundRect(4, 4, 152, 56, 8);
       ctx.fill();
     } else {
-      ctx.fillRect(0, 0, 160, 64);
+      ctx.fillRect(4, 4, 152, 56);
     }
 
-    // Subtle glossy glass highlight
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
-    ctx.fillRect(4, 4, 152, 24);
+    // Elegant metallic border
+    ctx.strokeStyle = isGold ? '#F5E6CC' : 'rgba(255, 255, 255, 0.25)';
+    ctx.lineWidth = 2;
+    if (ctx.roundRect) {
+      ctx.roundRect(4, 4, 152, 56, 8);
+      ctx.stroke();
+    }
 
-    // Bold seat number
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 36px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    // Top subtle highlight reflection
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+    ctx.fillRect(6, 6, 148, 18);
+
+    // High-contrast luxury typography
+    ctx.fillStyle = isGold ? '#10141A' : '#F1F5F9';
+    ctx.font = 'bold 30px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(seatNumber, 80, 34);
+    ctx.fillText(seatNumber, 80, 32);
   }
 
   const texture = new THREE.CanvasTexture(canvas);

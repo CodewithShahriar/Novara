@@ -265,20 +265,20 @@ export default function SeatDetailsPanel({
 
         {/* 
           ========================================================================
-          3. TICKET BOTTOM STUB: AUTHENTIC SCANNER BARCODE (User Reference Match!)
+          3. TICKET BOTTOM STUB: AUTHENTIC SCANNER BARCODE (Transparent, No White Box)
           ========================================================================
         */}
         <div className="p-4 sm:p-5 pt-2 sm:pt-3 bg-gradient-to-b from-transparent to-[#040C16]/95 space-y-3.5">
           
-          {/* Authentic Horizontal Scanner Barcode Matching User Image */}
-          <div className="flex items-center justify-between bg-[#0B1E34]/80 rounded-2xl p-2.5 sm:p-3 border border-white/10 gap-3 shadow-inner">
+          {/* Authentic Horizontal Scanner Barcode with Transparent Background */}
+          <div className="flex items-center justify-between bg-[#0B1E34]/90 rounded-2xl p-3 sm:p-3.5 border border-[#C5A880]/25 gap-3 shadow-inner">
             
-            {/* Crisp Stark White Badge with Horizontal Linear Barcode from Reference */}
-            <div className="bg-white rounded-xl px-2.5 py-1.5 shadow-md flex items-center justify-center shrink-0 border border-slate-200">
+            {/* Transparent Barcode Image directly on dark ticket paper */}
+            <div className="flex items-center justify-start shrink-0">
               <img
-                src="/images/scanner-barcode.png"
+                src="/images/transparent-barcode.png"
                 alt="Boarding Scanner Barcode"
-                className="h-9 w-36 sm:w-40 object-contain"
+                className="h-10 w-36 sm:w-44 object-contain filter drop-shadow-[0_0_8px_rgba(245,248,255,0.2)]"
               />
             </div>
 
