@@ -3,9 +3,9 @@
 import React, { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
-import { RoundedBox, Text } from '@react-three/drei';
+import { RoundedBox } from '@react-three/drei';
 import { SeatData, SeatStatus } from '@/lib/types';
-import { getLeatherTexture } from './textures';
+import { getLeatherTexture, getSeatBadgeTexture } from './textures';
 
 interface SeatMeshProps {
   seat: SeatData;
@@ -101,6 +101,10 @@ export default function SeatMesh({ seat, status, onClick, onHover }: SeatMeshPro
       badgeColor,
     };
   }, [isVip, isBooked, isSelected, upholsteryTexture]);
+
+  const badgeTexture = useMemo(() => {
+    return getSeatBadgeTexture(seat.seatNumber, materials.badgeColor);
+  }, [seat.seatNumber, materials.badgeColor]);
 
   // Subtle smooth elevation when hovered or selected
   useFrame(() => {
@@ -324,47 +328,17 @@ export default function SeatMesh({ seat, status, onClick, onHover }: SeatMeshPro
               <primitive object={materials.whiteHeadrestMat} attach="material" />
             </RoundedBox>
 
-            {/* Front Headrest Badge with Seat Number */}
-            <group position={[0, -0.01, 0.05]}>
-              <RoundedBox args={[0.16, 0.055, 0.012]} radius={0.006} smoothness={2} castShadow>
-                <meshStandardMaterial
-                  color={materials.badgeColor}
-                  roughness={0.25}
-                  metalness={0.6}
-                />
-              </RoundedBox>
-              <Text
-                position={[0, 0, 0.008]}
-                fontSize={0.038}
-                color="#FFFFFF"
-                anchorX="center"
-                anchorY="middle"
-                fontWeight="bold"
-              >
-                {seat.seatNumber}
-              </Text>
-            </group>
+            {/* Front Headrest Badge with Seat Number (Instant 2D Texture) */}
+            <mesh position={[0, -0.01, 0.052]}>
+              <planeGeometry args={[0.16, 0.056]} />
+              <meshBasicMaterial map={badgeTexture} transparent />
+            </mesh>
 
             {/* Rear Headrest Badge (Visible from behind the seat!) */}
-            <group position={[0, -0.01, -0.062]} rotation={[0, Math.PI, 0]}>
-              <RoundedBox args={[0.16, 0.055, 0.012]} radius={0.006} smoothness={2} castShadow>
-                <meshStandardMaterial
-                  color={materials.badgeColor}
-                  roughness={0.25}
-                  metalness={0.6}
-                />
-              </RoundedBox>
-              <Text
-                position={[0, 0, 0.008]}
-                fontSize={0.038}
-                color="#FFFFFF"
-                anchorX="center"
-                anchorY="middle"
-                fontWeight="bold"
-              >
-                {seat.seatNumber}
-              </Text>
-            </group>
+            <mesh position={[0, -0.01, -0.063]} rotation={[0, Math.PI, 0]}>
+              <planeGeometry args={[0.16, 0.056]} />
+              <meshBasicMaterial map={badgeTexture} transparent />
+            </mesh>
           </group>
         </group>
 

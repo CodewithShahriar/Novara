@@ -220,24 +220,24 @@ export default function HomePage() {
 
         <div className="relative max-w-7xl xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-between py-4 lg:py-6">
           
-          {/* Hero Left-Aligned Typography (Premium Luxury Editorial Style) */}
-          <div className="text-left max-w-2xl my-auto pt-6 lg:pt-10">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#B48C56]/25 to-[#B48C56]/10 border border-[#B48C56]/40 text-[#E2C799] text-xs font-bold uppercase tracking-[0.2em] mb-5 backdrop-blur-md shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-[#E2C799]" />
+          {/* Hero Left-Aligned Typography (Refined Executive Headline) */}
+          <div className="text-left max-w-2xl my-auto pt-6 lg:pt-8">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#B48C56]/20 border border-[#B48C56]/40 text-[#D8B788] text-xs font-bold uppercase tracking-widest mb-5 backdrop-blur-md shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 text-[#D8B788]" />
               <span>PREMIUM INTERCITY MOBILITY</span>
             </div>
 
-            <h1 className="font-extrabold tracking-tight leading-none mb-5">
-              <span className="font-serif italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-[#F7E7CE] via-[#D8B788] to-[#B48C56] text-3xl sm:text-5xl md:text-6xl lg:text-7xl block mb-2 tracking-wide drop-shadow-[0_2px_12px_rgba(180,140,86,0.3)]">
-                Intercity Express
+            <h1 className="tracking-tight leading-none mb-5">
+              <span className="font-serif italic text-3xl sm:text-5xl md:text-6xl text-[#C5A880] block mb-2 font-normal">
+                Luxury Coach Travel
               </span>
-              <span className="text-white text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black block tracking-tight uppercase drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
-                TOURING ROUTES
+              <span className="text-white text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tight block">
+                INTERCITY EXPRESS
               </span>
             </h1>
 
-            <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-slate-300 font-medium leading-relaxed max-w-xl border-l-2 border-[#B48C56] pl-4 mt-2">
-              TICKETS FOR FAST AND COMFORTABLE BUS TRIPS ACROSS CITIES • GUARANTEED 3D SEAT CONFIRMATION
+            <p className="text-xs sm:text-sm uppercase tracking-widest text-slate-300 font-medium leading-relaxed max-w-xl border-l-2 border-[#B48C56] pl-4 mt-3">
+              FAST, COMFORTABLE DIRECT JOURNEYS ACROSS CITIES • GUARANTEED 3D SEAT CONFIRMATION
             </p>
           </div>
 

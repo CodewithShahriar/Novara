@@ -50,12 +50,12 @@ function CameraController({
     if (isZoomed && activeFocusedSeat) {
       const [sx, sy, sz] = activeFocusedSeat.position;
 
-      // Position camera in the center aisle at a comfortable viewing distance (~1.65m away, elevated)
-      // This gives an expansive, elegant view of the entire passenger suite and surrounding aisle/window
+      // Position camera in the center aisle at comfortable framing matching user reference screenshot (media_1795405618410_63855c4b.jpg)
+      // Elevated slightly above headrest height and set back ~2.20m for a clear 3/4 perspective with breathing room
       const targetCameraPos = {
-        x: sx < 0 ? 0.35 : -0.35,
-        y: sy + 0.65,
-        z: sz - 1.65,
+        x: sx < 0 ? 0.45 : -0.45,
+        y: sy + 0.82,
+        z: sz - 2.20,
       };
 
       gsap.to(camera.position, {
@@ -68,8 +68,8 @@ function CameraController({
       });
 
       gsap.to(controls.target, {
-        x: sx * 0.90,
-        y: sy + 0.28,
+        x: sx,
+        y: sy + 0.30,
         z: sz,
         duration: 1.15,
         ease: 'power3.inOut',
@@ -884,8 +884,8 @@ export default function BusInteriorScene({
           position={[14, 25, 12]}
           intensity={2.6}
           castShadow
-          shadow-mapSize-width={2048}
-          shadow-mapSize-height={2048}
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
           shadow-camera-near={0.5}
           shadow-camera-far={50}
           shadow-camera-left={-16}
