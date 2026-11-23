@@ -28,6 +28,7 @@ interface BusInteriorSceneProps {
 // Initial Intro Position (Pic 1 - 3/4 side profile overview)
 const INTRO_CAMERA_POS = { x: -9.2, y: 6.8, z: 6.4 };
 const INTRO_TARGET = { x: 0, y: 0.5, z: 0.4 };
+const INTRO_ROTATION_DURATION = 6.8; // Increased duration for an ultra-slow, majestic cinematic cabin sweep
 
 // Final Aligned Overhead Cabin Position (Pic 2 - Looking from front cockpit towards rear)
 // Row 1 (VIP cognac seats) at bottom facing viewer, row 9 at top, exactly matching reference!
@@ -63,7 +64,7 @@ function CameraController({
     const controls = controlsRef.current;
 
     // First visit intro swoop: starts at Pic 1 (side angle) and smoothly, majestically rotates to Pic 2
-    // Slower, graceful 3.8-second cinematic glide requested by user!
+    // Slower, graceful cinematic glide requested by user
     if (!hasAnimatedIntro.current && !isZoomed) {
       hasAnimatedIntro.current = true;
       camera.position.set(INTRO_CAMERA_POS.x, INTRO_CAMERA_POS.y, INTRO_CAMERA_POS.z);
@@ -78,7 +79,7 @@ function CameraController({
         x: targetPos.x,
         y: targetPos.y,
         z: targetPos.z,
-        duration: 3.8,
+        duration: INTRO_ROTATION_DURATION,
         ease: 'power2.inOut',
         delay: 0.15,
         onUpdate: () => {
@@ -95,7 +96,7 @@ function CameraController({
         x: OVERVIEW_TARGET.x,
         y: OVERVIEW_TARGET.y,
         z: OVERVIEW_TARGET.z,
-        duration: 3.8,
+        duration: INTRO_ROTATION_DURATION,
         ease: 'power2.inOut',
         delay: 0.15,
       });
