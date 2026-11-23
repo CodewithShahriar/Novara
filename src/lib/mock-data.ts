@@ -1,14 +1,19 @@
 import { BusDetails, SeatData, BookingRecord } from './types';
 
 export const CITIES = [
+  'Budapest',
+  'Rome',
+  'Prague',
+  'Paris',
+  'Vienna',
+  'Berlin',
+  'Milan',
+  'Munich',
   'Neo-San Francisco',
-  'Cyber-Seattle',
-  'Neo-Tokyo Bay',
   'Metro Los Angeles',
+  'Neo-Seattle',
   'Silicon Austin',
-  'Neo-Chicago Transit',
   'Vegas SkyPort',
-  'Denver HyperHub'
 ];
 
 export function generateSeatsForBus(busId: string, basePrice: number): SeatData[] {

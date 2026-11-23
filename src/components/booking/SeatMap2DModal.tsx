@@ -25,12 +25,12 @@ export default function SeatMap2DModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in">
-      <div className="bg-slate-900 border border-white/10 rounded-3xl p-6 md:p-8 max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl text-white">
+      <div className="bg-[#071526] border border-white/10 rounded-3xl p-6 md:p-8 max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl text-white">
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
           <div>
             <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <Armchair className="w-5 h-5 text-amber-400" />
+              <Armchair className="w-5 h-5 text-[#B48C56]" />
               2D Cabin Blueprint
             </h3>
             <p className="text-xs text-slate-400">
@@ -46,18 +46,18 @@ export default function SeatMap2DModal({
         </div>
 
         {/* Legend */}
-        <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-medium text-slate-300 py-2.5 px-4 rounded-xl bg-slate-800/80 border border-white/5 mb-6">
+        <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-medium text-slate-300 py-2.5 px-4 rounded-xl bg-[#0B192C] border border-white/5 mb-6">
           <div className="flex items-center gap-1.5">
             <div className="w-3.5 h-3.5 rounded bg-slate-700 border border-slate-600 shadow-xs" />
             <span>Available</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-3.5 h-3.5 rounded bg-amber-500 shadow-xs" />
-            <span className="text-amber-400 font-bold">Selected</span>
+            <div className="w-3.5 h-3.5 rounded bg-[#B48C56] shadow-xs" />
+            <span className="text-[#D8B788] font-bold">Selected</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-3.5 h-3.5 rounded bg-amber-600/30 border border-amber-500/30" />
-            <span className="text-amber-300">Executive VIP</span>
+            <div className="w-3.5 h-3.5 rounded bg-[#B48C56]/20 border border-[#B48C56]/40" />
+            <span className="text-[#D8B788]">Executive VIP</span>
           </div>
           <div className="flex items-center gap-1.5">
             <div className="w-3.5 h-3.5 rounded bg-slate-800 border border-slate-700" />
@@ -67,13 +67,13 @@ export default function SeatMap2DModal({
 
         {/* Coach Front Indicator */}
         <div className="text-center mb-6">
-          <div className="inline-block px-5 py-1.5 rounded-full bg-slate-800 border border-white/5 text-[10px] uppercase font-bold tracking-widest text-slate-400">
+          <div className="inline-block px-5 py-1.5 rounded-full bg-[#0B192C] border border-white/5 text-[10px] uppercase font-bold tracking-widest text-slate-400">
             ▲ Front Driver Cockpit
           </div>
         </div>
 
         {/* 2D Bus Interior Seat Grid (2 + 2 layout) */}
-        <div className="space-y-3 bg-slate-950/60 p-6 rounded-2xl border border-white/5">
+        <div className="space-y-3 bg-[#0B192C]/60 p-6 rounded-2xl border border-white/5">
           {rows.map((rowNum) => {
             const rowSeats = seats.filter((s) => s.row === rowNum);
             const leftSeats = rowSeats.filter((s) => s.col === 0 || s.col === 1 || s.seatNumber.endsWith('A') || s.seatNumber.endsWith('B'));
@@ -97,10 +97,10 @@ export default function SeatMap2DModal({
                           isBooked
                             ? 'bg-slate-800 text-slate-600 cursor-not-allowed border border-slate-700/50'
                             : isSelected
-                            ? 'bg-amber-500 text-slate-950 shadow-lg font-black scale-105'
+                            ? 'bg-[#B48C56] text-slate-950 shadow-lg font-black scale-105'
                             : isVip
-                            ? 'bg-amber-500/15 text-amber-300 border border-amber-500/40 hover:bg-amber-500/25'
-                            : 'bg-slate-800 text-white border border-white/10 hover:border-amber-400/50 hover:bg-slate-700'
+                            ? 'bg-[#B48C56]/15 text-[#D8B788] border border-[#B48C56]/40 hover:bg-[#B48C56]/25'
+                            : 'bg-[#071526] text-white border border-white/10 hover:border-[#B48C56]/50 hover:bg-slate-800'
                         }`}
                         title={`Seat ${seat.seatNumber} (${seat.tier}) - $${seat.price}`}
                       >
@@ -118,7 +118,7 @@ export default function SeatMap2DModal({
 
                 {/* Center Aisle Indicator */}
                 <div className="flex-1 flex items-center justify-center">
-                  <span className="text-[10px] text-slate-600 uppercase font-mono tracking-widest">
+                  <span className="text-[10px] text-slate-500 uppercase font-mono tracking-widest">
                     Row {rowNum}
                   </span>
                 </div>
@@ -139,10 +139,10 @@ export default function SeatMap2DModal({
                           isBooked
                             ? 'bg-slate-800 text-slate-600 cursor-not-allowed border border-slate-700/50'
                             : isSelected
-                            ? 'bg-amber-500 text-slate-950 shadow-lg font-black scale-105'
+                            ? 'bg-[#B48C56] text-slate-950 shadow-lg font-black scale-105'
                             : isVip
-                            ? 'bg-amber-500/15 text-amber-300 border border-amber-500/40 hover:bg-amber-500/25'
-                            : 'bg-slate-800 text-white border border-white/10 hover:border-amber-400/50 hover:bg-slate-700'
+                            ? 'bg-[#B48C56]/15 text-[#D8B788] border border-[#B48C56]/40 hover:bg-[#B48C56]/25'
+                            : 'bg-[#071526] text-white border border-white/10 hover:border-[#B48C56]/50 hover:bg-slate-800'
                         }`}
                         title={`Seat ${seat.seatNumber} (${seat.tier}) - $${seat.price}`}
                       >

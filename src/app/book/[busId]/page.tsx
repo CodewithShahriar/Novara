@@ -99,7 +99,7 @@ export default function BookBusPage({
   );
 
   return (
-    <div className="relative w-screen h-[calc(100vh-80px)] bg-[#070A0F] overflow-hidden select-none">
+    <div className="relative w-screen h-[calc(100vh-80px)] bg-[#071526] overflow-hidden select-none">
       
       {/* 1. TOP STATUS & NAVIGATION OVERLAY BAR */}
       <div className="absolute top-4 left-4 right-4 z-30 flex flex-wrap items-center justify-between gap-4 pointer-events-none">
@@ -108,17 +108,17 @@ export default function BookBusPage({
         <div className="pointer-events-auto flex items-center gap-3">
           <Link
             href="/routes"
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-white/10 text-xs font-semibold shadow-lg transition backdrop-blur-md"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#071526]/90 hover:bg-[#0B192C] text-slate-200 border border-white/10 text-xs font-semibold shadow-lg transition backdrop-blur-md"
           >
-            <ArrowLeft className="w-4 h-4 text-amber-400" />
+            <ArrowLeft className="w-4 h-4 text-[#D8B788]" />
             <span className="hidden sm:inline">All Schedules</span>
           </Link>
 
-          <div className="bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 shadow-lg flex items-center gap-3">
+          <div className="bg-[#071526]/90 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 shadow-lg flex items-center gap-3">
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold text-white tracking-wide">{bus.name}</span>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 uppercase tracking-wider">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#B48C56]/20 text-[#D8B788] border border-[#B48C56]/30 uppercase tracking-wider">
                   {bus.type}
                 </span>
               </div>
@@ -134,10 +134,10 @@ export default function BookBusPage({
           {/* Reset Camera to Full Cabin Overview */}
           <button
             onClick={handleBackToOverview}
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-lg backdrop-blur-md ${
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-lg backdrop-blur-md cursor-pointer ${
               isZoomed
-                ? 'bg-amber-500 text-slate-950 hover:bg-amber-400'
-                : 'bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-white/10'
+                ? 'bg-[#B48C56] text-slate-950 hover:bg-[#A37B47]'
+                : 'bg-[#071526]/90 hover:bg-[#0B192C] text-slate-200 border border-white/10'
             }`}
             title="Reset 3D camera to full coach overview"
           >
@@ -148,10 +148,10 @@ export default function BookBusPage({
           {/* 2D Map Blueprint toggle */}
           <button
             onClick={() => setIs2DMapOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-white/10 text-xs font-semibold shadow-lg transition backdrop-blur-md"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#071526]/90 hover:bg-[#0B192C] text-slate-200 border border-white/10 text-xs font-semibold shadow-lg transition backdrop-blur-md cursor-pointer"
             title="Open 2D Seat Map"
           >
-            <Map className="w-3.5 h-3.5 text-amber-400" />
+            <Map className="w-3.5 h-3.5 text-[#D8B788]" />
             <span className="hidden md:inline">2D Blueprint</span>
           </button>
         </div>
@@ -159,8 +159,8 @@ export default function BookBusPage({
 
       {/* 2. 3D INTERACTION HINT PILL */}
       <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-        <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 backdrop-blur-md border border-white/10 text-xs font-medium text-slate-300 shadow-xl">
-          <Eye className="w-3.5 h-3.5 text-amber-400" />
+        <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#071526]/90 backdrop-blur-md border border-white/10 text-xs font-medium text-slate-300 shadow-xl">
+          <Eye className="w-3.5 h-3.5 text-[#D8B788]" />
           <span>Click any seat to zoom in & inspect • Drag to rotate coach</span>
         </div>
       </div>
@@ -168,11 +168,11 @@ export default function BookBusPage({
       {/* 3. HOVERED SEAT TOOLTIP OVERLAY */}
       {hoveredSeat && !isZoomed && (
         <div className="absolute bottom-28 left-6 z-20 pointer-events-none animate-in fade-in">
-          <div className="bg-slate-900/95 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/15 shadow-2xl text-xs text-white">
+          <div className="bg-[#071526]/95 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/15 shadow-2xl text-xs text-white">
             <div className="font-bold flex items-center gap-2">
-              <Armchair className="w-4 h-4 text-amber-400" />
+              <Armchair className="w-4 h-4 text-[#D8B788]" />
               <span>Seat {hoveredSeat.seatNumber}</span>
-              <span className="text-[10px] text-amber-400 font-semibold uppercase tracking-wider">
+              <span className="text-[10px] text-[#D8B788] font-semibold uppercase tracking-wider">
                 ({hoveredSeat.tier})
               </span>
             </div>
