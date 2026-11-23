@@ -24,9 +24,9 @@ interface BusInteriorSceneProps {
   isZoomed: boolean;
 }
 
-// Elevated 3/4 cutaway camera position: full coach visible from front to rear
-const OVERVIEW_CAMERA_POS = { x: 4.8, y: 7.2, z: 8.6 };
-const OVERVIEW_TARGET = { x: 0, y: 0.2, z: 0.2 };
+// Elevated 3/4 cutaway camera position: full luxury coach visible from front to rear
+const OVERVIEW_CAMERA_POS = { x: 5.2, y: 7.2, z: 8.8 };
+const OVERVIEW_TARGET = { x: 0, y: 0.35, z: 0.2 };
 
 // Camera controller: ALWAYS places camera in the central aisle looking toward the seat
 // This guarantees the camera is NEVER outside the bus wall, eliminating dark wall obstruction!
@@ -51,8 +51,8 @@ function CameraController({
       const [sx, sy, sz] = activeFocusedSeat.position;
 
       // Position camera safely in the center aisle (X around 0) looking outwards at the seat
-      // For left seats (A & B, sx < 0): stand in aisle at x = +0.06 looking left-forward at the seat
-      // For right seats (C & D, sx > 0): stand in aisle at x = -0.06 looking right-forward at the seat
+      // For left seats (A & B, sx < 0): stand in aisle at x = +0.08 looking at the seat
+      // For right seats (C & D, sx > 0): stand in aisle at x = -0.08 looking at the seat
       const targetCameraPos = {
         x: sx < 0 ? 0.08 : -0.08,
         y: sy + 0.42,
@@ -104,26 +104,26 @@ function CameraController({
       enableDamping
       dampingFactor={0.06}
       minDistance={0.8}
-      maxDistance={25}
+      maxDistance={28}
       maxPolarAngle={Math.PI / 2.05}
-      minPolarAngle={0.12}
+      minPolarAngle={0.10}
     />
   );
 }
 
-// Photorealistic Champagne Metallic Luxury Touring Coach Model (Reference Picture 6)
-function ChampagneLuxuryCoachModel({ isZoomed }: { isZoomed: boolean }) {
+// Fully Integrated, Photorealistic Luxury Touring Coach Model (Volvo 9900 / Scania Touring Inspired)
+function LuxuryTouringCoachModel({ isZoomed }: { isZoomed: boolean }) {
   const carpetFloorTexture = useMemo(() => getWoodFloorTexture(), []);
   const aisleRunnerTexture = useMemo(() => getAisleCarpetTexture(), []);
   const dashTexture = useMemo(() => getDashboardClusterTexture(), []);
   const curtainTexture = useMemo(() => getCurtainTexture(), []);
   const shadowTexture = useMemo(() => getRadialShadowTexture(), []);
 
-  // Premium automotive coach materials (Matching Image 6 Gold/Champagne Touring Coach)
+  // Automotive materials with high visual fidelity and metallic luster
   const materials = useMemo(() => {
     // Rich Champagne / Gold Metallic Coach Body Paint (Image 6)
     const coachBodyGold = new THREE.MeshStandardMaterial({
-      color: '#C8AB73', // Elegant metallic champagne gold (Image 6)
+      color: '#C8AB73',
       roughness: 0.22,
       metalness: 0.38,
     });
@@ -131,8 +131,8 @@ function ChampagneLuxuryCoachModel({ isZoomed }: { isZoomed: boolean }) {
     // Dark Gloss Trim & Window Surround
     const coachDarkMask = new THREE.MeshStandardMaterial({
       color: '#1A202C',
-      roughness: 0.25,
-      metalness: 0.5,
+      roughness: 0.3,
+      metalness: 0.4,
     });
 
     // Polished Mirror Chrome
@@ -142,15 +142,28 @@ function ChampagneLuxuryCoachModel({ isZoomed }: { isZoomed: boolean }) {
       metalness: 0.95,
     });
 
-    // High-transparency Solar Tinted Panoramic Window Glass (Image 6)
+    // High-transparency Solar Tinted Panoramic Window Glass (Visible from both sides!)
     const panoramicGlass = new THREE.MeshPhysicalMaterial({
       color: '#0F172A',
       transparent: true,
-      opacity: isZoomed ? 0.15 : 0.25,
+      opacity: isZoomed ? 0.15 : 0.30,
       roughness: 0.05,
-      metalness: 0.1,
-      transmission: 0.88,
+      metalness: 0.15,
+      transmission: 0.85,
       ior: 1.45,
+      side: THREE.DoubleSide,
+    });
+
+    // Windshield Glass with Realistic Tint & Reflection
+    const windshieldGlass = new THREE.MeshPhysicalMaterial({
+      color: '#182438',
+      transparent: true,
+      opacity: 0.45,
+      roughness: 0.08,
+      metalness: 0.2,
+      transmission: 0.75,
+      ior: 1.48,
+      side: THREE.DoubleSide,
     });
 
     // Draped Royal Blue Window Curtains (Picture 4)
@@ -158,34 +171,35 @@ function ChampagneLuxuryCoachModel({ isZoomed }: { isZoomed: boolean }) {
       map: curtainTexture,
       roughness: 0.65,
       metalness: 0.05,
+      side: THREE.DoubleSide,
     });
 
-    // Triple LED Projector Headlights (Image 6)
+    // Triple LED Projector Headlights
     const headlightLens = new THREE.MeshStandardMaterial({
       color: '#FFFDF0',
       emissive: '#FEF08A',
-      emissiveIntensity: 0.85,
+      emissiveIntensity: 0.9,
       roughness: 0.1,
       metalness: 0.2,
     });
 
-    // Ruby Red LED Taillights (Image 6)
+    // Ruby Red LED Taillights
     const taillightLens = new THREE.MeshStandardMaterial({
       color: '#DC2626',
       emissive: '#991B1B',
-      emissiveIntensity: 0.8,
+      emissiveIntensity: 0.85,
       roughness: 0.2,
     });
 
-    // Circular Fog Lamps (Image 6)
+    // Circular Fog Lamps
     const fogLampLens = new THREE.MeshStandardMaterial({
       color: '#FEF08A',
       emissive: '#F59E0B',
-      emissiveIntensity: 0.75,
+      emissiveIntensity: 0.8,
       roughness: 0.15,
     });
 
-    // High-visibility Safety Yellow Rails (Picture 4 & 5)
+    // High-visibility Safety Yellow Rails
     const safetyYellowRail = new THREE.MeshStandardMaterial({
       color: '#FACC15',
       roughness: 0.25,
@@ -199,7 +213,7 @@ function ChampagneLuxuryCoachModel({ isZoomed }: { isZoomed: boolean }) {
       metalness: 0.1,
     });
 
-    // Diamond-cut Multi-spoke Alloy Wheels (Image 6)
+    // Diamond-cut Multi-spoke Alloy Wheels
     const alloyRim = new THREE.MeshStandardMaterial({
       color: '#CBD5E1',
       roughness: 0.2,
@@ -217,6 +231,7 @@ function ChampagneLuxuryCoachModel({ isZoomed }: { isZoomed: boolean }) {
       coachDarkMask,
       chromeTrim,
       panoramicGlass,
+      windshieldGlass,
       curtainMat,
       headlightLens,
       taillightLens,
@@ -233,121 +248,125 @@ function ChampagneLuxuryCoachModel({ isZoomed }: { isZoomed: boolean }) {
       {/* ============================================================ */}
       {/* 0. SOFT GROUND CONTACT SHADOW                                */}
       {/* ============================================================ */}
-      <mesh position={[0, -0.16, 0.2]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[5.5, 16.5]} />
+      <mesh position={[0, -0.16, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[5.5, 14.5]} />
         <meshBasicMaterial map={shadowTexture} transparent opacity={0.65} depthWrite={false} />
       </mesh>
 
       {/* ============================================================ */}
-      {/* 1. CABIN FLOORING & AISLE (Picture 3 & 4 Alignment)           */}
+      {/* 1. CABIN FLOORING & AISLE                                    */}
       {/* ============================================================ */}
-      {/* Left Raised Seating Platform with Charcoal Transit Carpet */}
+      {/* 
+        Unified Z range: from Z = -4.8 (front cockpit partition) to Z = +5.4 (rear bulkhead)
+        Total interior floor length: 10.2m, centered at Z = 0.3
+      */}
+      {/* Left Raised Platform with Charcoal Transit Carpet */}
       <mesh position={[-0.73, 0.04, 0.3]} receiveShadow>
-        <boxGeometry args={[0.98, 0.12, 11.2]} />
+        <boxGeometry args={[0.98, 0.12, 10.2]} />
         <meshStandardMaterial map={carpetFloorTexture} roughness={0.7} metalness={0.08} />
       </mesh>
 
-      {/* Right Raised Seating Platform with Charcoal Transit Carpet */}
+      {/* Right Raised Platform with Charcoal Transit Carpet */}
       <mesh position={[0.73, 0.04, 0.3]} receiveShadow>
-        <boxGeometry args={[0.98, 0.12, 11.2]} />
+        <boxGeometry args={[0.98, 0.12, 10.2]} />
         <meshStandardMaterial map={carpetFloorTexture} roughness={0.7} metalness={0.08} />
       </mesh>
 
-      {/* Center Sunken Aisle with Diamond-Plate Aluminum Runner & Safety Yellow Lines (Picture 3 & 4) */}
+      {/* Center Sunken Aisle with Diamond-Plate Aluminum Tread & Yellow Safety Borders */}
       <mesh position={[0, 0.015, 0.3]} receiveShadow>
-        <boxGeometry args={[0.48, 0.07, 11.2]} />
+        <boxGeometry args={[0.48, 0.07, 10.2]} />
         <meshStandardMaterial map={aisleRunnerTexture} roughness={0.4} metalness={0.6} />
       </mesh>
 
-      {/* Main Structural Undercarriage Chassis Frame */}
-      <mesh position={[0, -0.06, 0.2]} receiveShadow>
-        <boxGeometry args={[2.55, 0.12, 14.2]} />
+      {/* Chassis Base Plate */}
+      <mesh position={[0, -0.06, 0.0]} receiveShadow>
+        <boxGeometry args={[2.50, 0.12, 11.2]} />
         <primitive object={materials.interiorCharcoal} attach="material" />
       </mesh>
 
       {/* ============================================================ */}
-      {/* 2. EXTERIOR LOWER BODY PANELS & SKIRTING (Image 6 Champagne) */}
+      {/* 2. EXTERIOR LOWER BODY SIDE PANELS (Spans from Z = -5.5 to +5.5) */}
       {/* ============================================================ */}
-      {/* Left Exterior Body Skirt */}
-      <group position={[-1.28, 0, 0.2]}>
-        <mesh position={[0, 0.38, 0]} castShadow receiveShadow>
-          <boxGeometry args={[0.08, 0.76, 14.0]} />
+      {/* Left Exterior Side Body Panel */}
+      <group position={[-1.25, 0, 0.0]}>
+        {/* Main Champagne Gold Lower Skirt */}
+        <mesh position={[0, 0.38, 0.0]} castShadow receiveShadow>
+          <boxGeometry args={[0.08, 0.76, 11.0]} />
           <primitive object={materials.coachBodyGold} attach="material" />
         </mesh>
-        {/* Beltline Dark Mask Band (Image 6) */}
-        <mesh position={[0, 0.82, 0]} castShadow receiveShadow>
-          <boxGeometry args={[0.08, 0.16, 14.0]} />
+        {/* Black Beltline Graphic Trim */}
+        <mesh position={[0, 0.82, 0.0]} castShadow receiveShadow>
+          <boxGeometry args={[0.08, 0.14, 11.0]} />
           <primitive object={materials.coachDarkMask} attach="material" />
         </mesh>
         {/* Luggage Bay Hatch Seams */}
-        {[-3.6, -1.8, 0.0, 1.8].map((z, idx) => (
+        {[-3.0, -1.5, 0.0, 1.5, 3.0].map((z, idx) => (
           <group key={idx} position={[-0.045, 0.34, z]}>
             <mesh>
-              <boxGeometry args={[0.005, 0.44, 1.55]} />
+              <boxGeometry args={[0.005, 0.44, 1.35]} />
               <primitive object={materials.interiorCharcoal} attach="material" />
             </mesh>
           </group>
         ))}
       </group>
 
-      {/* Right Exterior Body Skirt */}
-      <group position={[1.28, 0, 0.2]}>
-        <mesh position={[0, 0.38, 0]} castShadow receiveShadow>
-          <boxGeometry args={[0.08, 0.76, 14.0]} />
+      {/* Right Exterior Side Body Panel */}
+      <group position={[1.25, 0, 0.0]}>
+        {/* Main Champagne Gold Lower Skirt */}
+        <mesh position={[0, 0.38, 0.0]} castShadow receiveShadow>
+          <boxGeometry args={[0.08, 0.76, 11.0]} />
           <primitive object={materials.coachBodyGold} attach="material" />
         </mesh>
-        {/* Beltline Dark Mask Band */}
-        <mesh position={[0, 0.82, 0]} castShadow receiveShadow>
-          <boxGeometry args={[0.08, 0.16, 14.0]} />
+        {/* Black Beltline Graphic Trim */}
+        <mesh position={[0, 0.82, 0.0]} castShadow receiveShadow>
+          <boxGeometry args={[0.08, 0.14, 11.0]} />
           <primitive object={materials.coachDarkMask} attach="material" />
         </mesh>
-        {/* Front Passenger Boarding Door Frame on Right Side (Image 6) */}
-        <group position={[0.045, 0.95, -4.6]}>
+        {/* Front Passenger Boarding Door Outline on Right Side */}
+        <group position={[0.045, 0.92, -4.2]}>
           <mesh>
-            <boxGeometry args={[0.01, 1.65, 1.15]} />
+            <boxGeometry args={[0.01, 1.60, 1.05]} />
             <primitive object={materials.coachDarkMask} attach="material" />
           </mesh>
         </group>
       </group>
 
       {/* ============================================================ */}
-      {/* 3. PANORAMIC WINDOWS & ROYAL BLUE CURTAINS (Picture 4)       */}
+      {/* 3. PANORAMIC SIDE WINDOWS & DRAPED CURTAINS                  */}
       {/* ============================================================ */}
       {/* Left Panoramic Window Glass */}
-      <mesh position={[-1.24, 1.48, 0.2]} raycast={() => null}>
-        <boxGeometry args={[0.02, 1.1, 12.6]} />
+      <mesh position={[-1.23, 1.48, 0.1]} raycast={() => null}>
+        <boxGeometry args={[0.02, 1.10, 10.4]} />
         <primitive object={materials.panoramicGlass} attach="material" />
       </mesh>
 
       {/* Right Panoramic Window Glass */}
-      <mesh position={[1.24, 1.48, 0.2]} raycast={() => null}>
-        <boxGeometry args={[0.02, 1.1, 12.6]} />
+      <mesh position={[1.23, 1.48, 0.1]} raycast={() => null}>
+        <boxGeometry args={[0.02, 1.10, 10.4]} />
         <primitive object={materials.panoramicGlass} attach="material" />
       </mesh>
 
-      {/* Structural Window Pillars on BOTH sides with Royal Blue Curtains (Picture 4) */}
-      {[-4.6, -2.3, 0.0, 2.3, 4.6].map((z, idx) => (
+      {/* Structural Window Pillars on Both Sides with Royal Blue Curtains (Picture 4) */}
+      {[-3.8, -1.9, 0.0, 1.9, 3.8].map((z, idx) => (
         <React.Fragment key={idx}>
-          {/* Left Pillar */}
-          <group position={[-1.24, 1.48, z]}>
+          {/* Left Pillar & Curtain */}
+          <group position={[-1.23, 1.48, z]}>
             <mesh castShadow>
-              <boxGeometry args={[0.06, 1.12, 0.16]} />
+              <boxGeometry args={[0.06, 1.12, 0.14]} />
               <primitive object={materials.coachDarkMask} attach="material" />
             </mesh>
-            {/* Elegant Draped Royal Blue Window Curtain (Picture 4) */}
             <mesh position={[0.035, 0, 0]} castShadow>
               <boxGeometry args={[0.03, 0.95, 0.14]} />
               <primitive object={materials.curtainMat} attach="material" />
             </mesh>
           </group>
 
-          {/* Right Pillar */}
-          <group position={[1.24, 1.48, z]}>
+          {/* Right Pillar & Curtain */}
+          <group position={[1.23, 1.48, z]}>
             <mesh castShadow>
-              <boxGeometry args={[0.06, 1.12, 0.16]} />
+              <boxGeometry args={[0.06, 1.12, 0.14]} />
               <primitive object={materials.coachDarkMask} attach="material" />
             </mesh>
-            {/* Elegant Draped Royal Blue Window Curtain (Picture 4) */}
             <mesh position={[-0.035, 0, 0]} castShadow>
               <boxGeometry args={[0.03, 0.95, 0.14]} />
               <primitive object={materials.curtainMat} attach="material" />
@@ -358,48 +377,50 @@ function ChampagneLuxuryCoachModel({ isZoomed }: { isZoomed: boolean }) {
 
       {/* 
         Sleek Aerodynamic Roof Side Rails (Cutaway Silhouette Framing, Image 6)
-        NOTE: ROOF IS 100% UNCOVERED/OPEN — NO OBSTRUCTING BOX OVER BACK SEATS!
+        Spans EXACTLY from Front Crown (Z = -4.5) to Rear Bulkhead (Z = +5.5).
+        Length = 10.0m, Centered at Z = 0.5.
+        ZERO OVERHANGING POLES! Seamlessly connects front to back!
       */}
-      <group position={[-1.25, 2.08, 0.2]}>
-        <RoundedBox args={[0.08, 0.12, 14.2]} radius={0.02} smoothness={3} castShadow>
+      <group position={[-1.24, 2.12, 0.5]}>
+        <RoundedBox args={[0.08, 0.14, 10.0]} radius={0.02} smoothness={3} castShadow>
           <primitive object={materials.coachBodyGold} attach="material" />
         </RoundedBox>
       </group>
-      <group position={[1.25, 2.08, 0.2]}>
-        <RoundedBox args={[0.08, 0.12, 14.2]} radius={0.02} smoothness={3} castShadow>
+      <group position={[1.24, 2.12, 0.5]}>
+        <RoundedBox args={[0.08, 0.14, 10.0]} radius={0.02} smoothness={3} castShadow>
           <primitive object={materials.coachBodyGold} attach="material" />
         </RoundedBox>
       </group>
 
       {/* ============================================================ */}
-      {/* 4. REALISTIC 3-AXLE WHEELS (Image 6 Touring Coach)           */}
+      {/* 4. REALISTIC 3-AXLE WHEELS                                   */}
       {/* ============================================================ */}
       {[
-        [-1.30, -0.05, -3.8],
-        [1.30, -0.05, -3.8],
-        [-1.30, -0.05, 3.6],
-        [1.30, -0.05, 3.6],
-        [-1.30, -0.05, 4.8],
-        [1.30, -0.05, 4.8],
+        [-1.26, -0.05, -3.6],
+        [1.26, -0.05, -3.6],
+        [-1.26, -0.05, 3.4],
+        [1.26, -0.05, 3.4],
+        [-1.26, -0.05, 4.6],
+        [1.26, -0.05, 4.6],
       ].map(([wx, wy, wz], wi) => (
         <group key={wi} position={[wx, wy, wz]}>
-          {/* Wheel Arch Liner */}
-          <mesh position={[wx > 0 ? -0.05 : 0.05, 0.15, 0]}>
+          {/* Wheel Arch Fender Liner */}
+          <mesh position={[wx > 0 ? -0.04 : 0.04, 0.15, 0]}>
             <boxGeometry args={[0.05, 0.65, 1.05]} />
             <primitive object={materials.interiorCharcoal} attach="material" />
           </mesh>
-          {/* Deep Rubber Tire with Tread Profile */}
+          {/* Rubber Tire with Deep Tread Profile */}
           <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
-            <cylinderGeometry args={[0.44, 0.44, 0.24, 24]} />
+            <cylinderGeometry args={[0.44, 0.44, 0.22, 24]} />
             <primitive object={materials.tireRubber} attach="material" />
           </mesh>
-          {/* Diamond-cut Multi-spoke Alloy Rim (Image 6) */}
+          {/* Multi-spoke Diamond-cut Alloy Rim */}
           <mesh rotation={[0, 0, Math.PI / 2]}>
-            <cylinderGeometry args={[0.27, 0.27, 0.26, 16]} />
+            <cylinderGeometry args={[0.27, 0.27, 0.24, 16]} />
             <primitive object={materials.alloyRim} attach="material" />
           </mesh>
           {/* Chrome Central Hubcap */}
-          <mesh position={[wx > 0 ? 0.14 : -0.14, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+          <mesh position={[wx > 0 ? 0.13 : -0.13, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
             <circleGeometry args={[0.09, 16]} />
             <primitive object={materials.chromeTrim} attach="material" />
           </mesh>
@@ -407,254 +428,288 @@ function ChampagneLuxuryCoachModel({ isZoomed }: { isZoomed: boolean }) {
       ))}
 
       {/* ============================================================ */}
-      {/* 5. SLEEK CHAMPAGNE FRONT COACH FASCIA (Image 6 Exact Match)  */}
+      {/* 5. AUTHENTIC FRONT COACH FASCIA & COCKPIT (Image 6 Coach)    */}
       {/* ============================================================ */}
-      <group position={[0, 0, -5.6]}>
-        {/* Curved Aerodynamic Front Bumper & Chin (Image 6) */}
-        <RoundedBox args={[2.54, 0.52, 0.8]} radius={0.18} smoothness={4} position={[0, 0.14, -0.92]} castShadow>
+      {/* Front end connects seamlessly from Z = -4.5 to Z = -5.5 */}
+      <group position={[0, 0, -4.5]}>
+        {/* Front Left and Right A-Pillars sweeping down from roof to bumper */}
+        <mesh position={[-1.22, 1.48, -0.45]} rotation={[-0.32, 0, 0]} castShadow>
+          <boxGeometry args={[0.08, 1.45, 0.08]} />
+          <primitive object={materials.coachBodyGold} attach="material" />
+        </mesh>
+        <mesh position={[1.22, 1.48, -0.45]} rotation={[-0.32, 0, 0]} castShadow>
+          <boxGeometry args={[0.08, 1.45, 0.08]} />
+          <primitive object={materials.coachBodyGold} attach="material" />
+        </mesh>
+
+        {/* Front Hood / Dash Cowl Deck (Sloping up from bumper to base of glass) */}
+        <mesh position={[0, 0.82, -0.80]} rotation={[-0.22, 0, 0]} castShadow>
+          <boxGeometry args={[2.46, 0.06, 0.55]} />
+          <primitive object={materials.coachBodyGold} attach="material" />
+        </mesh>
+
+        {/* Sculpted Curved Aerodynamic Front Bumper (Image 6) */}
+        <RoundedBox args={[2.50, 0.72, 0.55]} radius={0.16} smoothness={4} position={[0, 0.38, -1.02]} castShadow receiveShadow>
           <primitive object={materials.coachBodyGold} attach="material" />
         </RoundedBox>
 
-        {/* Lower Central Dark Air Intake Grille (Image 6) */}
-        <mesh position={[0, 0.06, -1.33]}>
-          <boxGeometry args={[1.5, 0.22, 0.04]} />
+        {/* Recessed Dark Horizontal Air Intake Grille (Image 6) */}
+        <mesh position={[0, 0.18, -1.31]}>
+          <boxGeometry args={[1.5, 0.22, 0.02]} />
           <primitive object={materials.coachDarkMask} attach="material" />
         </mesh>
 
-        {/* Triple Round LED Projector Headlamp Clusters (Image 6) */}
+        {/* Novara Chrome Emblem & Horizontal Grille Line */}
+        <mesh position={[0, 0.44, -1.31]}>
+          <boxGeometry args={[1.2, 0.02, 0.02]} />
+          <primitive object={materials.chromeTrim} attach="material" />
+        </mesh>
+        <mesh position={[0, 0.44, -1.30]}>
+          <circleGeometry args={[0.08, 20]} />
+          <primitive object={materials.chromeTrim} attach="material" />
+        </mesh>
+
+        {/* Swept-Back Triple Projector LED Headlamps (Image 6) */}
         {/* Left Headlamp */}
-        <group position={[-0.95, 0.24, -1.24]}>
-          <RoundedBox args={[0.44, 0.16, 0.06]} radius={0.03} smoothness={3}>
+        <group position={[-0.92, 0.44, -1.26]}>
+          <RoundedBox args={[0.42, 0.16, 0.04]} radius={0.03} smoothness={3}>
             <primitive object={materials.coachDarkMask} attach="material" />
           </RoundedBox>
-          {[-0.14, 0, 0.14].map((lx, li) => (
-            <mesh key={li} position={[lx, 0, 0.035]} rotation={[Math.PI / 2, 0, 0]}>
-              <cylinderGeometry args={[0.045, 0.045, 0.03, 16]} />
+          {[-0.13, 0, 0.13].map((lx, li) => (
+            <mesh key={li} position={[lx, 0, 0.025]} rotation={[Math.PI / 2, 0, 0]}>
+              <cylinderGeometry args={[0.042, 0.042, 0.02, 16]} />
               <primitive object={materials.headlightLens} attach="material" />
             </mesh>
           ))}
         </group>
+
         {/* Right Headlamp */}
-        <group position={[0.95, 0.24, -1.24]}>
-          <RoundedBox args={[0.44, 0.16, 0.06]} radius={0.03} smoothness={3}>
+        <group position={[0.92, 0.44, -1.26]}>
+          <RoundedBox args={[0.42, 0.16, 0.04]} radius={0.03} smoothness={3}>
             <primitive object={materials.coachDarkMask} attach="material" />
           </RoundedBox>
-          {[-0.14, 0, 0.14].map((lx, li) => (
-            <mesh key={li} position={[lx, 0, 0.035]} rotation={[Math.PI / 2, 0, 0]}>
-              <cylinderGeometry args={[0.045, 0.045, 0.03, 16]} />
+          {[-0.13, 0, 0.13].map((lx, li) => (
+            <mesh key={li} position={[lx, 0, 0.025]} rotation={[Math.PI / 2, 0, 0]}>
+              <cylinderGeometry args={[0.042, 0.042, 0.02, 16]} />
               <primitive object={materials.headlightLens} attach="material" />
             </mesh>
           ))}
         </group>
 
-        {/* Circular Lower Fog Lamps (Image 6) */}
-        <mesh position={[-0.92, -0.04, -1.30]}>
+        {/* Lower Circular Fog Lamps in Chrome Bezels (Image 6) */}
+        <mesh position={[-0.88, 0.14, -1.31]}>
           <circleGeometry args={[0.05, 16]} />
           <primitive object={materials.fogLampLens} attach="material" />
         </mesh>
-        <mesh position={[0.92, -0.04, -1.30]}>
+        <mesh position={[0.88, 0.14, -1.31]}>
           <circleGeometry args={[0.05, 16]} />
           <primitive object={materials.fogLampLens} attach="material" />
         </mesh>
 
-        {/* Slanted Curved Panoramic Windshield with Dark Border (Image 6) */}
-        <mesh position={[0, 1.18, -0.85]} rotation={[0.34, 0, 0]} raycast={() => null}>
-          <planeGeometry args={[2.46, 1.75]} />
-          <primitive object={materials.panoramicGlass} attach="material" />
+        {/* 
+          Large Sweeping Aerodynamic Panoramic Windshield (Image 6)
+          Visible from both front & inside with realistic tint & dual wipers!
+        */}
+        <mesh position={[0, 1.55, -0.45]} rotation={[-0.32, 0, 0]} raycast={() => null}>
+          <planeGeometry args={[2.42, 1.50]} />
+          <primitive object={materials.windshieldGlass} attach="material" />
         </mesh>
 
-        {/* Dual Articulated Windshield Wipers (Image 6) */}
-        <mesh position={[-0.45, 0.46, -1.05]} rotation={[0, 0, 0.18]}>
+        {/* Windshield Dual Articulated Wipers (Image 6) */}
+        <mesh position={[-0.42, 0.92, -0.68]} rotation={[0, 0, 0.18]}>
           <boxGeometry args={[0.55, 0.018, 0.015]} />
-          <primitive object={materials.interiorCharcoal} attach="material" />
+          <primitive object={materials.coachDarkMask} attach="material" />
         </mesh>
-        <mesh position={[0.45, 0.46, -1.05]} rotation={[0, 0, 0.18]}>
+        <mesh position={[0.42, 0.92, -0.68]} rotation={[0, 0, 0.18]}>
           <boxGeometry args={[0.55, 0.018, 0.015]} />
-          <primitive object={materials.interiorCharcoal} attach="material" />
+          <primitive object={materials.coachDarkMask} attach="material" />
         </mesh>
 
-        {/* Upper Windshield Crown Visor & LED Destination Route Display (Image 6) */}
-        <group position={[0, 2.05, -0.6]}>
-          <RoundedBox args={[2.52, 0.36, 0.5]} radius={0.08} smoothness={3} castShadow>
+        {/* Aerodynamic Front Roof Crown & Destination Matrix Sign (Image 6) */}
+        <group position={[0, 2.12, 0.0]}>
+          <RoundedBox args={[2.50, 0.20, 0.38]} radius={0.06} smoothness={3} castShadow>
             <primitive object={materials.coachBodyGold} attach="material" />
           </RoundedBox>
-          <mesh position={[0, -0.02, -0.26]} rotation={[0.22, 0, 0]}>
-            <planeGeometry args={[1.9, 0.18]} />
-            <meshStandardMaterial color="#0B132B" emissive="#0284C7" emissiveIntensity={0.4} />
+          <mesh position={[0, 0, -0.20]} rotation={[0.15, 0, 0]}>
+            <planeGeometry args={[1.8, 0.12]} />
+            <meshStandardMaterial color="#0B132B" emissive="#0284C7" emissiveIntensity={0.5} />
+          </mesh>
+        </group>
+
+        {/* Streamlined "Elephant-Ear" Wing Mirrors (Image 6) */}
+        <group position={[-1.38, 1.75, -0.3]}>
+          <mesh castShadow>
+            <cylinderGeometry args={[0.016, 0.016, 0.45, 12]} />
+            <primitive object={materials.coachDarkMask} attach="material" />
+          </mesh>
+          <RoundedBox args={[0.12, 0.38, 0.16]} radius={0.03} smoothness={3} position={[-0.06, 0.14, -0.06]} castShadow>
+            <primitive object={materials.coachBodyGold} attach="material" />
+          </RoundedBox>
+          <mesh position={[-0.01, 0.14, -0.06]} rotation={[0, -Math.PI / 2, 0]}>
+            <planeGeometry args={[0.14, 0.34]} />
+            <primitive object={materials.chromeTrim} attach="material" />
+          </mesh>
+        </group>
+        <group position={[1.38, 1.75, -0.3]}>
+          <mesh castShadow>
+            <cylinderGeometry args={[0.016, 0.016, 0.45, 12]} />
+            <primitive object={materials.coachDarkMask} attach="material" />
+          </mesh>
+          <RoundedBox args={[0.12, 0.38, 0.16]} radius={0.03} smoothness={3} position={[0.06, 0.14, -0.06]} castShadow>
+            <primitive object={materials.coachBodyGold} attach="material" />
+          </RoundedBox>
+          <mesh position={[0.01, 0.14, -0.06]} rotation={[0, Math.PI / 2, 0]}>
+            <planeGeometry args={[0.14, 0.34]} />
+            <primitive object={materials.chromeTrim} attach="material" />
           </mesh>
         </group>
 
         {/* 
-          High-Mounted Aerodynamic Wing Mirrors in Champagne Body Color (Image 6)
+          DRIVER COCKPIT CONSOLE (Picture 5 Reference)
+          Cleanly nested behind the front cowl inside the cabin!
         */}
-        <group position={[-1.42, 1.62, -0.6]}>
-          <mesh castShadow>
-            <cylinderGeometry args={[0.018, 0.018, 0.48, 12]} />
-            <primitive object={materials.coachDarkMask} attach="material" />
-          </mesh>
-          <RoundedBox args={[0.12, 0.42, 0.18]} radius={0.03} smoothness={3} position={[-0.08, 0.16, -0.08]} castShadow>
-            <primitive object={materials.coachBodyGold} attach="material" />
-          </RoundedBox>
-          <mesh position={[-0.02, 0.16, -0.08]} rotation={[0, -Math.PI / 2, 0]}>
-            <planeGeometry args={[0.16, 0.38]} />
-            <primitive object={materials.chromeTrim} attach="material" />
-          </mesh>
-        </group>
-        <group position={[1.42, 1.62, -0.6]}>
-          <mesh castShadow>
-            <cylinderGeometry args={[0.018, 0.018, 0.48, 12]} />
-            <primitive object={materials.coachDarkMask} attach="material" />
-          </mesh>
-          <RoundedBox args={[0.12, 0.42, 0.18]} radius={0.03} smoothness={3} position={[0.08, 0.16, -0.08]} castShadow>
-            <primitive object={materials.coachBodyGold} attach="material" />
-          </RoundedBox>
-          <mesh position={[0.02, 0.16, -0.08]} rotation={[0, Math.PI / 2, 0]}>
-            <planeGeometry args={[0.16, 0.38]} />
-            <primitive object={materials.chromeTrim} attach="material" />
-          </mesh>
-        </group>
-
-        {/* 
-          DRIVER COCKPIT & DASHBOARD (Picture 5 Reference)
-        */}
-        <group position={[-0.45, 0.62, -0.2]}>
-          <RoundedBox args={[1.35, 0.46, 0.78]} radius={0.05} smoothness={4} castShadow>
+        <group position={[-0.45, 0.65, 0.15]}>
+          <RoundedBox args={[1.25, 0.42, 0.65]} radius={0.04} smoothness={3} castShadow>
             <primitive object={materials.interiorCharcoal} attach="material" />
           </RoundedBox>
 
           {/* Warm Walnut Instrument Cluster & Telemetry (Picture 5) */}
-          <mesh position={[0, 0.24, 0.05]} rotation={[-0.35, 0, 0]}>
-            <planeGeometry args={[0.82, 0.28]} />
+          <mesh position={[0, 0.22, 0.02]} rotation={[-0.35, 0, 0]}>
+            <planeGeometry args={[0.78, 0.26]} />
             <meshStandardMaterial map={dashTexture} roughness={0.25} metalness={0.1} />
           </mesh>
 
           {/* 3-Spoke Bus Steering Wheel & Column (Picture 5) */}
-          <group position={[0, 0.32, 0.24]} rotation={[0.55, 0, 0]}>
+          <group position={[0, 0.30, 0.20]} rotation={[0.55, 0, 0]}>
             <mesh position={[0, -0.15, 0]} castShadow>
-              <cylinderGeometry args={[0.035, 0.045, 0.3, 16]} />
+              <cylinderGeometry args={[0.03, 0.04, 0.28, 16]} />
               <primitive object={materials.interiorCharcoal} attach="material" />
             </mesh>
             <mesh castShadow>
-              <torusGeometry args={[0.20, 0.02, 16, 32]} />
+              <torusGeometry args={[0.19, 0.018, 16, 32]} />
               <primitive object={materials.interiorCharcoal} attach="material" />
             </mesh>
             <mesh>
-              <cylinderGeometry args={[0.065, 0.065, 0.035, 20]} />
+              <cylinderGeometry args={[0.06, 0.06, 0.03, 20]} />
               <primitive object={materials.chromeTrim} attach="material" />
             </mesh>
           </group>
 
-          {/* Floor-mounted Gear Shift Lever with Wood/Amber Knob (Picture 5) */}
-          <group position={[0.32, -0.12, 0.35]}>
+          {/* Floor-mounted Gear Shift Lever (Picture 5) */}
+          <group position={[0.30, -0.10, 0.28]}>
             <mesh>
-              <cylinderGeometry args={[0.012, 0.014, 0.24, 12]} />
+              <cylinderGeometry args={[0.01, 0.012, 0.22, 12]} />
               <primitive object={materials.chromeTrim} attach="material" />
             </mesh>
-            <mesh position={[0, 0.13, 0]}>
-              <sphereGeometry args={[0.028, 16, 16]} />
+            <mesh position={[0, 0.12, 0]}>
+              <sphereGeometry args={[0.025, 16, 16]} />
               <meshStandardMaterial color="#854D27" roughness={0.3} metalness={0.2} />
             </mesh>
           </group>
 
           {/* Safety Yellow Grab Rails (Picture 4 & 5) */}
-          <mesh position={[0.62, 0.35, 0.25]} castShadow>
-            <cylinderGeometry args={[0.016, 0.016, 1.1, 16]} />
+          <mesh position={[0.58, 0.35, 0.20]} castShadow>
+            <cylinderGeometry args={[0.014, 0.014, 1.05, 16]} />
             <primitive object={materials.safetyYellowRail} attach="material" />
           </mesh>
 
           {/* Forward-Facing Driver Suspension Seat */}
-          <group position={[0, -0.14, 0.62]}>
+          <group position={[0, -0.14, 0.55]}>
             <mesh position={[0, 0.08, 0]} castShadow>
-              <cylinderGeometry args={[0.1, 0.12, 0.22, 16]} />
+              <cylinderGeometry args={[0.09, 0.11, 0.20, 16]} />
               <primitive object={materials.interiorCharcoal} attach="material" />
             </mesh>
-            <RoundedBox args={[0.52, 0.12, 0.50]} radius={0.03} smoothness={3} position={[0, 0.22, -0.05]} castShadow>
+            <RoundedBox args={[0.50, 0.11, 0.48]} radius={0.03} smoothness={3} position={[0, 0.20, -0.04]} castShadow>
               <primitive object={materials.interiorCharcoal} attach="material" />
             </RoundedBox>
-            <RoundedBox args={[0.48, 0.68, 0.10]} radius={0.03} smoothness={3} position={[0, 0.62, 0.20]} rotation={[0.12, 0, 0]} castShadow>
+            <RoundedBox args={[0.46, 0.65, 0.09]} radius={0.03} smoothness={3} position={[0, 0.58, 0.18]} rotation={[0.12, 0, 0]} castShadow>
               <primitive object={materials.interiorCharcoal} attach="material" />
             </RoundedBox>
-            <RoundedBox args={[0.28, 0.16, 0.08]} radius={0.03} smoothness={3} position={[0, 1.02, 0.18]} castShadow>
+            <RoundedBox args={[0.26, 0.15, 0.07]} radius={0.03} smoothness={3} position={[0, 0.98, 0.16]} castShadow>
               <primitive object={materials.interiorCharcoal} attach="material" />
             </RoundedBox>
           </group>
         </group>
 
-        {/* Boarding Steps with Safety Yellow Nosing (Picture 4) */}
-        <group position={[0.82, -0.08, 0.2]}>
+        {/* Boarding Steps at Front Entrance with Safety Yellow Nosing (Picture 4) */}
+        <group position={[0.78, -0.08, 0.15]}>
           <mesh receiveShadow>
-            <boxGeometry args={[0.72, 0.1, 0.42]} />
+            <boxGeometry args={[0.70, 0.10, 0.40]} />
             <primitive object={materials.interiorCharcoal} attach="material" />
           </mesh>
-          <mesh position={[0, 0.052, 0.20]}>
-            <boxGeometry args={[0.72, 0.008, 0.02]} />
+          <mesh position={[0, 0.052, 0.19]}>
+            <boxGeometry args={[0.70, 0.008, 0.02]} />
             <primitive object={materials.safetyYellowRail} attach="material" />
           </mesh>
         </group>
       </group>
 
       {/* ============================================================ */}
-      {/* 6. SCULPTED REAR TOURING COACH TAIL (Image 6 Aerodynamic)    */}
+      {/* 6. COHESIVE, FLUSH REAR BULKHEAD & TAIL (Z = +5.50)           */}
       {/* ============================================================ */}
-      <group position={[0, 0.95, 6.25]}>
-        {/* Sculpted Rear Cap with Rounded Aerodynamic Corners (Image 6) */}
-        <RoundedBox args={[2.54, 2.05, 0.42]} radius={0.16} smoothness={4} castShadow receiveShadow>
+      {/* 
+        Caps the rear of the bus COMPLETELY flush with side skirts and roof rails!
+        ZERO overhanging rails! ZERO open flatbed gap!
+      */}
+      <group position={[0, 0.95, 5.50]}>
+        {/* Full-width Rear Curved Body Cap (Wraps flush into side skirts!) */}
+        <RoundedBox args={[2.50, 2.10, 0.35]} radius={0.12} smoothness={4} castShadow receiveShadow>
           <primitive object={materials.coachBodyGold} attach="material" />
         </RoundedBox>
 
         {/* Lower Rear Bumper with Twin Chrome Exhaust Diffusers */}
-        <group position={[0, -0.85, 0.22]}>
-          <RoundedBox args={[2.56, 0.36, 0.25]} radius={0.08} smoothness={3} castShadow>
+        <group position={[0, -0.85, 0.16]}>
+          <RoundedBox args={[2.52, 0.38, 0.22]} radius={0.08} smoothness={3} castShadow>
             <primitive object={materials.coachDarkMask} attach="material" />
           </RoundedBox>
-          <mesh position={[-0.82, -0.05, 0.13]}>
-            <boxGeometry args={[0.26, 0.07, 0.04]} />
+          <mesh position={[-0.82, -0.06, 0.12]}>
+            <boxGeometry args={[0.25, 0.06, 0.03]} />
             <primitive object={materials.chromeTrim} attach="material" />
           </mesh>
-          <mesh position={[0.82, -0.05, 0.13]}>
-            <boxGeometry args={[0.26, 0.07, 0.04]} />
+          <mesh position={[0.82, -0.06, 0.12]}>
+            <boxGeometry args={[0.25, 0.06, 0.03]} />
             <primitive object={materials.chromeTrim} attach="material" />
           </mesh>
           {/* Illuminated License Plate */}
-          <mesh position={[0, 0.02, 0.14]}>
-            <boxGeometry args={[0.55, 0.16, 0.02]} />
+          <mesh position={[0, 0.02, 0.12]}>
+            <boxGeometry args={[0.55, 0.15, 0.02]} />
             <meshStandardMaterial color="#0B132B" />
           </mesh>
         </group>
 
-        {/* Vertical LED Tail Light Assemblies (Image 6) */}
-        <group position={[-1.12, 0.12, 0.22]}>
-          <RoundedBox args={[0.14, 1.05, 0.05]} radius={0.03} smoothness={3}>
+        {/* Flush Vertical LED Tail Light Assemblies on Left & Right Corners (Image 6) */}
+        <group position={[-1.12, 0.12, 0.16]}>
+          <RoundedBox args={[0.13, 1.05, 0.04]} radius={0.02} smoothness={3}>
             <primitive object={materials.taillightLens} attach="material" />
           </RoundedBox>
-          <mesh position={[0, -0.28, 0.028]}>
-            <boxGeometry args={[0.11, 0.14, 0.02]} />
+          <mesh position={[0, -0.28, 0.022]}>
+            <boxGeometry args={[0.10, 0.14, 0.02]} />
             <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.7} />
           </mesh>
         </group>
-        <group position={[1.12, 0.12, 0.22]}>
-          <RoundedBox args={[0.14, 1.05, 0.05]} radius={0.03} smoothness={3}>
+        <group position={[1.12, 0.12, 0.16]}>
+          <RoundedBox args={[0.13, 1.05, 0.04]} radius={0.02} smoothness={3}>
             <primitive object={materials.taillightLens} attach="material" />
           </RoundedBox>
-          <mesh position={[0, -0.28, 0.028]}>
-            <boxGeometry args={[0.11, 0.14, 0.02]} />
+          <mesh position={[0, -0.28, 0.022]}>
+            <boxGeometry args={[0.10, 0.14, 0.02]} />
             <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={0.7} />
           </mesh>
         </group>
 
-        {/* Rear Privacy Tinted Window (Picture 4) */}
-        <mesh position={[0, 0.35, 0.22]} raycast={() => null}>
-          <planeGeometry args={[1.8, 0.85]} />
+        {/* Large Rear Privacy Tinted Window (Picture 4) */}
+        <mesh position={[0, 0.38, 0.18]} raycast={() => null}>
+          <planeGeometry args={[1.85, 0.85]} />
           <primitive object={materials.panoramicGlass} attach="material" />
         </mesh>
 
-        {/* Aerodynamic High-Mount Rear Roof Spoiler & Third Brake Light (Image 6) */}
-        <group position={[0, 1.05, 0.06]}>
-          <RoundedBox args={[2.52, 0.14, 0.40]} radius={0.03} smoothness={3} castShadow>
+        {/* Aerodynamic Integrated Rear Roof Spoiler & Third Brake Light (Seamlessly caps roof rails!) */}
+        <group position={[0, 1.15, 0.02]}>
+          <RoundedBox args={[2.52, 0.14, 0.38]} radius={0.03} smoothness={3} castShadow>
             <primitive object={materials.coachDarkMask} attach="material" />
           </RoundedBox>
-          <mesh position={[0, 0.02, 0.21]}>
-            <boxGeometry args={[0.9, 0.035, 0.02]} />
+          <mesh position={[0, 0.02, 0.20]}>
+            <boxGeometry args={[0.9, 0.03, 0.02]} />
             <primitive object={materials.taillightLens} attach="material" />
           </mesh>
         </group>
@@ -715,11 +770,11 @@ export default function BusInteriorScene({
         {/* Ambient Fill Light */}
         <directionalLight position={[-10, 12, -8]} intensity={0.85} color="#E2E8F0" />
 
-        {/* Warm Golden Rim Light for Coach Body Silhouette (Image 6) */}
-        <directionalLight position={[0, 6, -14]} intensity={0.8} color="#FEF08A" />
+        {/* Warm Golden Rim Light for Coach Silhouette */}
+        <directionalLight position={[0, 6, -14]} intensity={0.85} color="#FEF08A" />
 
-        {/* Realistic Champagne Gold Luxury Touring Coach Model (Image 6) */}
-        <ChampagneLuxuryCoachModel isZoomed={isZoomed} />
+        {/* Fully Integrated Luxury Touring Coach Model */}
+        <LuxuryTouringCoachModel isZoomed={isZoomed} />
 
         {/* 
           All 28 Forward-Facing Passenger Seats (100% Unobstructed and Fully Interactive) 
