@@ -342,18 +342,6 @@ function RoutesContent() {
                       </Link>
                     </div>
                   </div>
-
-                  {/* Amenities Badges Bar */}
-                  <div className="mt-4 pt-4 border-t border-white/5 flex flex-wrap items-center gap-2">
-                    {bus.amenities.map((amenity, i) => (
-                      <span
-                        key={i}
-                        className="text-[10px] font-semibold px-2.5 py-1 rounded-lg bg-white/5 text-slate-300 border border-white/5"
-                      >
-                        {amenity}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               ))
             )}
