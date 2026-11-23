@@ -26,6 +26,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { CITIES } from '@/lib/mock-data';
+import LuxuryTicketGraphic from '@/components/home/LuxuryTicketGraphic';
 
 // Domestic Intercity Destinations (All within the country's national express network)
 const POPULAR_DESTINATIONS = [
@@ -199,13 +200,13 @@ export default function HomePage() {
 
   return (
     <div className="relative min-h-screen bg-[#F8FAFC] text-slate-800 font-sans selection:bg-[#B48C56] selection:text-white">
-      
+
       {/* ============================================================== */}
       {/* 1. HERO SECTION (Seamless Background Behind Navbar To Bottom)  */}
       {/* ============================================================== */}
       <section className="relative min-h-screen bg-[#071526] text-white flex flex-col justify-between pt-24 pb-8 sm:pt-28 sm:pb-12 lg:pt-32 lg:pb-14 overflow-hidden">
         {/* Full-Bleed Hero Background Image - Spans 100% full width and height, seamless behind navbar */}
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none brightness-105 contrast-105 saturate-110"
           style={{
             backgroundImage: `url('/images/hero-coach.jpg')`,
@@ -214,12 +215,12 @@ export default function HomePage() {
 
         {/* Ambient overlay - subtle and uniform so the entire coach and terminal lights remain vibrant */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#071526]/80 via-black/20 to-black/30 pointer-events-none" />
-        
+
         {/* Subtle bottom vignette to smoothly anchor the floating search widget */}
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#071526]/85 to-transparent pointer-events-none" />
 
         <div className="relative max-w-7xl xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 flex-1 flex flex-col justify-between py-2 lg:py-4">
-          
+
           {/* Hero Left-Aligned Typography (Pure & Clean - No Box / Card Outline) */}
           <div className="text-left max-w-2xl my-auto pt-6 lg:pt-10">
             <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#B48C56]/25 border border-[#B48C56]/40 text-[#D8B788] text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-md shadow-md">
@@ -244,7 +245,7 @@ export default function HomePage() {
           {/* Floating Horizontal Search Widget - Translucent Luxury Glassmorphism (Background Visible Through Glass) */}
           <div className="w-full max-w-6xl xl:max-w-7xl bg-[#061222]/40 backdrop-blur-xl rounded-3xl p-5 sm:p-6 lg:p-7 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.7),inset_0_1px_2px_rgba(255,255,255,0.22)] border border-white/20 text-white mt-8 sm:mt-12 lg:mt-14 ring-1 ring-white/10">
             <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
-              
+
               {/* Departure City */}
               <div className="relative">
                 <label className="block text-[11px] font-bold text-[#E5C287] uppercase tracking-wider mb-1.5 drop-shadow-sm">
@@ -357,19 +358,15 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================== */}
-      {/* 2. BUS TRAVEL WITH EASY SECTION (Full Uncut Ticket + Details)  */}
+      {/* 2. BUS TRAVEL WITH EASY SECTION (Faithful Reference Match UI)  */}
       {/* ============================================================== */}
       <section className="py-16 md:py-24 bg-white border-b border-slate-100 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
-            
-            {/* Left Column: Big Statement Headline, Highlights & Read More */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+
+            {/* Left Column: Big Statement Headline & Read More */}
             <div className="lg:col-span-4 space-y-5 text-left">
               <div>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#B48C56]/15 border border-[#B48C56]/30 text-[#8C6B3D] text-[10px] font-black uppercase tracking-widest mb-3">
-                  <Sparkles className="w-3 h-3 text-[#B48C56]" />
-                  <span>DIGITAL PASS CONCIERGE</span>
-                </span>
                 <h2 className="tracking-tight leading-[0.95]">
                   <span className="font-extrabold text-4xl sm:text-5xl lg:text-6xl text-[#B48C56] block tracking-tight uppercase">
                     BUS TRAVEL
@@ -379,82 +376,51 @@ export default function HomePage() {
                   </span>
                 </h2>
               </div>
-
               <p className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-slate-800 leading-relaxed max-w-sm">
                 AFFORDABLE TICKETS FOR FAST AND COMFORTABLE BUS TRIPS ACROSS CITIES
               </p>
-
-              {/* Detailed Value Checkmarks */}
-              <div className="space-y-2 pt-1 border-t border-slate-100">
-                <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-[#B48C56] shrink-0" />
-                  <span>Instant Scannable Barcode & Wallet Pass</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-[#B48C56] shrink-0" />
-                  <span>Flexible Date Rescheduling Up to 2h Prior</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-[#B48C56] shrink-0" />
-                  <span>Guaranteed 3D Seat Allocation (Zero Overbooking)</span>
-                </div>
-              </div>
-
               <div className="pt-2">
                 <Link
                   href="/routes"
-                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#B48C56] hover:text-[#8C6B3D] transition-all group"
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#B48C56] hover:text-[#946F38] transition-all group"
                 >
-                  <span className="border-b-2 border-[#B48C56] pb-0.5">EXPLORE TICKETS</span>
+                  <span className="border-b border-[#B48C56] pb-0.5">READ MORE</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>
 
-            {/* Center Column: Full Uncut Diagonal Overlapping Luxury Boarding Passes */}
+            {/* Center Column: Interactive Pure Vector Luxury Boarding Passes (100% Complete, No Cutoff) */}
             <div className="lg:col-span-4 flex items-center justify-center relative py-6 lg:py-0">
-              <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[410px] flex items-center justify-center select-none group">
-                {/* Soft ambient aura behind ticket */}
-                <div className="absolute -inset-4 bg-gradient-to-tr from-[#C5A880]/20 via-transparent to-[#071526]/10 rounded-full blur-2xl pointer-events-none group-hover:scale-110 transition-transform duration-700" />
-                
-                {/* Complete Uncut High-Res Luxury Tickets */}
-                <img
-                  src="/images/bus-travel-tickets.png"
-                  alt="Novara Luxury Bus Boarding Passes (Uncut)"
-                  className="w-full h-auto object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.16)] group-hover:scale-105 group-hover:-translate-y-1.5 transition-all duration-500 cursor-pointer"
-                />
-              </div>
+              <LuxuryTicketGraphic />
             </div>
 
-            {/* Right Column: Transport You Can Trust & Key Features */}
+            {/* Right Column: Transport You Can Trust + View Schedule Button */}
             <div className="lg:col-span-4 space-y-6 text-left">
-              <div className="bg-slate-50/80 rounded-2xl p-4 border border-slate-100">
-                <div className="flex items-center gap-2 text-xs font-black text-[#071526] uppercase tracking-wider mb-1">
-                  <Bus className="w-4 h-4 text-[#B48C56]" />
-                  <span>Punctual Express Corridors</span>
-                </div>
-                <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                  Guaranteed departure times across national highway corridors with zero transit transfers and real-time GPS tracking.
+              <div>
+                <h4 className="text-xs sm:text-sm font-black text-[#071526] uppercase tracking-widest mb-1.5">
+                  TRANSPORT YOU CAN TRUST
+                </h4>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Guaranteed departure times with premium direct intercity corridors. Zero layovers, no stress, and real-time live vehicle status.
                 </p>
               </div>
 
-              <div className="bg-slate-50/80 rounded-2xl p-4 border border-slate-100">
-                <div className="flex items-center gap-2 text-xs font-black text-[#071526] uppercase tracking-wider mb-1">
-                  <Armchair className="w-4 h-4 text-[#B48C56]" />
-                  <span>Executive First-Class Suites</span>
-                </div>
-                <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                  Ergonomic winged leather recliners, inductive Qi wireless charging, and high-speed Starlink Wi-Fi for productive travel.
+              <div>
+                <h4 className="text-xs sm:text-sm font-black text-[#071526] uppercase tracking-widest mb-1.5">
+                  TRANSPORT YOU CAN TRUST
+                </h4>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Ergonomic reclining suites, certified sanitation standards, and guaranteed 3D seat reservation for every single passenger.
                 </p>
               </div>
 
-              <div className="pt-1">
+              <div className="pt-2">
                 <Link
                   href="/routes"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#D8B788] via-[#B48C56] to-[#8C6B3D] hover:from-[#E2C799] hover:to-[#B48C56] text-slate-950 font-black text-xs uppercase tracking-widest shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 cursor-pointer"
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-[#C5A880] hover:bg-[#B48C56] text-white font-extrabold text-xs uppercase tracking-widest shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5"
                 >
-                  <span>VIEW TIMETABLES</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  VIEW SCHEDULE
                 </Link>
               </div>
             </div>
@@ -467,7 +433,7 @@ export default function HomePage() {
       {/* 3. POPULAR DESTINATIONS SECTION (Clean Photo Cards - No Badges)*/}
       {/* ============================================================== */}
       <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Title */}
         <div className="text-center mb-10">
           <span className="text-xs font-bold text-[#B48C56] uppercase tracking-widest block mb-1">
@@ -492,7 +458,7 @@ export default function HomePage() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                
+
                 {/* City & Corridor Overlay (Clean, no floating badges) */}
                 <div className="absolute bottom-3.5 left-4 right-4 text-white flex items-end justify-between">
                   <div>
@@ -540,7 +506,7 @@ export default function HomePage() {
       <section className="py-16 md:py-24 bg-white border-y border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
+
             {/* Left Column: Portrait photo of passengers selfie inside coach */}
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100">
@@ -551,7 +517,7 @@ export default function HomePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#071526]/50 via-transparent to-transparent" />
               </div>
-              
+
               {/* Floating Quality Badge */}
               <div className="absolute -bottom-6 -right-6 bg-white rounded-2xl p-4 shadow-xl border border-slate-100 hidden sm:flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-[#B48C56]/15 flex items-center justify-center text-[#B48C56]">
@@ -615,12 +581,12 @@ export default function HomePage() {
       {/* 4. FLEET & AMENITIES SECTION (Deep Navy & Stats - Ref UI)       */}
       {/* ============================================================== */}
       <section className="py-20 md:py-28 bg-[#071526] text-white relative overflow-hidden">
-        
+
         {/* Ambient Radial Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-[#B48C56]/10 rounded-full blur-[160px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
+
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white uppercase leading-snug">
@@ -714,7 +680,7 @@ export default function HomePage() {
       {/* 5. RECENT SCHEDULE / TIMETABLE (Tabbed Table - Ref UI)         */}
       {/* ============================================================== */}
       <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Header */}
         <div className="text-center mb-10">
           <span className="text-xs font-bold text-[#B48C56] uppercase tracking-widest block mb-1">
@@ -731,11 +697,10 @@ export default function HomePage() {
             <button
               key={tab}
               onClick={() => setActiveScheduleTab(tab)}
-              className={`px-5 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
-                activeScheduleTab === tab
-                  ? 'bg-[#B48C56] text-slate-950 shadow-md'
-                  : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-              }`}
+              className={`px-5 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${activeScheduleTab === tab
+                ? 'bg-[#B48C56] text-slate-950 shadow-md'
+                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                }`}
             >
               {tab}
             </button>
@@ -810,7 +775,7 @@ export default function HomePage() {
         }}
       >
         <div className="absolute inset-0 bg-[#071526]/75 backdrop-blur-[2px]" />
-        
+
         <div className="relative max-w-5xl mx-auto px-4 text-center z-10 space-y-6">
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-white leading-tight">
             COMFORT, SAFETY AND SPEED — EVERYTHING FOR YOUR JOURNEY
@@ -835,7 +800,7 @@ export default function HomePage() {
       {/* ============================================================== */}
       <section className="py-20 md:py-28 bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
+
           {/* Left Column: Questions Accordion with Clean Plus/Minus Toggles */}
           <div className="lg:col-span-7 space-y-4">
             <div>
@@ -903,7 +868,7 @@ export default function HomePage() {
       {/* ============================================================== */}
       <section className="py-16 md:py-24 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Section Header */}
           <div className="text-center mb-12">
             <span className="text-xs font-bold text-[#B48C56] uppercase tracking-widest block mb-1">
