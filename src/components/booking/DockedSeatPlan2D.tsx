@@ -30,7 +30,7 @@ export default function DockedSeatPlan2D({
 
   return (
     <div
-      className={`absolute left-4 top-24 bottom-24 z-20 transition-all duration-300 ease-in-out flex items-start select-none ${
+      className={`hidden md:flex absolute left-4 top-24 bottom-24 z-20 transition-all duration-300 ease-in-out items-start select-none ${
         isCollapsed ? '-translate-x-[calc(100%-12px)]' : 'translate-x-0'
       }`}
     >

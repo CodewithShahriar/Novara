@@ -55,7 +55,7 @@ export default function SeatDetailsPanel({
   const coachName = bus?.name || 'Apex Skyliner BioDrive';
 
   return (
-    <div className="fixed bottom-3 sm:bottom-auto sm:top-20 left-2 right-2 sm:left-auto sm:right-6 md:right-8 z-40 w-auto sm:w-[94vw] max-w-md max-h-[86vh] sm:max-h-[88vh] overflow-y-auto overscroll-contain animate-in slide-in-from-right duration-300">
+    <div className="fixed bottom-2 sm:bottom-auto sm:top-20 left-2 right-2 sm:left-auto sm:right-6 md:right-8 z-40 w-auto sm:w-[94vw] max-w-md max-h-[72vh] sm:max-h-[88vh] overflow-y-auto overscroll-contain animate-in slide-in-from-bottom sm:slide-in-from-right duration-300">
       
       {/* 
         ========================================================================
@@ -70,11 +70,14 @@ export default function SeatDetailsPanel({
       */}
       <div className="relative bg-[#071322]/98 backdrop-blur-2xl rounded-3xl border border-[#C5A880]/35 text-white shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85),0_0_25px_rgba(197,168,128,0.12)] overflow-hidden">
         
+        {/* Mobile Pull Handle Indicator */}
+        <div className="w-10 h-1 bg-white/25 rounded-full mx-auto my-1.5 sm:hidden" />
+
         {/* Top Gold Foil Metallic Bar */}
         <div className="h-1.5 w-full bg-gradient-to-r from-[#D8B788] via-[#B48C56] to-[#8C6B3D]" />
 
         {/* 1. TICKET HEADER & CONTROLS */}
-        <div className="p-4 sm:p-5 pb-3 sm:pb-4 border-b border-white/10 bg-gradient-to-b from-white/5 to-transparent">
+        <div className="p-3.5 sm:p-5 pb-3 sm:pb-4 border-b border-white/10 bg-gradient-to-b from-white/5 to-transparent">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#0B1E34] to-[#071526] border border-[#C5A880]/40 flex items-center justify-center p-1 shadow-inner shrink-0">

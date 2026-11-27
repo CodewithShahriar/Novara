@@ -53,7 +53,7 @@ function CameraController({
   useEffect(() => {
     // Dynamically optimize FOV for mobile portrait screens so full coach length is visible
     if ('fov' in camera) {
-      const targetFov = isMobilePortrait ? 46 : 38;
+      const targetFov = isMobilePortrait ? 50 : 38;
       if ((camera as THREE.PerspectiveCamera).fov !== targetFov) {
         (camera as THREE.PerspectiveCamera).fov = targetFov;
         (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
@@ -72,7 +72,7 @@ function CameraController({
       controls.enabled = false;
 
       const targetPos = isMobilePortrait
-        ? { x: OVERVIEW_CAMERA_POS.x, y: OVERVIEW_CAMERA_POS.y + 2.0, z: OVERVIEW_CAMERA_POS.z - 1.2 }
+        ? { x: OVERVIEW_CAMERA_POS.x, y: OVERVIEW_CAMERA_POS.y + 2.4, z: OVERVIEW_CAMERA_POS.z - 2.0 }
         : OVERVIEW_CAMERA_POS;
 
       gsap.to(camera.position, {
@@ -110,13 +110,14 @@ function CameraController({
       const [sx, sy, sz] = activeFocusedSeat.position;
 
       // Position camera in the central open aisle directly in front of the seat
-      // Elevated comfortably from above (y: sy + 1.45) with generous setback (z: sz - 1.70)
-      // providing a zoomed-out, spacious downward 3/4 perspective with full suite breathing room.
+      // On mobile portrait, elevate camera and target slightly so the suite sits
+      // prominently in the top half of the screen above the bottom sheet!
       const targetCameraPos = {
         x: sx < 0 ? 0.35 : -0.35,
-        y: sy + 1.45,
-        z: sz - 1.70,
+        y: isMobilePortrait ? sy + 1.80 : sy + 1.45,
+        z: isMobilePortrait ? sz - 1.95 : sz - 1.70,
       };
+      const targetFocusY = isMobilePortrait ? sy + 0.65 : sy + 0.35;
 
       controls.enabled = false;
 
@@ -131,14 +132,14 @@ function CameraController({
         },
         onComplete: () => {
           controls.enabled = true;
-          controls.target.set(sx, sy + 0.35, sz);
+          controls.target.set(sx, targetFocusY, sz);
           controls.update();
         },
       });
 
       gsap.to(controls.target, {
         x: sx,
-        y: sy + 0.35,
+        y: targetFocusY,
         z: sz,
         duration: 1.25,
         ease: 'power3.inOut',
@@ -148,7 +149,7 @@ function CameraController({
       controls.enabled = false;
 
       const targetPos = isMobilePortrait
-        ? { x: OVERVIEW_CAMERA_POS.x, y: OVERVIEW_CAMERA_POS.y + 2.0, z: OVERVIEW_CAMERA_POS.z - 1.2 }
+        ? { x: OVERVIEW_CAMERA_POS.x, y: OVERVIEW_CAMERA_POS.y + 2.4, z: OVERVIEW_CAMERA_POS.z - 2.0 }
         : OVERVIEW_CAMERA_POS;
 
       gsap.to(camera.position, {

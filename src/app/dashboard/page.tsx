@@ -299,7 +299,7 @@ export default function UserDashboardPage() {
             {otpSent && !isVerified && (
               <form
                 onSubmit={handleVerifyOtp}
-                className="max-w-xl mx-auto bg-gradient-to-b from-[#0B1E34]/95 via-[#091B2F]/95 to-[#071526]/95 border border-[#38BDF8]/35 rounded-3xl p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_35px_rgba(56,189,248,0.12)] backdrop-blur-xl relative overflow-hidden animate-in fade-in zoom-in-95 my-2"
+                className="max-w-xl mx-auto bg-gradient-to-b from-[#0B1E34]/95 via-[#091B2F]/95 to-[#071526]/95 border border-[#38BDF8]/35 rounded-3xl p-4 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_35px_rgba(56,189,248,0.12)] backdrop-blur-xl relative overflow-hidden animate-in fade-in zoom-in-95 my-2"
               >
                 {/* Ambient glowing radial top-accent */}
                 <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-48 h-24 bg-[#38BDF8]/15 rounded-full blur-2xl pointer-events-none" />
@@ -320,8 +320,8 @@ export default function UserDashboardPage() {
                   </p>
                 </div>
 
-                {/* 6 Individual Segmented Input Boxes */}
-                <div className="flex items-center justify-center gap-2 sm:gap-3.5 mb-5 relative z-10">
+                {/* 6 Individual Segmented Input Boxes (Fluid sizing for all mobile screen widths) */}
+                <div className="flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3.5 mb-5 relative z-10">
                   {otpDigits.map((digit, idx) => (
                     <input
                       key={idx}
@@ -334,11 +334,11 @@ export default function UserDashboardPage() {
                       onChange={(e) => handleDigitChange(idx, e.target.value)}
                       onKeyDown={(e) => handleKeyDown(idx, e)}
                       onPaste={handlePaste}
-                      className={`w-11 h-13 sm:w-13 sm:h-16 bg-[#0B1E34] border ${
+                      className={`w-9.5 h-12 xs:w-11 xs:h-13 sm:w-13 sm:h-16 bg-[#0B1E34] border ${
                         digit
                           ? 'border-[#38BDF8] shadow-[0_0_16px_rgba(56,189,248,0.35)]'
                           : 'border-white/15 hover:border-white/30'
-                      } focus:border-[#38BDF8] focus:ring-4 focus:ring-[#38BDF8]/25 rounded-2xl text-center text-xl sm:text-3xl font-black text-white font-mono transition-all outline-none shadow-inner`}
+                      } focus:border-[#38BDF8] focus:ring-4 focus:ring-[#38BDF8]/25 rounded-xl sm:rounded-2xl text-center text-lg xs:text-xl sm:text-3xl font-black text-white font-mono transition-all outline-none shadow-inner`}
                       autoFocus={idx === 0}
                     />
                   ))}
