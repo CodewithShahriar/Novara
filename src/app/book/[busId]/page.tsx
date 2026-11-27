@@ -120,72 +120,63 @@ export default function BookBusPage({
   return (
     <div className="relative w-screen h-[calc(100dvh-5rem)] bg-[#071526] overflow-hidden select-none">
       
-      {/* 1. TOP STATUS & NAVIGATION OVERLAY BAR (Compact, single-row responsive layout) */}
-      <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 z-30 flex items-center justify-between gap-1.5 sm:gap-4 pointer-events-none">
+      {/* 1. TOP UNIFIED NAVIGATION & ACTION BAR (Single elegant row, zero overlap) */}
+      <div className="absolute top-3 inset-x-3 z-30 flex items-center justify-between gap-2 pointer-events-none">
         
-        {/* Left: Route info & back to schedules */}
-        <div className="pointer-events-auto flex items-center gap-1.5 sm:gap-3 min-w-0">
+        {/* Left: Back button + Coach Route Info */}
+        <div className="pointer-events-auto flex items-center gap-2 bg-[#071526]/90 backdrop-blur-md px-2.5 sm:px-3 py-1.5 rounded-2xl border border-white/10 shadow-xl min-w-0">
           <Link
             href="/routes"
-            className="flex items-center gap-1.5 p-2 sm:px-3.5 sm:py-2 rounded-xl bg-[#071526]/95 hover:bg-[#0B192C] text-slate-200 border border-white/10 text-xs font-semibold shadow-lg transition backdrop-blur-md shrink-0"
+            className="p-1.5 rounded-xl hover:bg-white/10 text-[#D8B788] transition shrink-0"
             title="Return to schedules"
           >
-            <ArrowLeft className="w-4 h-4 text-[#D8B788]" />
-            <span className="hidden sm:inline">All Schedules</span>
+            <ArrowLeft className="w-4 h-4" />
           </Link>
-
-          <div className="bg-[#071526]/95 backdrop-blur-md px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl border border-white/10 shadow-lg flex items-center gap-2 min-w-0">
-            <div className="min-w-0">
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-xs font-bold text-white tracking-wide truncate max-w-[110px] xs:max-w-[160px] sm:max-w-none">
-                  {bus.name}
-                </span>
-                <span className="hidden xs:inline-block text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#B48C56]/20 text-[#D8B788] border border-[#B48C56]/30 uppercase tracking-wider shrink-0">
-                  {bus.type}
-                </span>
-              </div>
-              <p className="text-[10px] sm:text-[11px] text-slate-400 truncate">
-                {bus.fromCity} → {bus.toCity} <span className="hidden xs:inline">• {bus.departureTime}</span>
-              </p>
+          <div className="min-w-0 leading-tight">
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-black text-white tracking-wide truncate max-w-[130px] xs:max-w-[180px] sm:max-w-none">
+                {bus.name}
+              </span>
+              <span className="hidden xs:inline-block text-[9px] font-bold px-1.5 py-0.2 rounded bg-[#B48C56]/20 text-[#D8B788] border border-[#B48C56]/30 uppercase shrink-0">
+                {bus.type}
+              </span>
             </div>
+            <p className="text-[10px] text-slate-400 truncate">
+              {bus.fromCity} → {bus.toCity} <span className="hidden xs:inline">• {bus.departureTime}</span>
+            </p>
           </div>
         </div>
 
-        {/* Right: Camera Reset & 2D Blueprint Actions */}
-        <div className="pointer-events-auto flex items-center gap-1.5 sm:gap-2 shrink-0">
-          {/* Reset Camera to Full Cabin Overview */}
-          <button
-            onClick={handleBackToOverview}
-            className={`flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition shadow-lg backdrop-blur-md cursor-pointer ${
-              isZoomed
-                ? 'bg-[#B48C56] text-slate-950 hover:bg-[#A37B47]'
-                : 'bg-[#071526]/95 hover:bg-[#0B192C] text-slate-200 border border-white/10'
-            }`}
-            title="Reset 3D camera to full coach overview"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span className="hidden xs:inline">Cabin Overview</span>
-          </button>
-
-          {/* 2D Map Blueprint toggle */}
-          <button
-            onClick={() => setIs2DMapOpen(true)}
-            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-[#071526]/95 hover:bg-[#0B192C] text-slate-200 border border-white/10 text-xs font-semibold shadow-lg transition backdrop-blur-md cursor-pointer"
-            title="Open 2D Seat Map"
-          >
-            <Map className="w-3.5 h-3.5 text-[#D8B788]" />
-            <span className="text-xs">2D</span>
-            <span className="hidden md:inline">Blueprint</span>
-          </button>
+        {/* Right: Context-Aware Action (Overview when zoomed, 2D Blueprint when overview) */}
+        <div className="pointer-events-auto flex items-center gap-1.5 shrink-0">
+          {isZoomed ? (
+            <button
+              onClick={handleBackToOverview}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-[#B48C56] hover:bg-[#A37B47] text-slate-950 font-black text-xs shadow-xl transition cursor-pointer"
+              title="Reset 3D camera to full coach overview"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Overview</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => setIs2DMapOpen(true)}
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-[#071526]/90 hover:bg-[#0B192C] text-slate-200 border border-white/10 text-xs font-bold shadow-xl transition backdrop-blur-md cursor-pointer"
+              title="Open 2D Seat Map"
+            >
+              <Map className="w-3.5 h-3.5 text-[#D8B788]" />
+              <span>2D Map</span>
+            </button>
+          )}
         </div>
       </div>
 
-      {/* 2. 3D INTERACTION HINT PILL (Only visible in overview mode, clean responsive positioning) */}
-      {!isZoomed && (
-        <div className="absolute top-14 sm:top-20 left-1/2 -translate-x-1/2 z-20 pointer-events-none max-w-[92vw] animate-in fade-in">
-          <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-[#071526]/90 backdrop-blur-md border border-white/10 text-[11px] sm:text-xs font-medium text-slate-300 shadow-xl whitespace-nowrap overflow-hidden text-ellipsis">
+      {/* 2. 3D INTERACTION HINT PILL (Clean floating pill near bottom, auto-hides on zoom or seat selection) */}
+      {!isZoomed && selectedSeatNumbers.length === 0 && (
+        <div className="absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 z-20 pointer-events-none max-w-[92vw] animate-in fade-in">
+          <div className="flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 rounded-full bg-[#071526]/85 backdrop-blur-md border border-white/10 text-[11px] sm:text-xs font-medium text-slate-300 shadow-xl whitespace-nowrap">
             <Eye className="w-3.5 h-3.5 text-[#D8B788] shrink-0" />
-            <span className="sm:hidden">Tap seat to inspect • Drag to rotate</span>
+            <span className="sm:hidden">Tap suite to inspect • Drag to rotate</span>
             <span className="hidden sm:inline">Click any seat to zoom in & inspect • Drag to rotate coach</span>
           </div>
         </div>
@@ -193,16 +184,16 @@ export default function BookBusPage({
 
       {/* 3. HOVERED SEAT TOOLTIP OVERLAY */}
       {hoveredSeat && !isZoomed && (
-        <div className="absolute bottom-28 left-6 z-20 pointer-events-none animate-in fade-in">
-          <div className="bg-[#071526]/95 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/15 shadow-2xl text-xs text-white">
+        <div className="absolute bottom-24 left-4 z-20 pointer-events-none animate-in fade-in hidden sm:block">
+          <div className="bg-[#071526]/95 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/15 shadow-2xl text-xs text-white">
             <div className="font-bold flex items-center gap-2">
-              <Armchair className="w-4 h-4 text-[#D8B788]" />
-              <span>Seat {hoveredSeat.seatNumber}</span>
+              <Armchair className="w-3.5 h-3.5 text-[#D8B788]" />
+              <span>Suite {hoveredSeat.seatNumber}</span>
               <span className="text-[10px] text-[#D8B788] font-semibold uppercase tracking-wider">
                 ({hoveredSeat.tier})
               </span>
             </div>
-            <div className="text-slate-400 text-[11px] mt-0.5">
+            <div className="text-slate-400 text-[10px] mt-0.5">
               ${hoveredSeat.price} • {hoveredSeat.isWindow ? 'Panoramic Window' : 'Direct Aisle Access'}
             </div>
           </div>

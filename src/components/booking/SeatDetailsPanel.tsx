@@ -55,23 +55,30 @@ export default function SeatDetailsPanel({
   const coachName = bus?.name || 'Apex Skyliner BioDrive';
 
   return (
-    <div className="fixed bottom-2 sm:bottom-auto sm:top-20 left-2 right-2 sm:left-auto sm:right-6 md:right-8 z-40 w-auto sm:w-[94vw] max-w-md max-h-[72vh] sm:max-h-[88vh] overflow-y-auto overscroll-contain animate-in slide-in-from-bottom sm:slide-in-from-right duration-300">
-      
-      {/* 
-        ========================================================================
-        AUTHENTIC LUXURY EXECUTIVE BOARDING PASS / TICKET VOUCHER
-        Features:
-        - Mobile-responsive layout fitting all screens with fluid scroll
-        - Scalloped ticket tear notches on left & right borders
-        - Perforated dotted tear line
-        - Concise bus journey itinerary (from/to, departure/arrival times, date)
-        - Stark Black & White Scanner QR Code matching real boarding pass
-        ========================================================================
-      */}
-      <div className="relative bg-[#071322]/98 backdrop-blur-2xl rounded-3xl border border-[#C5A880]/35 text-white shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85),0_0_25px_rgba(197,168,128,0.12)] overflow-hidden">
+    <>
+      {/* Mobile Dimmed Backdrop Overlay (prevents any background elements from peeking through) */}
+      <div
+        className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs sm:hidden animate-in fade-in duration-200"
+        onClick={onBack}
+      />
+
+      <div className="fixed bottom-0 inset-x-0 sm:bottom-auto sm:top-20 sm:left-auto sm:right-6 md:right-8 z-50 w-full sm:max-w-md max-h-[78vh] sm:max-h-[88vh] overflow-y-auto overscroll-contain animate-in slide-in-from-bottom sm:slide-in-from-right duration-300">
         
-        {/* Mobile Pull Handle Indicator */}
-        <div className="w-10 h-1 bg-white/25 rounded-full mx-auto my-1.5 sm:hidden" />
+        {/* 
+          ========================================================================
+          AUTHENTIC LUXURY EXECUTIVE BOARDING PASS / TICKET VOUCHER
+          Features:
+          - Mobile-responsive layout fitting all screens with fluid scroll
+          - Scalloped ticket tear notches on left & right borders
+          - Perforated dotted tear line
+          - Concise bus journey itinerary (from/to, departure/arrival times, date)
+          - Stark Black & White Scanner QR Code matching real boarding pass
+          ========================================================================
+        */}
+        <div className="relative bg-[#071322]/98 backdrop-blur-2xl rounded-t-3xl sm:rounded-3xl border-t sm:border border-[#C5A880]/35 text-white shadow-[0_-20px_50px_rgba(0,0,0,0.85)] sm:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85),0_0_25px_rgba(197,168,128,0.12)] overflow-hidden">
+          
+          {/* Mobile Pull Handle Indicator */}
+          <div className="w-12 h-1 bg-white/20 rounded-full mx-auto my-2 sm:hidden" />
 
         {/* Top Gold Foil Metallic Bar */}
         <div className="h-1.5 w-full bg-gradient-to-r from-[#D8B788] via-[#B48C56] to-[#8C6B3D]" />
@@ -333,5 +340,6 @@ export default function SeatDetailsPanel({
       </div>
 
     </div>
+    </>
   );
 }

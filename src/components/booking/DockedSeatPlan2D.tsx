@@ -23,14 +23,15 @@ export default function DockedSeatPlan2D({
   activeFocusedSeat,
   onSeatClick,
 }: DockedSeatPlan2DProps) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  // Collapsed by default on desktop; hidden completely on mobile/tablet (< xl)
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   // Group seats by rows 1 to 9
   const rows = Array.from(new Set(seats.map((s) => s.row))).sort((a, b) => a - b);
 
   return (
     <div
-      className={`hidden md:flex absolute left-4 top-24 bottom-24 z-20 transition-all duration-300 ease-in-out items-start select-none ${
+      className={`hidden xl:flex absolute left-4 top-24 bottom-24 z-20 transition-all duration-300 ease-in-out items-start select-none ${
         isCollapsed ? '-translate-x-[calc(100%-12px)]' : 'translate-x-0'
       }`}
     >
